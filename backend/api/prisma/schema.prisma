@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Months {
+  id                    Int                     @id @default(autoincrement())
+  monthNumber           Int                     @unique(map: "monthNumber_UNIQUE") @map("month_number")  
+  monthName             String                  @db.VarChar(45)  @map("month_name")
+  plantPlantingMonths   PlantPlantingMonths[]
+
+  @@map("months")
+}
+
+model PestsDiseases {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(180)
+  description         String?               @db.Text
+  control_description String?               @db.Text
+  plantPestDiseases   PlantPestDiseases[]
+
+  @@map("pests_diseases")
+}
+
+model PlantIntercropping {
+  plantId             Int @map("plant_id")
+  intercroppingPlantId Int @map("plant_intercropping_id")
+
+  plant               Plants @relation("PlantIntercropping_Main",fields: [plantId],references: [id])
+
+  intercroppingPlant  Plants @relation("PlantIntercropping_Secondary",fields: [intercroppingPlantId],references: [id])
+
+  @@id([plantId, intercroppingPlantId])
+  @@index([intercroppingPlantId], map: "plant_intercropping_id_idx")
+  @@map("plant_intercropping")
+}
+
+model PlantPestDiseases {
+  plantId        Int @map("plant_id")
+  pestDiseaseId  Int @map("pest_diseases_id")
+
+  plant          Plants @relation(fields: [plantId],references: [id])
+
+  pestDiseases    PestsDiseases @relation(fields: [pestDiseaseId],references: [id])
+
+  @@id([plantId, pestDiseaseId])
+  @@map("plant_pest_diseases")
+}
+
+model PlantPlantingMonths {
+  plantId  Int    @map("plant_id")
+  monthId  Int    @map("month_id")
+  months   Months @relation(fields: [monthId],references: [id])
+  plants   Plants @relation(fields: [plantId], references: [id])
+
+  @@map("plant_planting_months")
+  @@index([monthId], map: "month_id_idx")
+  @@id([plantId, monthId])
+}
+
+model PlantTypes {
+  id          Int      @id @default(autoincrement())
+  description String   @db.VarChar(80)
+  plants      Plants[]
+
+  @@map("plant_types")
+}
+
+model PlantingAreaFertilizing {
+  id                   Int                    @id @default(autoincrement())
+  description          String                 @db.Text
+  plantingAreaId       Int                    @map("planting_area_id")
+  fertilizingDate     DateTime               @db.Date @map("fertilizing_date") 
+  createdAt            DateTime               @default(now()) @db.DateTime(0) @map("created_at")
+
+  plantingAreas        PlantingAreas          @relation(fields: [plantingAreaId],references: [id])
+
+  plantingAreaPlants PlantingAreaPlants[]
+
+  @@map("planting_area_fertilizing")
+  @@index([plantingAreaId], map: "planting_area_id_idx")
+}
+
+model PlantingAreaPlants {
+  id                                                                                     Int                        @id @default(autoincrement())
+  plantingAreaId                                                                         Int                        @map("planting_area_id")
+  plantId                                                                                Int                        @map("plant_id")
+  plantingMethodId                                                                       Int?                       @map("planting_method_id")
+  isPlanted                                                                              Int                        @default(0) @db.TinyInt           @map("is_planted")
+  isHarvested                                                                            Int                        @default(0) @db.TinyInt           @map("is_harvested")
+  plantingDate                                                                           DateTime?                  @db.Date                          @map("planting_date") 
+  haverstDate                                                                            DateTime?                  @db.Date                          @map("harvest_date") 
+  plantingQuantity                                                                       Int?                       @map("planting_quantity") 
+  harvestQuantity                                                                        Decimal?                   @db.Decimal(5, 2)                 @map("harvest_quantity") 
+  harverstUnitMeasurementId                                                              Int                        @default(1)                       @map("harverst_unit_measurement_id")
+  plantingUnitMeasurementId                                                              Int                        @default(1)                       @map("planting_unit_measurement_id")
+  fertilizingId                                                                          Int?                       @map("fertilizing_id")
+  plantingAreaFertilizing                                                                PlantingAreaFertilizing?   @relation(fields: [fertilizingId], references: [id])
+
+  harvestUnitMeasurement                                                                 UnitMeasurements            @relation("HarvestUnitMeasurement", fields: [harverstUnitMeasurementId ],references: [id])
+  plants                                                                                 Plants                     @relation(fields: [plantId], references: [id])
+
+  plantingAreas                                                                         PlantingAreas               @relation(fields: [plantingAreaId], references: [id])
+
+  plantingUnitMeasurement                                                                UnitMeasurements            @relation("PlantingUnitMeasurement", fields: [plantingUnitMeasurementId], references: [id])
+
+
+
+  @@map("planting_area_plants")
+  @@index([fertilizingId], map: "adubation_id_idx")
+  @@index([harverstUnitMeasurementId], map: "harverst_unit_measurement_id_idx")
+  @@index([plantId], map: "plant_id_idx")
+  @@index([plantingAreaId], map: "planting_area_id_idx")
+  @@index([plantingUnitMeasurementId], map: "planting_unit_measurement_id_idx")
+}
+
+model PlantingAreas {
+  id                        Int                         @id @default(autoincrement())
+  name                      String                      @db.VarChar(120)
+  createdAt                 DateTime                    @default(now()) @db.DateTime(0)     @map("created_at")
+  sunshineHours             Int?                        @map("sunshine_hours")  
+  projectId                 Int                         @map("project_id")
+  plantingAreaFertilizing   PlantingAreaFertilizing[]
+  plantingAreaPlants        PlantingAreaPlants[]
+  projects                  Projects                    @relation(fields: [projectId], references: [id])
+  
+  @@map("planting_areas")
+  @@index([projectId], map: "PROJECT_ID_idx")
+}
+
+model Plants {
+  id                                                                     Int                    @id @default(autoincrement())
+  name                                                                   String                 @db.VarChar(180)
+  scientificName                                                         String                 @unique(map: "scientific_name_UNIQUE") @db.VarChar(180) @map("scientific_name")
+  harvestMinDays                                                         Int                    @map("harvest_min_days")
+  harvestMaxDays                                                         Int                    @map("harvest_max_days")
+  sunshineMinHours                                                       Int                    @map("sunshine_min_hours")
+  sunshineMaxHours                                                       Int                    @map("sunshine_max_hours")
+  plantTypeId                                                            Int                    @map("plant_type_id")
+  germinationMinDays                                                     Int                    @map("germination_min_days")
+  germinationMaxDays                                                     Int                    @map("germination_max_days")
+  phMin                                                                  Decimal                @db.Decimal(2, 1)           @map("ph_min")
+  phMax                                                                  Decimal                @db.Decimal(2, 1)           @map("ph_max")
+  plantingDistancePlants                                                 Int                    @map("planting_distance_plants")
+  managementDescription                                                  String?                @db.Text                   @map("management_description")
+  plantingDescription                                                    String?                @db.Text                   @map("planting_description")
+  createdAt                                                              DateTime               @default(now()) @db.DateTime(0)     @map("created_at") 
+  intercroppings                                                         PlantIntercropping[]   @relation("PlantIntercropping_Main")
+  intercroppedWith                                                       PlantIntercropping[]   @relation("PlantIntercropping_Secondary")
+  plantPestDiseases                                                      PlantPestDiseases[]
+  plantPlantingMonths                                                    PlantPlantingMonths[]
+  plantingAreaPlants                                                     PlantingAreaPlants[]
+  plantTypes                                                             PlantTypes             @relation(fields:[plantTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("plants")
+  @@index([plantTypeId], map: "plant_type_id_idx")
+}
+
+model Projects {
+  id             Int              @id
+  name           String?          @db.VarChar(180)
+  createdAt      DateTime         @default(now()) @db.DateTime(0) @map("created_at")
+  plantingAreas PlantingAreas[]
+
+  @@map("projects")
+}
+
+
+model UnitMeasurements {
+  id                                                                                        Int                    @id @default(autoincrement())
+  description                                                                               String                 @db.VarChar(80)
+  abbreviation                                                                              String                 @db.VarChar(45)
+  harvestUnitMeasurement PlantingAreaPlants[] @relation("HarvestUnitMeasurement")
+  plantingUnitMeasurement PlantingAreaPlants[] @relation("PlantingUnitMeasurement")
+
+  @@map("unit_measurements")
+
+}
+
+model UserRefreshTokens {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique(map: "user_id_UNIQUE") @map("user_id")
+  token      String    @db.VarChar(500)
+  isActive   Int       @default(1) @db.TinyInt @map("is_active")
+  createdAt  DateTime  @default(now()) @db.DateTime(0) @map("created_at")
+  expiresAt  DateTime? @db.DateTime(0) @map("expires_at")
+  users      Users     @relation(fields:[userId], references: [id])
+
+  @@map("user_refresh_tokens")
+}
+
+model Users {
+  id                  Int                  @id @default(autoincrement())
+  name                String               @unique(map: "name_UNIQUE") @db.VarChar(120)
+  email               String               @unique(map: "email_UNIQUE") @db.VarChar(180)
+  password            String               @db.VarChar(180)
+  isActive            Int                  @default(1) @db.TinyInt @map("is_active")
+  createdAt           DateTime             @default(now()) @db.DateTime(0) @map("created_at")
+  userRefreshTokens   UserRefreshTokens[]
+
+  @@map("users")
+}
