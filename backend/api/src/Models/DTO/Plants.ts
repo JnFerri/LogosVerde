@@ -1,0 +1,95 @@
+import { object, z } from 'zod';
+
+export const PlantSchema = z.object({
+  name: z.string().min(1).max(180),
+
+  scientificName: z.string().min(1).max(180),
+
+  harvestMinDays: z.number().int().positive(),
+  harvestMaxDays: z.number().int().positive(),
+
+  sunshineMinHours: z.number().int().positive(),
+  sunshineMaxHours: z.number().int().positive(),
+
+  plantTypeId: z.number().int().positive(),
+
+  germinationMinDays: z.number().int().positive(),
+  germinationMaxDays: z.number().int().positive(),
+
+  phMin: z.number().min(0).max(14),
+  phMax: z.number().min(0).max(14),
+
+  plantingDistancePlants: z.number().int().positive(),
+
+  managementDescription: z.string().nullable(),
+  plantingDescription: z.string().nullable(),
+  plantPestDiseases:z.array(object()).optional(),
+
+});
+
+export const PlantSchemaWithRules = PlantSchema.refine(
+  (data) => data.harvestMaxDays >= data.harvestMinDays,
+  {
+    message: "harvestMaxDays it has to be bigger than harvestMinDays",
+    path: ["harvestMaxDays"],
+  }
+).refine(
+  (data) => data.germinationMaxDays >= data.germinationMinDays,
+  {
+    message: "germinationMaxDays invalid",
+    path: ["germinationMaxDays"],
+  }
+).refine(
+  (data) => data.sunshineMaxHours >= data.sunshineMinHours,
+  {
+    message: "sunshineMaxHours invalid",
+    path: ["sunshineMaxHours"],
+  }
+).refine(
+  (data) => data.phMax >= data.phMin,
+  {
+    message: "phMax it has to be bigger than phMin",
+    path: ["phMax"],
+  }
+);
+
+export const CreatePlantSchema = PlantSchemaWithRules;
+
+
+export const UpdatePlantSchema = PlantSchema
+  .partial().refine(
+  (data) =>!data.harvestMinDays ||
+      !data.harvestMaxDays || data.harvestMaxDays >= data.harvestMinDays,
+  {
+    message: "harvestMaxDays it has to be bigger than harvestMinDays",
+    path: ["harvestMaxDays"],
+  }
+).refine(
+  (data) => !data.germinationMaxDays ||
+      !data.germinationMinDays|| data.germinationMaxDays >= data.germinationMinDays,
+  {
+    message: "germinationMaxDays invalid",
+    path: ["germinationMaxDays"],
+  }
+).refine(
+  (data) => !data.sunshineMaxHours ||
+      !data.sunshineMinHours || data.sunshineMaxHours >= data.sunshineMinHours,
+  {
+    message: "sunshineMaxHours invalid",
+    path: ["sunshineMaxHours"],
+  }
+).refine(
+  (data) =>!data.phMax ||
+      !data.phMin|| data.phMax >= data.phMin,
+  {
+    message: "phMax it has to be bigger than phMin",
+    path: ["phMax"],
+  }
+  
+      
+  );
+
+
+  export const PlantIdParamSchema = z.object({
+  id: z.coerce.number().int().positive(),
+});

@@ -1,49 +1,81 @@
 
-import type { Prisma } from "../../../generated/prisma/client";
-import { prisma } from "../../Configs/Prisma";
+import type { Prisma } from "../../../generated/prisma/browser";
+import type { CreatePlantDTO, UpdatePlantDTO } from "../../Types/Plants/PlantsDTOs";
+import type { PrismaClient } from "../../../generated/prisma/client";
+import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
+
+
+
 
 
 class PlantsRepository {
+  private prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient){
+    this.prisma = prisma;
+  }
+
+ 
   
-  static async getAll() {
+   async getAll(options? : Prisma.PlantsFindManyArgs) {
     try{
-      console.log('teste')
-      return await prisma.plants.findMany();
+      return await this.prisma.plants.findMany({
+         ...options
+      });
 
     }catch(err){
-      console.log(err)
+      throw err
     }
   }
 
-  static async getById(id: number, options?: Prisma.PlantsFindUniqueArgs) {
+   async getById(id: number, options?: Prisma.PlantsFindUniqueArgs) {
+    try{
+      return await this.prisma.plants.findUnique({
+        ...options,
+        where: { id }
+      });
 
-    return await prisma.plants.findUnique({
-      where: { id },
-      ...options,
-    });
+    }catch(err){
+      throw err
+    }
   }
 
-  static async create(data: Prisma.PlantsCreateInput) {
+   async create(data: CreatePlantDTO) {
+    try{
+      return await this.prisma.plants.create({
+        data,
+      });
+      
+    }catch(err){
+      throw err
+    }
+}
 
-    return await prisma.plants.create({
-      data,
+ async update(id: number, data: UpdatePlantDTO) {
+  try{
+    const prismaData = mapToPrismaUpdate<
+    UpdatePlantDTO,
+    Prisma.PlantsUpdateInput
+    >(data)
+    return await this.prisma.plants.update({
+      where: { id },
+      data: prismaData,
     });
 
+  }catch(err){
+    throw err
+  }
 }
 
-static async update(id: number, data: Prisma.PlantsUpdateInput) {
+ async delete(id: number) {
+  try{
+    return await this.prisma.plants.delete({
+      where: { id },
+    });
 
-  return await prisma.plants.update({
-    where: { id },
-    data,
-  });
-}
-
-static async delete(id: number) {
-
-  return await prisma.plants.delete({
-    where: { id },
-  });
+  }catch(err){
+    throw err
+  }
 }
 
 }

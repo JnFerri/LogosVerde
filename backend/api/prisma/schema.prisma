@@ -162,7 +162,7 @@ model Plants {
 
 model Projects {
   id             Int              @id
-  name           String?          @db.VarChar(180)
+  name           String          @db.VarChar(180)
   createdAt      DateTime         @default(now()) @db.DateTime(0) @map("created_at")
   plantingAreas PlantingAreas[]
 
@@ -187,7 +187,9 @@ model UserRefreshTokens {
   token      String    @db.VarChar(500)
   isActive   Int       @default(1) @db.TinyInt @map("is_active")
   createdAt  DateTime  @default(now()) @db.DateTime(0) @map("created_at")
-  expiresAt  DateTime? @db.DateTime(0) @map("expires_at")
+  expiresAt  DateTime @db.DateTime(0) @map("expires_at")
+  revokedAt  DateTime? @db.DateTime(0) @map("revoked_at")
+  replacedBy String?  @db.VarChar(500) @map("replaced_by")
   users      Users     @relation(fields:[userId], references: [id])
 
   @@map("user_refresh_tokens")
