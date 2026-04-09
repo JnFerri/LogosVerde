@@ -1,6 +1,9 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
 
+import type { ProjectCreate , ProjectUpdate , ProjectIdParam } from "../../Types/Projects";
+
+
 
 
 
@@ -23,11 +26,11 @@ class ProjectsRepository {
     }
   }
   
-  async getById(id: number, options?: Prisma.ProjectsFindUniqueArgs) {
+  async getById(id: ProjectIdParam, options?: Prisma.ProjectsFindUniqueArgs) {
     try{
       return await this.prisma.projects.findUnique({
         ...options,
-        where: { id }
+        where:  id 
       });
 
     }catch(err){
@@ -35,7 +38,7 @@ class ProjectsRepository {
     }
   }
 
-  async create(data: Prisma.ProjectsCreateInput) {
+  async create(data: ProjectCreate) {
     try{
       return await this.prisma.projects.create({
         data,
@@ -46,7 +49,7 @@ class ProjectsRepository {
     }
 }
 
-  async update(id: number, data: Prisma.ProjectsUpdateInput) {
+  async update(id: number, data: ProjectUpdate) {
   try{
     return await this.prisma.projects.update({
       where: { id },
@@ -58,10 +61,10 @@ class ProjectsRepository {
   }
 }
 
-async delete(id: number) {
+async delete(id: ProjectIdParam) {
   try{
     return await this.prisma.projects.delete({
-      where: { id },
+      where:  id ,
     });
 
   }catch(err){

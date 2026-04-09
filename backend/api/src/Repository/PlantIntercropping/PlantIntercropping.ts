@@ -2,7 +2,7 @@
 import type { PrismaClient } from "../../../generated/prisma/client";
 import isPrismaError from "../../Helpers/isPrismaError";
 import normalizePlantPairIntercrooping from "../../Helpers/normalizePlantPairIntercrooping";
-import type { CreatePlantIntercroppingDTO } from "../../Types/PlantIntercropping/PlantIntercropping";
+import type { PlantIntercroppingCreate, PlantIntercroppingIdPlantParam } from "../../Types/PlantIntercropping";
 
 
 class PlantIntercroppingRepository {
@@ -13,13 +13,13 @@ class PlantIntercroppingRepository {
     }
 
 
-  async getById(plantId: number) {
+  async getById(plantId: PlantIntercroppingIdPlantParam) {
     try{
       return await this.prisma.plantIntercropping.findMany({
         where: {
       OR: [
-        { plantId },
-        { intercroppingPlantId: plantId}
+         plantId ,
+         plantId
       ]
     },
     include: {
@@ -33,10 +33,10 @@ class PlantIntercroppingRepository {
     }
   }
 
-  async create(data: CreatePlantIntercroppingDTO) {
+  async create(data: PlantIntercroppingCreate) {
     try{
       const { plantId, intercroppingPlantId } = data
-      const dataNomalized : CreatePlantIntercroppingDTO   = await normalizePlantPairIntercrooping(plantId, intercroppingPlantId)
+      const dataNomalized : PlantIntercroppingCreate  = await normalizePlantPairIntercrooping(plantId, intercroppingPlantId)
       return await this.prisma.plantIntercropping.create({
         data: dataNomalized,
       })
@@ -51,12 +51,12 @@ class PlantIntercroppingRepository {
 }
 
 
-async delete(id: number) {
+async delete(id: PlantIntercroppingIdPlantParam) {
   try{
     return await this.prisma.plantIntercropping.delete({
       where: { plantId_intercroppingPlantId : {
-        plantId : id,
-        intercroppingPlantId: id
+        plantId : id.plantId,
+        intercroppingPlantId: id.intercroppingPlantId
       } },
     });
 
