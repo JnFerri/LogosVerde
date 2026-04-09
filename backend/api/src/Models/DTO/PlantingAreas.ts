@@ -23,12 +23,16 @@ export const PlantingAreaCreateSchema = PlantingAreaSchema.pick({
   name: true,
   sunshineHours: true,
   projectId: true,
+}).extend({
+  sunshineHours: PlantingAreaSchema.shape.sunshineHours
+    .optional()
+    .transform((val) => val ?? null),
 });
 
 export const PlantingAreaUpdateSchema = PlantingAreaSchema.pick({
   name: true,
-  sunshineHours: true,
-});
+  sunshineHours: true
+}).partial();
 
 export const PlantingAreaIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),

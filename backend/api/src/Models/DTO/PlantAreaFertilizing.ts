@@ -22,7 +22,7 @@ export const PlantingAreaFertilizingUpdateSchema = PlantingAreaFertilizingSchema
   description: true,
   plantingAreaId: true,
   fertilizingDate: true,
-});
+}).partial();
 
 export const PlantingAreaFertilizingParamIdSchema = z.object({
   id: z.coerce.number().int().positive(),
