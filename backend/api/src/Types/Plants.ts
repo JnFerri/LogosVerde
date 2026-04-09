@@ -4,8 +4,8 @@ import type { CreatePlantSchema, UpdatePlantSchema , PlantSchema, PlantIdParamSc
 
 export type Plant = z.infer<typeof PlantSchema>;
 
-export type CreatePlant = z.infer<typeof CreatePlantSchema>;
+export type PlantCreate = z.infer<typeof CreatePlantSchema>;
 
-export type UpdatePlant = z.infer<typeof UpdatePlantSchema>;
+export type PlantUpdate = z.infer<typeof UpdatePlantSchema>;
 
 export type PlantIdParam = z.infer<typeof PlantIdParamSchema>;
