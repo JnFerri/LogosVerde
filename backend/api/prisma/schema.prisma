@@ -161,7 +161,7 @@ model Plants {
 }
 
 model Projects {
-  id             Int              @id
+  id             Int              @id @default(autoincrement())
   name           String          @db.VarChar(180)
   createdAt      DateTime         @default(now()) @db.DateTime(0) @map("created_at")
   plantingAreas PlantingAreas[]
