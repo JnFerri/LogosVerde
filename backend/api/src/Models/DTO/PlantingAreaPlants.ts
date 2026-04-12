@@ -68,7 +68,7 @@ export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
   harverstUnitMeasurementId:true,
   plantingUnitMeasurementId: true,
   fertilizingId: true,
-});
+}).partial();
 
 export const PlantingAreaPlantsIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),

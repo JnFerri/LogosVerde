@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { PlantPestDiseaseCreateSchema, PlantPestDiseaseParamIdPestDiseaseSchema, PlantPestDiseaseParamIdPlantSchema, PlantPestDiseaseSchema } from "../Models/DTO/PestDiseases";
+import type { PlantPestDiseaseCreateSchema, PlantPestDiseaseParamIdPestDiseaseSchema, PlantPestDiseaseParamIdPlantSchema, PlantPestDiseaseSchema } from "../Models/DTO/PlantPestDiseases";
 
 export type PlantPestDisease = z.infer<typeof PlantPestDiseaseSchema>;
 

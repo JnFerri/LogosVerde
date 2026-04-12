@@ -1,11 +1,11 @@
 import type z from "zod";
 import type { PlantPlantingMonthsCreateSchema, PlantPlantingMonthsParamIdPlantSchema, PlantPlantingMonthsSchema } from "../Models/DTO/PlantPlantingMonths";
 
-export type PlantPlantingMonthsType = z.infer<
+export type PlantPlantingMonths = z.infer<
   typeof PlantPlantingMonthsSchema
 >;
 
-export type PlantPlantingMonthsCreateType = z.infer<
+export type PlantPlantingMonthsCreate = z.infer<
   typeof PlantPlantingMonthsCreateSchema
 >;
 

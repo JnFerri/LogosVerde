@@ -1,5 +1,7 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
+import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
+import type { PestsDiseasesCreate, PestsDiseasesIdParam, PestsDiseasesUpdate } from "../../Types/PestDiseases";
 
 
 class PestDiseasesRepository {
@@ -20,11 +22,10 @@ class PestDiseasesRepository {
     }
   }
   
-  async getById(id: number, options?: Prisma.PestsDiseasesFindUniqueArgs) {
+  async getById(id: PestsDiseasesIdParam ) {
     try{
       return await this.prisma.pestsDiseases.findUnique({
-        where: { id },
-        ...options,
+        where:  id 
       });
 
     }catch(err){
@@ -32,7 +33,7 @@ class PestDiseasesRepository {
     }
   }
 
-  async create(data: Prisma.PestsDiseasesCreateInput) {
+  async create(data: PestsDiseasesCreate) {
     try{
       return await this.prisma.pestsDiseases.create({
         data,
@@ -41,30 +42,35 @@ class PestDiseasesRepository {
     }catch(err){
       throw err
     }
-}
-
-async update(id: number, data: Prisma.PestsDiseasesUpdateInput) {
-  try{
-    return await this.prisma.pestsDiseases.update({
-      where: { id },
-      data,
-    });
-
-  }catch(err){
-    throw err
   }
-}
 
-async delete(id: number) {
-  try{
-    return await this.prisma.pestsDiseases.delete({
-      where: { id },
-    });
+  async update(id: PestsDiseasesIdParam, data: PestsDiseasesUpdate) {
+    try{
+      const prismaData = mapToPrismaUpdate<
+              PestsDiseasesUpdate,
+              Prisma.PestsDiseasesCreateInput
+              >(data)
+      return await this.prisma.pestsDiseases.update({
+        where: id ,
+        data : prismaData,
+      });
 
-  }catch(err){
-    throw err
+    }catch(err){
+      throw err
+    }
   }
-}
+ 
+
+  async delete(id: PestsDiseasesIdParam) {
+    try{
+      return await this.prisma.pestsDiseases.delete({
+        where:  id ,
+      });
+
+    }catch(err){
+    throw err
+    }
+  }
 
 }
 

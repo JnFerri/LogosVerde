@@ -14,13 +14,20 @@ export const PestsDiseasesCreateSchema = PestsDiseasesSchema.pick({
   name: true,
   description: true,
   controlDescription: true,
-});
+}).extend({
+  description: PestsDiseasesSchema.shape.description
+    .optional()
+    .transform((val) => val ?? null),
+  controlDescription: PestsDiseasesSchema.shape.controlDescription
+    .optional()
+    .transform((val) => val ?? null),
+});;
 
 export const PestsDiseasesUpdateSchema = PestsDiseasesSchema.pick({
   name: true,
   description: true,
   controlDescription: true,
-});
+}).partial();
 
 export const PestsDiseasesIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),

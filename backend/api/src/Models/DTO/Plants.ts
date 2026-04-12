@@ -22,8 +22,7 @@ export const PlantSchema = z.object({
   plantingDistancePlants: z.number().int().positive(),
 
   managementDescription: z.string().nullable(),
-  plantingDescription: z.string().nullable(),
-  plantPestDiseases:z.array(object()).optional(),
+  plantingDescription: z.string().nullable()
 
 });
 
@@ -56,38 +55,22 @@ export const PlantSchemaWithRules = PlantSchema.refine(
 export const CreatePlantSchema = PlantSchemaWithRules;
 
 
-export const UpdatePlantSchema = PlantSchema
-  .partial().refine(
-  (data) =>!data.harvestMinDays ||
-      !data.harvestMaxDays || data.harvestMaxDays >= data.harvestMinDays,
-  {
-    message: "harvestMaxDays it has to be bigger than harvestMinDays",
-    path: ["harvestMaxDays"],
-  }
-).refine(
-  (data) => !data.germinationMaxDays ||
-      !data.germinationMinDays|| data.germinationMaxDays >= data.germinationMinDays,
-  {
-    message: "germinationMaxDays invalid",
-    path: ["germinationMaxDays"],
-  }
-).refine(
-  (data) => !data.sunshineMaxHours ||
-      !data.sunshineMinHours || data.sunshineMaxHours >= data.sunshineMinHours,
-  {
-    message: "sunshineMaxHours invalid",
-    path: ["sunshineMaxHours"],
-  }
-).refine(
-  (data) =>!data.phMax ||
-      !data.phMin|| data.phMax >= data.phMin,
-  {
-    message: "phMax it has to be bigger than phMin",
-    path: ["phMax"],
-  }
-  
-      
-  );
+export const UpdatePlantSchema = PlantSchema.pick({
+  name: true,
+  scientificName: true,
+  harvestMinDays: true,
+  harvestMaxDays: true,
+  sunshineMinHours: true,
+  sunshineMaxHours: true,
+  plantTypeId: true,
+  germinationMinDays: true,
+  germinationMaxDays: true,
+  phMin: true,
+  phMax: true,
+  plantingDistancePlants: true,
+  managementDescription: true,
+  plantingDescription: true,
+} ).partial();
 
 
   export const PlantIdParamSchema = z.object({

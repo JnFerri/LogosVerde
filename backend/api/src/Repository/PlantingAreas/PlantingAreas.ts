@@ -1,5 +1,7 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
+import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
+import type { PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Types/PlantingAreas";
 
 
 class PlantingAreasRepository {
@@ -20,11 +22,10 @@ class PlantingAreasRepository {
     }
   }
   
-  async getById(id: number, options?: Prisma.PlantingAreasFindUniqueArgs) {
+  async getById(id: PlantingAreaIdParam ) {
     try{
       return await this.prisma.plantingAreas.findUnique({
-        where: { id },
-        ...options,
+        where:  id 
       });
 
     }catch(err){
@@ -32,7 +33,7 @@ class PlantingAreasRepository {
     }
   }
 
-  async create(data: Prisma.PlantingAreasCreateInput) {
+  async create(data: PlantingAreaCreate) {
     try{
       return await this.prisma.plantingAreas.create({
         data,
@@ -43,11 +44,15 @@ class PlantingAreasRepository {
     }
 }
 
-async update(id: number, data: Prisma.PlantingAreasUpdateInput) {
+async update(id: PlantingAreaIdParam, data: PlantingAreaUpdate) {
   try{
+    const prismaData = mapToPrismaUpdate<
+        PlantingAreaUpdate,
+        Prisma.PlantingAreasCreateInput
+        >(data)
     return await this.prisma.plantingAreas.update({
-      where: { id },
-      data,
+      where: id ,
+      data:prismaData,
     });
 
   }catch(err){
@@ -55,10 +60,10 @@ async update(id: number, data: Prisma.PlantingAreasUpdateInput) {
   }
 }
 
-async delete(id: number) {
+async delete(id: PlantingAreaIdParam) {
   try{
     return await this.prisma.plantingAreas.delete({
-      where: { id },
+      where:  id ,
     });
 
   }catch(err){
