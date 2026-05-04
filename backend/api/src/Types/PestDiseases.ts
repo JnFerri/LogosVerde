@@ -1,10 +1,10 @@
 import type z from "zod";
-import type { PestsDiseasesCreateSchema, PestsDiseasesIdParamSchema, PestsDiseasesSchema, PestsDiseasesUpdateSchema } from "../Models/DTO/PestDisease";
+import type { PestDiseasesCreateSchema, PestDiseasesIdParamSchema, PestDiseasesSchema, PestDiseasesUpdateSchema } from "../Models/DTO/PestDisease";
 
-export type PestsDiseases = z.infer<typeof PestsDiseasesSchema>;
+export type PestDiseases = z.infer<typeof PestDiseasesSchema>;
 
-export type PestsDiseasesCreate = z.infer<typeof PestsDiseasesCreateSchema>;
+export type PestDiseasesCreate = z.infer<typeof PestDiseasesCreateSchema>;
 
-export type PestsDiseasesUpdate = z.infer<typeof PestsDiseasesUpdateSchema>;
+export type PestDiseasesUpdate = z.infer<typeof PestDiseasesUpdateSchema>;
 
-export type PestsDiseasesIdParam = z.infer<typeof PestsDiseasesIdParamSchema>;
+export type PestDiseasesIdParam = z.infer<typeof PestDiseasesIdParamSchema>;
