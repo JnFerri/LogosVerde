@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const PestsDiseasesSchema = z.object({
+export const PestDiseasesSchema = z.object({
   id: z.number(),
 
   name: z.string().max(180),
@@ -10,25 +10,25 @@ export const PestsDiseasesSchema = z.object({
   controlDescription: z.string().nullable().optional()
 });
 
-export const PestsDiseasesCreateSchema = PestsDiseasesSchema.pick({
+export const PestDiseasesCreateSchema = PestDiseasesSchema.pick({
   name: true,
   description: true,
   controlDescription: true,
 }).extend({
-  description: PestsDiseasesSchema.shape.description
+  description: PestDiseasesSchema.shape.description
     .optional()
     .transform((val) => val ?? null),
-  controlDescription: PestsDiseasesSchema.shape.controlDescription
+  controlDescription: PestDiseasesSchema.shape.controlDescription
     .optional()
     .transform((val) => val ?? null),
 });;
 
-export const PestsDiseasesUpdateSchema = PestsDiseasesSchema.pick({
+export const PestDiseasesUpdateSchema = PestDiseasesSchema.pick({
   name: true,
   description: true,
   controlDescription: true,
 }).partial();
 
-export const PestsDiseasesIdParamSchema = z.object({
+export const PestDiseasesIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
