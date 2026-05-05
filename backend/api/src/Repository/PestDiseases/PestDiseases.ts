@@ -1,7 +1,7 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
-import type { PestsDiseasesCreate, PestsDiseasesIdParam, PestsDiseasesUpdate } from "../../Types/PestDiseases";
+import type { PestDiseasesCreate, PestDiseasesIdParam, PestDiseasesUpdate } from "../../Types/PestDiseases";
 
 
 class PestDiseasesRepository {
@@ -22,7 +22,7 @@ class PestDiseasesRepository {
     }
   }
   
-  async getById(id: PestsDiseasesIdParam ) {
+  async getById(id: PestDiseasesIdParam ) {
     try{
       return await this.prisma.pestsDiseases.findUnique({
         where:  id 
@@ -33,7 +33,7 @@ class PestDiseasesRepository {
     }
   }
 
-  async create(data: PestsDiseasesCreate) {
+  async create(data: PestDiseasesCreate) {
     try{
       return await this.prisma.pestsDiseases.create({
         data,
@@ -44,10 +44,10 @@ class PestDiseasesRepository {
     }
   }
 
-  async update(id: PestsDiseasesIdParam, data: PestsDiseasesUpdate) {
+  async update(id: PestDiseasesIdParam, data: PestDiseasesUpdate) {
     try{
       const prismaData = mapToPrismaUpdate<
-              PestsDiseasesUpdate,
+              PestDiseasesUpdate,
               Prisma.PestsDiseasesCreateInput
               >(data)
       return await this.prisma.pestsDiseases.update({
@@ -61,7 +61,7 @@ class PestDiseasesRepository {
   }
  
 
-  async delete(id: PestsDiseasesIdParam) {
+  async delete(id: PestDiseasesIdParam) {
     try{
       return await this.prisma.pestsDiseases.delete({
         where:  id ,
