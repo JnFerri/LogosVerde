@@ -1,5 +1,6 @@
 
 import { ApiError } from "../../Models/ApiResponse/ApiError";
+import { PestDiseasesSchema } from "../../Models/DTO/PestDisease";
 import PestDiseasesRepository from "../../Repository/PestDiseases/PestDiseases"
 import type { PestDiseases, PestDiseasesCreate, PestDiseasesUpdate } from "../../Types/PestDiseases";
 
@@ -11,60 +12,43 @@ export class PestDiseaseService{
     }
 
     async findAll(){
-        try{
             const response : PestDiseases[] = await this.repository.getAll()
-            return response
-        }catch(err){
-            throw err
-        }
+            return PestDiseasesSchema.array().parse(response)
     }
 
     async findById(id: number){
-        try{
-            const response = await this.repository.getById({id})
+            if(!id){
+                throw ApiError.BadRequest("Id is required")
+            }
+            const response = await this.repository.getById(id)
             if(!response){
                 throw ApiError.NotFound("Pest disease not found")
             }
-            return response
-        }catch(err){
-           throw err
-        }
+            return PestDiseasesSchema.parse(response)
     }
 
     async create(data: PestDiseasesCreate){
-        try{
             const response = await this.repository.create(data)
-            return response
-        }catch(err){
-            throw err
-        }
+            return PestDiseasesSchema.parse(response)
     }
 
     async update(id: number, data: PestDiseasesUpdate){
-        try{
-            const exists = await this.repository.getById({ id })
-
+            if(!id){
+                throw ApiError.BadRequest("Id is required")
+            }
+            const exists = await this.repository.getById(id)
             if (!exists) {
                 throw ApiError.NotFound("Pest disease not found")
             }
-            await this.repository.update({id}, data)
-            const responseUpdated = await this.repository.getById({id})
-            return responseUpdated
-        }catch(err){
-            throw err
-        }
+            const response =  await this.repository.update(id, data)
+            return PestDiseasesSchema.parse(response)
     }
 
     async delete(id: number){
-        try{
-            const exists = await this.repository.getById({ id })
-
+            const exists = await this.repository.getById( id )
             if (!exists) {
                 throw ApiError.NotFound("Pest disease not found")
             }
-            await this.repository.delete({id})
-        }catch(err){
-            throw err
-        }
+            await this.repository.delete(id)
     }
 }

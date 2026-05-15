@@ -21,9 +21,7 @@ export const ProjectUpdateSchema = ProjectSchema.pick({
   name: true,
 });
 
-export const ProjectIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+export const ProjectIdParamSchema = z.coerce.number().int().positive();
 
 
 

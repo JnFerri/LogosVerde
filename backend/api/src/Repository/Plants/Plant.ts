@@ -1,7 +1,7 @@
 
 import type { Prisma } from "../../../generated/prisma/browser";
 import { prisma } from "../../Configs/Prisma";
-import type { PlantCreate, PlantUpdate } from "../../Types/Plant";
+import type { PlantCreate, PlantIdParam, PlantUpdate } from "../../Types/Plant";
 import type { PrismaClient } from "../../../generated/prisma/client";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 import type { Plant } from "../../Types/Plant";
@@ -13,11 +13,9 @@ class PlantsRepository {
     this.db = db;
   }
 
-  async getAll(options?: Prisma.PlantsFindManyArgs): Promise<Plant[]> {
+  async getAll(): Promise<Plant[]> {
 
-    const plants = await this.db.plants.findMany({
-      ...options
-    });
+    const plants = await this.db.plants.findMany();
 
     return plants.map((plant) => ({
       ...plant,
@@ -26,11 +24,10 @@ class PlantsRepository {
     }));
   }
 
-  async getById(id: number, options?: Prisma.PlantsFindUniqueArgs): Promise<Plant | null> {
+  async getById(id: PlantIdParam): Promise<Plant | null> {
     const plant = await this.db.plants.findUnique({
-      ...options,
-      where: { id }
-    });
+      where: { id:id }
+  });
     if (!plant) return null;
     return {
       ...plant,
@@ -50,13 +47,13 @@ class PlantsRepository {
     }
   }
 
-  async update(id: number, data: PlantUpdate): Promise<Plant> {
+  async update(id: PlantIdParam, data: PlantUpdate): Promise<Plant> {
     const prismaData = mapToPrismaUpdate<
       PlantUpdate,
       Prisma.PlantsUpdateInput
     >(data)
     const plant = await this.db.plants.update({
-      where: { id },
+      where: { id : id },
       data: prismaData,
     });
 
@@ -69,7 +66,7 @@ class PlantsRepository {
 
   async delete(id: number): Promise<Plant> {
     const plant = await this.db.plants.delete({
-      where: { id },
+      where: { id : id },
     });
     return {
       ...plant,

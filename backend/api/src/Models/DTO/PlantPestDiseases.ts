@@ -16,9 +16,7 @@ export const PlantPestDiseaseParamIdPlantSchema = z.object({
   plantId: z.coerce.number().int().positive(),
 });
 
-export const PlantPestDiseaseParamIdPestDiseaseSchema = z.object({
-  pestDiseaseId: z.coerce.number().int().positive(),
-});
+export const PlantPestDiseaseParamIdPestDiseaseSchema = z.coerce.number().int().positive()
 
 
 

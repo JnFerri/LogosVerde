@@ -16,11 +16,10 @@ class ProjectsRepository {
     });
   }
 
-  async getById(id: ProjectIdParam, options?: Prisma.ProjectsFindUniqueArgs): Promise<Project | null> {
+  async getById(id: ProjectIdParam): Promise<Project | null> {
     return this.db.projects.findUnique({
-      ...options,
-      where: id
-    });
+      where: {id:id}
+  });
   }
 
   async create(data: ProjectCreate): Promise<Project> {
@@ -30,16 +29,16 @@ class ProjectsRepository {
 
   }
 
-  async update(id: number, data: ProjectUpdate): Promise<Project> {
+  async update(id: ProjectIdParam, data: ProjectUpdate): Promise<Project> {
     return this.db.projects.update({
-      where: { id },
+      where: { id:id },
       data,
     });
   }
 
   async delete(id: ProjectIdParam): Promise<Project> {
     return this.db.projects.delete({
-      where: id,
+      where: {id:id},
     });
   }
 

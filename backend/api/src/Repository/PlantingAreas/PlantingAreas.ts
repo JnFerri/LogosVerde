@@ -11,15 +11,13 @@ class PlantingAreasRepository {
     this.db = db;
   }
 
-  async getAll(options?: Prisma.PlantingAreasFindManyArgs): Promise<PlantingArea[]> {
-    return this.db.plantingAreas.findMany({
-      ...options,
-    });
+  async getAll(): Promise<PlantingArea[]> {
+    return this.db.plantingAreas.findMany();
   }
 
   async getById(id: PlantingAreaIdParam): Promise<PlantingArea | null> {
     return this.db.plantingAreas.findUnique({
-      where: id
+      where: {id:id}
     });
   }
 
@@ -35,14 +33,14 @@ class PlantingAreasRepository {
       Prisma.PlantingAreasCreateInput
     >(data)
     return this.db.plantingAreas.update({
-      where: id,
+      where: {id:id},
       data: prismaData,
     });
   }
 
   async delete(id: PlantingAreaIdParam): Promise<PlantingArea> {
     return this.db.plantingAreas.delete({
-      where: id,
+      where: {id:id},
     });
   }
 
