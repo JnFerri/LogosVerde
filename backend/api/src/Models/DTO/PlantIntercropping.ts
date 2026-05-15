@@ -18,9 +18,7 @@ export const PlantIntercroppingCreateSchema = PlantIntercroppingSchema.pick({
     }
   );
 
-  export const PlantIntercroppingParamIdPlantSchema = z.object({
-    plantId: z.coerce.number().int().positive(),
-  });
+  export const PlantIntercroppingParamIdPlantSchema = z.coerce.number().int().positive();
 
 
 

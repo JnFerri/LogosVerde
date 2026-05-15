@@ -29,6 +29,4 @@ export const PestDiseasesUpdateSchema = PestDiseasesSchema.pick({
   controlDescription: true,
 }).partial();
 
-export const PestDiseasesIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+export const PestDiseasesIdParamSchema =  z.coerce.number().int().positive();

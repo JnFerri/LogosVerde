@@ -34,6 +34,4 @@ export const PlantingAreaUpdateSchema = PlantingAreaSchema.pick({
   sunshineHours: true
 }).partial();
 
-export const PlantingAreaIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+export const PlantingAreaIdParamSchema = z.coerce.number().int().positive();

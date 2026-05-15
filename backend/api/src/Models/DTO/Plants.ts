@@ -73,6 +73,4 @@ export const UpdatePlantSchema = PlantSchema.pick({
 } ).partial();
 
 
-  export const PlantIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+  export const PlantIdParamSchema = z.coerce.number().int().positive();

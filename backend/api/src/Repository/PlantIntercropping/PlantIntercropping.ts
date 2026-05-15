@@ -11,18 +11,22 @@ class PlantIntercroppingRepository {
     this.db = db;
   }
 
-  async getById(plantId: PlantIntercroppingIdPlantParam): Promise<PlantIntercropping[]> {
+  async getById(id: PlantIntercroppingIdPlantParam): Promise<PlantIntercropping[]> {
     return this.db.plantIntercropping.findMany({
       where: {
-        OR: [
-          plantId,
-          plantId
-        ]
-      },
-      include: {
-        plant: true,
-        intercroppingPlant: true
-      }
+      OR: [
+        {
+          plantId: id
+        },
+        {
+          intercroppingPlantId: id
+        }
+      ]
+    },
+    include: {
+      plant: true,
+      intercroppingPlant: true
+    }
     });
   }
 
@@ -38,8 +42,8 @@ class PlantIntercroppingRepository {
     return this.db.plantIntercropping.delete({
       where: {
         plantId_intercroppingPlantId: {
-          plantId: id.plantId,
-          intercroppingPlantId: id.intercroppingPlantId
+          plantId: id,
+          intercroppingPlantId: id
         }
       },
     });

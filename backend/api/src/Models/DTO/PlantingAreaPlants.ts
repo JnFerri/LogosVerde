@@ -70,9 +70,7 @@ export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
   fertilizingId: true,
 }).partial();
 
-export const PlantingAreaPlantsIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+export const PlantingAreaPlantsIdParamSchema = z.coerce.number().int().positive();
 
 
 

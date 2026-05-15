@@ -26,6 +26,4 @@ export const UserUpdateSchema = UserSchema.pick({
   password: true,
 }).partial();
 
-export const UserIdParamSchema = z.object({
-  id: z.coerce.number().int().positive(),
-});
+export const UserIdParamSchema = z.coerce.number().int().positive();

@@ -12,6 +12,4 @@ export const PlantPlantingMonthsCreateSchema = PlantPlantingMonthsSchema.pick({
   monthId: true,
 });
 
-export const PlantPlantingMonthsParamIdPlantSchema = z.object({
-  plantId: z.coerce.number().int().positive(),
-});
+export const PlantPlantingMonthsParamIdPlantSchema = z.coerce.number().int().positive()
