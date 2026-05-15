@@ -1,76 +1,47 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
-
-import type { ProjectCreate , ProjectUpdate , ProjectIdParam } from "../../Types/Projects";
-
-
-
-
+import { prisma } from "../../Configs/Prisma";
+import type { ProjectCreate, ProjectUpdate, ProjectIdParam, Project } from "../../Types/Projects";
 
 class ProjectsRepository {
-  private prisma: PrismaClient;
-  
-  constructor(prisma: PrismaClient){
-    this.prisma = prisma;
+  private db: PrismaClient
+
+  constructor(db: PrismaClient = prisma) {
+    this.db = db;
   }
 
-
-  async getAll(options?: Prisma.ProjectsFindManyArgs) {
-    try{
-      return await this.prisma.projects.findMany({
-       ...options
-      });
-
-    }catch(err){
-      throw err
-    }
-  }
-  
-  async getById(id: ProjectIdParam, options?: Prisma.ProjectsFindUniqueArgs) {
-    try{
-      return await this.prisma.projects.findUnique({
-        ...options,
-        where:  id 
-      });
-
-    }catch(err){
-      throw err
-    }
+  async getAll(options?: Prisma.ProjectsFindManyArgs): Promise<Project[]> {
+    return this.db.projects.findMany({
+      ...options
+    });
   }
 
-  async create(data: ProjectCreate) {
-    try{
-      return await this.prisma.projects.create({
-        data,
-      });
-      
-    }catch(err){
-      throw err
-    }
-}
+  async getById(id: ProjectIdParam, options?: Prisma.ProjectsFindUniqueArgs): Promise<Project | null> {
+    return this.db.projects.findUnique({
+      ...options,
+      where: id
+    });
+  }
 
-  async update(id: number, data: ProjectUpdate) {
-  try{
-    return await this.prisma.projects.update({
-      where: { id },
+  async create(data: ProjectCreate): Promise<Project> {
+    return this.db.projects.create({
       data,
     });
 
-  }catch(err){
-    throw err
   }
-}
 
-async delete(id: ProjectIdParam) {
-  try{
-    return await this.prisma.projects.delete({
-      where:  id ,
+  async update(id: number, data: ProjectUpdate): Promise<Project> {
+    return this.db.projects.update({
+      where: { id },
+      data,
     });
-
-  }catch(err){
-    throw err
   }
-}
+
+  async delete(id: ProjectIdParam): Promise<Project> {
+    return this.db.projects.delete({
+      where: id,
+    });
+  }
 
 }
 

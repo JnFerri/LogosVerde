@@ -1,75 +1,50 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
+import { prisma } from "../../Configs/Prisma";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
-import type { PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Types/PlantingAreas";
-
+import type { PlantingArea, PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Types/PlantingAreas";
 
 class PlantingAreasRepository {
-  private prisma: PrismaClient;
-    
-      constructor(prisma: PrismaClient){
-        this.prisma = prisma;
-      }
-  
-  async getAll(options? : Prisma.PlantingAreasFindManyArgs) {
-    try{
-      return await this.prisma.plantingAreas.findMany({
-        ...options,
-      });
+  private db: PrismaClient
 
-    }catch(err){
-      throw err
-    }
-  }
-  
-  async getById(id: PlantingAreaIdParam ) {
-    try{
-      return await this.prisma.plantingAreas.findUnique({
-        where:  id 
-      });
-
-    }catch(err){
-      throw err
-    }
+  constructor(db: PrismaClient = prisma) {
+    this.db = db;
   }
 
-  async create(data: PlantingAreaCreate) {
-    try{
-      return await this.prisma.plantingAreas.create({
-        data,
-      });
-      
-    }catch(err){
-      throw err
-    }
-}
+  async getAll(options?: Prisma.PlantingAreasFindManyArgs): Promise<PlantingArea[]> {
+    return this.db.plantingAreas.findMany({
+      ...options,
+    });
+  }
 
-async update(id: PlantingAreaIdParam, data: PlantingAreaUpdate) {
-  try{
+  async getById(id: PlantingAreaIdParam): Promise<PlantingArea | null> {
+    return this.db.plantingAreas.findUnique({
+      where: id
+    });
+  }
+
+  async create(data: PlantingAreaCreate): Promise<PlantingArea> {
+    return this.db.plantingAreas.create({
+      data,
+    });
+  }
+
+  async update(id: PlantingAreaIdParam, data: PlantingAreaUpdate): Promise<PlantingArea> {
     const prismaData = mapToPrismaUpdate<
-        PlantingAreaUpdate,
-        Prisma.PlantingAreasCreateInput
-        >(data)
-    return await this.prisma.plantingAreas.update({
-      where: id ,
-      data:prismaData,
+      PlantingAreaUpdate,
+      Prisma.PlantingAreasCreateInput
+    >(data)
+    return this.db.plantingAreas.update({
+      where: id,
+      data: prismaData,
     });
-
-  }catch(err){
-    throw err
   }
-}
 
-async delete(id: PlantingAreaIdParam) {
-  try{
-    return await this.prisma.plantingAreas.delete({
-      where:  id ,
+  async delete(id: PlantingAreaIdParam): Promise<PlantingArea> {
+    return this.db.plantingAreas.delete({
+      where: id,
     });
-
-  }catch(err){
-    throw err
   }
-}
 
 }
 

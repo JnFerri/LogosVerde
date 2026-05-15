@@ -1,4 +1,4 @@
-import { object, z } from 'zod';
+import { z } from 'zod';
 
 export const PlantSchema = z.object({
   name: z.string().min(1).max(180),
