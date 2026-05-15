@@ -11,12 +11,12 @@ export class PestDiseaseService{
         this.repository = repository
     }
 
-    async findAll(){
-            const response : PestDiseases[] = await this.repository.getAll()
+    async findAll() : Promise<PestDiseases[]>{
+            const response = await this.repository.getAll()
             return PestDiseasesSchema.array().parse(response)
     }
 
-    async findById(id: PestDiseasesIdParam){
+    async findById(id: PestDiseasesIdParam) : Promise<PestDiseases>{
             const response = await this.repository.getById(id)
             if(!response){
                 throw ApiError.NotFound("Pest disease not found")
@@ -24,17 +24,17 @@ export class PestDiseaseService{
             return PestDiseasesSchema.parse(response)
     }
 
-    async create(data: PestDiseasesCreate){
+    async create(data: PestDiseasesCreate) : Promise<PestDiseases>{
             const response = await this.repository.create(data)
             return PestDiseasesSchema.parse(response)
     }
 
-    async update(id: PestDiseasesIdParam, data: PestDiseasesUpdate){
+    async update(id: PestDiseasesIdParam, data: PestDiseasesUpdate) : Promise<PestDiseases>{
             const response =  await this.repository.update(id, data)
             return PestDiseasesSchema.parse(response)
     }
 
-    async delete(id: PestDiseasesIdParam){
+    async delete(id: PestDiseasesIdParam) : Promise<void>{
             await this.repository.delete(id)
     }
 }
