@@ -1,5 +1,5 @@
 import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
-import { PestDiseasesCreateSchema, PestDiseasesSchema, PestDiseasesUpdateSchema } from "../Models/DTO/PestDisease";
+import { PestDiseasesCreateSchema, PestDiseasesIdParamSchema, PestDiseasesUpdateSchema } from "../Models/DTO/PestDisease";
 import type { PestDiseaseService } from "../Services/PestDiseases/PestDiseases";
 import type { Request, Response, NextFunction } from "express";
 
@@ -14,8 +14,7 @@ export class PestDiseaseController {
             if(result.length === 0){
                 return ApiSuccess.success("No pest diseases found", [])
             }
-            const resultValidated = result.map((item) => PestDiseasesSchema.parse(item))
-            const response = await ApiSuccess.success("Pest diseases found", resultValidated)
+            const response = await ApiSuccess.success("Pest diseases found", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
             next(err)
@@ -24,10 +23,10 @@ export class PestDiseaseController {
 
     async getById(req: Request, res: Response, next: NextFunction) {
         try {
-            const id = Number(req.params.id)
-            const result = await this.service.findById(id)
-            const resultValidated = PestDiseasesSchema.parse(result)
-            const response = await ApiSuccess.success("Pest disease found", resultValidated)
+            const id = req.params.id
+            const idValidated = PestDiseasesIdParamSchema.parse(id)
+            const result = await this.service.findById(idValidated)
+            const response = await ApiSuccess.success("Pest disease found", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
             next(err)
@@ -48,12 +47,12 @@ export class PestDiseaseController {
 
     async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const id = Number(req.params.id)
+            const id = req.params.id
+            const idValidated = PestDiseasesIdParamSchema.parse(id)
             const data = req.body
             const dataValidated = PestDiseasesUpdateSchema.parse(data)
-            const result = await this.service.update(id, dataValidated)
-            const resultValidated = PestDiseasesSchema.parse(result)
-            const response = await ApiSuccess.updated("Pest disease updated", resultValidated)
+            const result = await this.service.update(idValidated, dataValidated)
+            const response = await ApiSuccess.updated("Pest disease updated", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
             next(err)
@@ -62,8 +61,9 @@ export class PestDiseaseController {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const id = Number(req.params.id)
-            await this.service.delete(id)
+            const id = req.params.id
+            const idValidated = PestDiseasesIdParamSchema.parse(id)
+            await this.service.delete(idValidated)
             const response = await ApiSuccess.noContent("Pest disease deleted successfully")
             res.status(response.statusCode).json(response)
         } catch (err) {
