@@ -2,6 +2,7 @@ import morgan from "morgan";
 import cors from "cors";
 import  express  from "express";
 import rateLimit from 'express-rate-limit';
+import app from "./src/Routes/app";
 
 
 const PORT = 3001
@@ -22,6 +23,7 @@ const limiter = rateLimit({
 server.use(limiter)
 server.use(express.json())
 server.use(morgan("dev"))
+server.use(app)
 
 
 server.listen(PORT , ()  => {
