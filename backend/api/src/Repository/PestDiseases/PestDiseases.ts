@@ -1,75 +1,50 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
+import { prisma } from "../../Configs/Prisma";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
-import type { PestDiseasesCreate, PestDiseasesIdParam, PestDiseasesUpdate } from "../../Types/PestDiseases";
-
+import type { PestDiseases, PestDiseasesCreate, PestDiseasesIdParam, PestDiseasesUpdate } from "../../Types/PestDiseases";
 
 class PestDiseasesRepository {
-  private prisma: PrismaClient;
-      
-        constructor(prisma: PrismaClient){
-          this.prisma = prisma;
-        }
-  
-  async getAll(options? : Prisma.PestsDiseasesFindManyArgs) {
-    try{
-      return await this.prisma.pestsDiseases.findMany({
-        ...options,
-      });
+  private db: PrismaClient
 
-    }catch(err){
-      throw err
-    }
-  }
-  
-  async getById(id: PestDiseasesIdParam ) {
-    try{
-      return await this.prisma.pestsDiseases.findUnique({
-        where:  id 
-      });
-
-    }catch(err){
-      throw err
-    }
+  constructor(db: PrismaClient = prisma) {
+    this.db = db;
   }
 
-  async create(data: PestDiseasesCreate) {
-    try{
-      return await this.prisma.pestsDiseases.create({
-        data,
-      });
-      
-    }catch(err){
-      throw err
-    }
+  async getAll(options?: Prisma.PestsDiseasesFindManyArgs): Promise<PestDiseases[]> {
+    return this.db.pestsDiseases.findMany({
+      ...options,
+    });
   }
 
-  async update(id: PestDiseasesIdParam, data: PestDiseasesUpdate) {
-    try{
-      const prismaData = mapToPrismaUpdate<
-              PestDiseasesUpdate,
-              Prisma.PestsDiseasesCreateInput
-              >(data)
-      return await this.prisma.pestsDiseases.update({
-        where: id ,
-        data : prismaData,
-      });
-
-    }catch(err){
-      throw err
-    }
+  async getById(id: PestDiseasesIdParam): Promise<PestDiseases | null> {
+    return this.db.pestsDiseases.findUnique({
+      where: id
+    });
   }
- 
 
-  async delete(id: PestDiseasesIdParam) {
-    try{
-      return await this.prisma.pestsDiseases.delete({
-        where:  id ,
-      });
+  async create(data: PestDiseasesCreate): Promise<PestDiseases> {
+    return this.db.pestsDiseases.create({
+      data,
+    });
+  }
 
-    }catch(err){
-    throw err
-    }
+  async update(id: PestDiseasesIdParam, data: PestDiseasesUpdate): Promise<PestDiseases> {
+    const prismaData = mapToPrismaUpdate<
+      PestDiseasesUpdate,
+      Prisma.PestsDiseasesCreateInput
+    >(data)
+    return this.db.pestsDiseases.update({
+      where: id,
+      data: prismaData,
+    });
+  }
+
+
+  async delete(id: PestDiseasesIdParam): Promise<PestDiseases> {
+    return this.db.pestsDiseases.delete({
+      where: id,
+    });
   }
 
 }

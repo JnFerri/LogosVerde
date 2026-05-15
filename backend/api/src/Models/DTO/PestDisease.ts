@@ -5,9 +5,9 @@ export const PestDiseasesSchema = z.object({
 
   name: z.string().max(180),
 
-  description: z.string().nullable().optional(),
+  description: z.string().nullable(),
 
-  controlDescription: z.string().nullable().optional()
+  controlDescription: z.string().nullable()
 });
 
 export const PestDiseasesCreateSchema = PestDiseasesSchema.pick({

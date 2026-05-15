@@ -20,7 +20,7 @@ model PestsDiseases {
   id                  Int                   @id @default(autoincrement())
   name                String                @db.VarChar(180)
   description         String?               @db.Text
-  control_description String?               @db.Text
+  controlDescription  String?               @db.Text
   plantPestDiseases   PlantPestDiseases[]
 
   @@map("pests_diseases")
