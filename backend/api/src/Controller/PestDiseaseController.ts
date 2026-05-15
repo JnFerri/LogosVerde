@@ -8,20 +8,22 @@ export class PestDiseaseController {
     constructor(private service: PestDiseaseService) {
     }
 
-    async getAll(req: Request, res: Response, next: NextFunction) {
+   getAll = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await this.service.findAll()
             if(result.length === 0){
-                return ApiSuccess.success("No pest diseases found", [])
+                const responseEmpty = await ApiSuccess.success("No pest diseases found", [])
+                return res.status(responseEmpty.statusCode).json(responseEmpty)
             }
             const response = await ApiSuccess.success("Pest diseases found", result)
-            res.status(response.statusCode).json(response)
+            return res.status(response.statusCode).json(response)
+            
         } catch (err) {
             next(err)
         }
     }
 
-    async getById(req: Request, res: Response, next: NextFunction) {
+    getById = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const id = req.params.id
             const idValidated = PestDiseasesIdParamSchema.parse(id)
@@ -33,7 +35,7 @@ export class PestDiseaseController {
         }
     }
 
-    async create(req: Request, res: Response, next: NextFunction) {
+    create = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const data = req.body
             const dataValidated = PestDiseasesCreateSchema.parse(data)
@@ -45,7 +47,7 @@ export class PestDiseaseController {
         }
     }
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    update = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const id = req.params.id
             const idValidated = PestDiseasesIdParamSchema.parse(id)
@@ -59,7 +61,7 @@ export class PestDiseaseController {
         }
     }
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    delete = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const id = req.params.id
             const idValidated = PestDiseasesIdParamSchema.parse(id)
