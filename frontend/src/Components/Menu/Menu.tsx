@@ -63,7 +63,7 @@ export default function Menu() {
         </Box>
         <List >
           {MenuLinks.map((link) => (
-            <ListItem sx={{ backgroundColor: '#9e866f' }} key={link.index} disablePadding>
+            <ListItem  key={link.index} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   {link.icon}
