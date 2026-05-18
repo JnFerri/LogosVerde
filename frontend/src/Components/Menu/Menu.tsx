@@ -51,17 +51,19 @@ export default function Menu() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+              backgroundColor: '#d6b696',
           },
+          
         }}
         variant="permanent"
         anchor="left"
       > 
         <Box sx={{ width: '100%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src="/logosIconWithDescription.png" alt="Logos Verde" style={{ width: '80%' }} />
+            <img src="/logosIconWithDescription.png" alt="Logos Verde" style={{ width: '95%' }} />
         </Box>
-        <List>
+        <List >
           {MenuLinks.map((link) => (
-            <ListItem key={link.index} disablePadding>
+            <ListItem sx={{ backgroundColor: '#9e866f' }} key={link.index} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   {link.icon}
@@ -72,5 +74,6 @@ export default function Menu() {
           ))}
         </List>
       </Drawer>
+
   );
 }

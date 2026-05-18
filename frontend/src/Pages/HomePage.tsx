@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 
@@ -10,8 +9,7 @@ export default function HomePage() {
 
 
   return (
-    <Box sx={{ display: 'flex'}}>
-        <Toolbar />
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center',width: '80%', height: '100%',margin: '0 auto', padding: 4 }}>
         <Typography sx={{ marginBottom: 2 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non

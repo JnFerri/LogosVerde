@@ -1,17 +1,13 @@
-import './App.css'
-import { Box, CssBaseline } from '@mui/material'
+import { Box } from '@mui/material'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import Menu from './Components/Menu/Menu'
-import MenuActions from './Components/Menu/MenuActions'
 
 
 function App() {
   return (
     <Router>
-      <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
-          <MenuActions />
+      <Box sx={{ display: 'flex', height: '100vh'}}>
           <Menu/>
         <main className="p-4 md:ml-[240px]">
           <Routes>
