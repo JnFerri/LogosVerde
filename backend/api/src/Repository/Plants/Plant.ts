@@ -15,7 +15,15 @@ class PlantsRepository {
 
   async getAll(): Promise<Plant[]> {
 
-    const plants = await this.db.plants.findMany();
+    const plants = await this.db.plants.findMany(
+      {
+        include: {
+        harvestUnitMeasurement : true,
+        plantingUnitMeasurement : true,
+        plantTypes: true
+      }
+    }
+    );
 
     return plants.map((plant) => ({
       ...plant,
@@ -26,7 +34,12 @@ class PlantsRepository {
 
   async getById(id: PlantIdParam): Promise<Plant | null> {
     const plant = await this.db.plants.findUnique({
-      where: { id:id }
+      where: { id:id },
+      include: {
+        harvestUnitMeasurement : true,
+        plantingUnitMeasurement : true,
+        plantTypes: true
+      }
   });
     if (!plant) return null;
     return {
