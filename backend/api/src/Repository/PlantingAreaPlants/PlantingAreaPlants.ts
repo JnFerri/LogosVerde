@@ -1,7 +1,6 @@
 
 import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
-import mapToPrismaCreate from "../../Helpers/mapToPrismaCreate";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 import type { PlantingAreaPlants, PlantingAreaPlantsCreate, PlantingAreaPlantsIdParam, PlantingAreaPlantsUpdate } from "../../Types/PlantingAreaPlants";
 
@@ -34,12 +33,8 @@ class PlantingAreaPlantsRepository{
     }
 
      async create(data: PlantingAreaPlantsCreate): Promise<PlantingAreaPlants> {
-        const PrismaData = mapToPrismaCreate<
-        PlantingAreaPlantsCreate,
-        Prisma.PlantingAreaPlantsUncheckedCreateInput
-        >(data);
        const plantingAreaPlants = await this.db.plantingAreaPlants.create({
-         data : PrismaData,
+         data
        });
 
        return {
