@@ -12,7 +12,7 @@ class PlantIntercroppingRepository {
   }
 
   async getById(id: PlantIntercroppingIdPlantParam): Promise<PlantIntercropping[]> {
-    return this.db.plantIntercropping.findMany({
+    return await this.db.plantIntercropping.findMany({
       where: {
       OR: [
         {
@@ -33,13 +33,13 @@ class PlantIntercroppingRepository {
   async create(data: PlantIntercroppingCreate): Promise<PlantIntercropping> {
     const { plantId, intercroppingPlantId } = data
     const dataNomalized: PlantIntercroppingCreate = await normalizePlantPairIntercrooping(plantId, intercroppingPlantId)
-    return this.db.plantIntercropping.create({
+    return await this.db.plantIntercropping.create({
       data: dataNomalized,
     })
   }
 
   async delete(id: PlantIntercroppingIdPlantParam): Promise<PlantIntercropping> {
-    return this.db.plantIntercropping.delete({
+    return await this.db.plantIntercropping.delete({
       where: {
         plantId_intercroppingPlantId: {
           plantId: id,

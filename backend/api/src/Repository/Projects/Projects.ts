@@ -11,33 +11,33 @@ class ProjectsRepository {
   }
 
   async getAll(options?: Prisma.ProjectsFindManyArgs): Promise<Project[]> {
-    return this.db.projects.findMany({
+    return await this.db.projects.findMany({
       ...options
     });
   }
 
   async getById(id: ProjectIdParam): Promise<Project | null> {
-    return this.db.projects.findUnique({
+    return await this.db.projects.findUnique({
       where: {id:id}
   });
   }
 
   async create(data: ProjectCreate): Promise<Project> {
-    return this.db.projects.create({
+    return await this.db.projects.create({
       data,
     });
 
   }
 
   async update(id: ProjectIdParam, data: ProjectUpdate): Promise<Project> {
-    return this.db.projects.update({
+    return await this.db.projects.update({
       where: { id:id },
       data,
     });
   }
 
   async delete(id: ProjectIdParam): Promise<Project> {
-    return this.db.projects.delete({
+    return await this.db.projects.delete({
       where: {id:id},
     });
   }
