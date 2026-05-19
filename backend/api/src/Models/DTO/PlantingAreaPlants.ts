@@ -7,37 +7,22 @@ export const PlantingAreaPlantsSchema = z.object({
 
   plantId: z.number(),
 
-  plantingMethodId: z.number().nullable().optional(),
+  plantingMethodId: z.number(),
 
-  isPlanted: z.number().int(), 
-  isHarvested: z.number().int(),
+  isPlanted: z.boolean(), 
+  isHarvested: z.boolean(),
 
-  plantingDate: z.coerce.date().nullable().optional(),
+  plantingDate: z.coerce.date().nullable(),
 
-  harvestDate: z.coerce.date().nullable().optional(),
+  harvestDate: z.coerce.date().nullable(),
 
-  plantingQuantity: z.number().int().nullable().optional(),
+  plantingQuantity: z.number().int().nullable(),
 
   harvestQuantity: z
     .number()
-    .nullable()
-    .optional(), 
+    .nullable(),
 
-  harverstUnitMeasurementId: z.number(),
-
-  plantingUnitMeasurementId: z.number(),
-
-  fertilizingId: z.number().nullable().optional(),
-
-  plantingAreaFertilizing: z.any().optional(),
-
-  harvestUnitMeasurement: z.any().optional(),
-
-  plants: z.any().optional(),
-
-  plantingAreas: z.any().optional(),
-
-  plantingUnitMeasurement: z.any().optional(),
+  fertilizingId: z.number().nullable()
 });
 
 export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
@@ -50,13 +35,16 @@ export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
   harvestDate: true,
   plantingQuantity: true,
   harvestQuantity: true,
-  harverstUnitMeasurementId: true,
-  plantingUnitMeasurementId: true,
+  fertilizingId: true,
+}).partial({
+  plantingDate: true,
+  harvestDate: true,
+  plantingQuantity: true,
+  harvestQuantity: true,
   fertilizingId: true,
 });
 
 export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
-  plantingAreaId: true,
   plantId: true,
   plantingMethodId: true,
   isPlanted: true,
@@ -65,8 +53,6 @@ export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
   harvestDate: true,
   plantingQuantity: true,
   harvestQuantity:true,
-  harverstUnitMeasurementId:true,
-  plantingUnitMeasurementId: true,
   fertilizingId: true,
 }).partial();
 
