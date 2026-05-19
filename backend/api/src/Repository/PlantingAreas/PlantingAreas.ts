@@ -30,7 +30,7 @@ class PlantingAreasRepository {
   async update(id: PlantingAreaIdParam, data: PlantingAreaUpdate): Promise<PlantingArea> {
     const prismaData = mapToPrismaUpdate<
       PlantingAreaUpdate,
-      Prisma.PlantingAreasCreateInput
+      Prisma.PlantingAreasUpdateInput
     >(data)
     return this.db.plantingAreas.update({
       where: {id:id},
