@@ -9,7 +9,7 @@ export const UserSchema = z.object({
 
   password: z.string().max(180).min(6),
 
-  isActive: z.number().int(), 
+  isActive: z.boolean(), 
 
   createdAt: z.coerce.date()
 });
