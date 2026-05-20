@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from "express";
 import type UsersService from "../Services/Users/Users";
 import { UserCreateSchema, UserIdParamSchema, UserLoginSchema, UserUpdateSchema } from "../Models/DTO/User";
 
-export class PestDiseaseController {
+export class UserController {
     
     constructor(private service: UsersService ) {
     }

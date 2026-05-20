@@ -4,12 +4,16 @@ import { ApiError } from "../../Models/ApiResponse/ApiError";
 import type UsersRepository from "../../Repository/Users/Users";
 import type { User, UserCreate, UserIdParam, UserUpdate } from "../../Types/User";
 import bcrypt from "bcrypt";
+import type UserRefreshTokensRepository from "../../Repository/UserRefreshTokens/UserRefreshTokens";
 
 class UsersService {
   private repository: UsersRepository;
+  private RefreshTokenRepository: UserRefreshTokensRepository;
 
-  constructor(repository: UsersRepository) {
+
+  constructor(repository: UsersRepository , RefreshTokenRepository: UserRefreshTokensRepository) {
     this.repository = repository;
+    this.RefreshTokenRepository = RefreshTokenRepository;
   }
 
   async findAll(): Promise<User[]> {
@@ -45,7 +49,7 @@ class UsersService {
     if (!user || !user.isActive) {
       throw ApiError.BadRequest("Invalid email or password");
     }
-
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
     
     if (!isPasswordValid) {
@@ -54,7 +58,7 @@ class UsersService {
 
     const accessToken = jwt.sign(
       {
-        id: user.id
+        sub: user.id
       },
       process.env.JWT_SECRET as string,
       {
@@ -63,6 +67,12 @@ class UsersService {
     );
 
     const refreshToken = crypto.randomUUID();
+    
+    await this.RefreshTokenRepository.create({
+      userId: user.id,
+      token: refreshToken,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    });
 
     return  {accessToken,
       refreshToken};
