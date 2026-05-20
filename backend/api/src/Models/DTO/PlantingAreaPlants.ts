@@ -36,12 +36,22 @@ export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
   plantingQuantity: true,
   harvestQuantity: true,
   fertilizingId: true,
-}).partial({
-  plantingDate: true,
-  harvestDate: true,
-  plantingQuantity: true,
-  harvestQuantity: true,
-  fertilizingId: true,
+}).extend({
+  plantingDate: PlantingAreaPlantsSchema.shape.plantingDate
+    .optional()
+    .transform((val) => val ?? null),
+  harvestDate: PlantingAreaPlantsSchema.shape.harvestDate
+    .optional()
+    .transform((val) => val ?? null),
+  plantingQuantity: PlantingAreaPlantsSchema.shape.plantingQuantity
+    .optional()
+    .transform((val) => val ?? null),
+  harvestQuantity: PlantingAreaPlantsSchema.shape.harvestQuantity
+    .optional()
+    .transform((val) => val ?? null),
+  ferilizingId: PlantingAreaPlantsSchema.shape.fertilizingId
+    .optional()
+    .transform((val) => val ?? null),
 });
 
 export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({

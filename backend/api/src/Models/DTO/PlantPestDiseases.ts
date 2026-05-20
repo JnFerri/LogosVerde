@@ -12,11 +12,10 @@ export const PlantPestDiseaseCreateSchema = PlantPestDiseaseSchema.pick({
   pestDiseaseId: true,
 });
 
-export const PlantPestDiseaseParamIdPlantSchema = z.object({
-  plantId: z.coerce.number().int().positive(),
-});
 
 export const PlantPestDiseaseParamIdPestDiseaseSchema = z.coerce.number().int().positive()
+
+export const PlantPestDiseaseParamIdPlantSchema = z.coerce.number().int().positive()
 
 
 

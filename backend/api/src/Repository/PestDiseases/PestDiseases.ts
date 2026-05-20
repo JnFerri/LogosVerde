@@ -12,17 +12,17 @@ class PestDiseasesRepository {
   }
 
   async getAll(): Promise<PestDiseases[]> {
-    return this.db.pestsDiseases.findMany();
+    return await this.db.pestsDiseases.findMany();
   }
 
   async getById(id: PestDiseasesIdParam): Promise<PestDiseases | null> {
-    return this.db.pestsDiseases.findUnique({
+    return await this.db.pestsDiseases.findUnique({
       where: {id:id}
     });
   }
 
   async create(data: PestDiseasesCreate): Promise<PestDiseases> {
-    return this.db.pestsDiseases.create({
+    return await this.db.pestsDiseases.create({
       data,
     });
   }
@@ -32,7 +32,7 @@ class PestDiseasesRepository {
       PestDiseasesUpdate,
       Prisma.PestsDiseasesCreateInput
     >(data)
-    return this.db.pestsDiseases.update({
+    return await this.db.pestsDiseases.update({
       where: {id:id},
       data: prismaData,
     });
@@ -40,7 +40,7 @@ class PestDiseasesRepository {
 
 
   async delete(id: PestDiseasesIdParam): Promise<PestDiseases> {
-    return this.db.pestsDiseases.delete({
+    return await this.db.pestsDiseases.delete({
       where: {id:id},
     });
   }

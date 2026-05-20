@@ -12,8 +12,7 @@ export const PlantingAreaSchema = z.object({
   sunshineHours: z
     .number()
     .int()
-    .nullable()
-    .optional(),
+    .nullable(),
 
   projectId: z.number(),
 
