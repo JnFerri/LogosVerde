@@ -78,6 +78,15 @@ class UsersService {
       refreshToken};
   }
 
+  async logout(refreshToken: string): Promise<void> {
+    const refreshTokenBD = await this.RefreshTokenRepository.getByRefreshToken(refreshToken);
+    
+    if (refreshTokenBD) {
+      await this.RefreshTokenRepository.inactive(refreshTokenBD.id);
+    }
+    return;
+  }
+
   
 }
 
