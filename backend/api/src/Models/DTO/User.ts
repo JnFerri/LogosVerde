@@ -20,6 +20,12 @@ export const UserCreateSchema = UserSchema.pick({
   password: true,
 });
 
+export const UserLoginSchema = UserSchema.pick({
+  email: true,
+  password: true,
+});
+
+
 export const UserUpdateSchema = UserSchema.pick({
   name: true,
   email: true,
