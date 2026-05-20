@@ -11,8 +11,8 @@ export default function HomePage() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center',width: '80%', height: '100%',margin: '0 auto', padding: 4 }}>
-        <Box sx={{ width: '60%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src="/logosIconWithDescription.png" alt="Logos Verde" style={{ width: '95%' }} />
+        <Box sx={{ width: '40%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src="/logosIconWithDescription.png" alt="Logos Verde" style={{ width: '100%' }} />
         </Box>
         <Typography sx={{ marginBottom: 2 }}>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
