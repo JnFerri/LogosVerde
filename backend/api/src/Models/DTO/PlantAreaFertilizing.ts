@@ -20,8 +20,9 @@ export const PlantingAreaFertilizingCreateSchema = PlantingAreaFertilizingSchema
 
 export const PlantingAreaFertilizingUpdateSchema = PlantingAreaFertilizingSchema.pick({
   description: true,
-  plantingAreaId: true,
   fertilizingDate: true,
 }).partial();
 
 export const PlantingAreaFertilizingParamIdSchema = z.coerce.number().int().positive();
+
+export const PlantingAreaFertilizingParamIdPlantingAreaSchema = z.coerce.number().int().positive();

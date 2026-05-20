@@ -11,32 +11,32 @@ class PlantPestDiseasesRepository{
    }
 
    async getAll(): Promise<PlantPestDiseases[]> {
-       return await this.db.plantPestDiseases.findMany();
+       return this.db.plantPestDiseases.findMany();
      }
 
    
      async getByPlantId(id: PlantPestDiseasesIdPlantParam): Promise<PlantPestDiseases[] | null> {
-       return await this.db.plantPestDiseases.findMany({
+       return this.db.plantPestDiseases.findMany({
          where: {plantId:id}
        });
        
     }
 
     async getByPestDiseasesId(id: PlantPestDiseasesIdPestDiseaseParam): Promise<PlantPestDiseases[] | null> {
-       return await this.db.plantPestDiseases.findMany({
+       return this.db.plantPestDiseases.findMany({
          where: {pestDiseaseId:id}
        });
        
     }
 
      async create(data: PlantPestDiseasesCreate): Promise<PlantPestDiseases> {
-       return await this.db.plantPestDiseases.create({
+       return this.db.plantPestDiseases.create({
          data
        });
      }
    
      async delete(plantId: PlantPestDiseasesIdPlantParam, pestDiseaseId: PlantPestDiseasesIdPestDiseaseParam): Promise<PlantPestDiseases> {
-       return await this.db.plantPestDiseases.delete({
+       return this.db.plantPestDiseases.delete({
          where: {
            plantId_pestDiseaseId: {
              plantId: plantId,
