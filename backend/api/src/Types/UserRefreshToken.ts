@@ -1,10 +1,8 @@
 import type z from "zod";
-import type { UserRefreshTokenCreateSchema, UserRefreshTokenSchema, UserRefreshTokenUpdateSchema } from "../Models/DTO/UserRefreshToken";
+import type { UserRefreshTokensCreateSchema, UserRefreshTokensSchema, UserRefreshTokensUpdateSchema } from "../Models/DTO/UserRefreshTokens";
 
-export type UserRefreshToken = z.infer<typeof UserRefreshTokenSchema>;
+export type UserRefreshTokens = z.infer<typeof UserRefreshTokensSchema>;
 
-export type UserRefreshTokenCreate = z.infer<typeof UserRefreshTokenCreateSchema>;
+export type UserRefreshTokensCreate = z.infer<typeof UserRefreshTokensCreateSchema>;
 
-export type UserRefreshTokenUpdate = z.infer<typeof UserRefreshTokenUpdateSchema>;
-
-export type UserRefreshTokenIdParam = z.infer<typeof UserRefreshTokenSchema>;
+export type UserRefreshTokensUpdate = z.infer<typeof UserRefreshTokensUpdateSchema>;
