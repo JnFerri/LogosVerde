@@ -4,11 +4,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Paper from '@mui/material/Paper';
 import YardIcon from '@mui/icons-material/Yard';
 import ForestIcon from '@mui/icons-material/Forest';
 import PestControlIcon from '@mui/icons-material/PestControl';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import Box from '@mui/material/Box';
+import { useTheme, useMediaQuery } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -40,9 +45,15 @@ export default function Menu() {
         link: '/settings'
     },
     ]
+    
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const navigate = useNavigate();
 
+    
 
-  return (
+  if (!isMobile) {
+    return (
     
       <Drawer
         sx={{
@@ -58,13 +69,13 @@ export default function Menu() {
         variant="permanent"
         anchor="left"
       > 
-        <Box sx={{ width: '100%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ width: '100%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick = {() => navigate('/')}>
             <img src="/logosIconWithDescription.png" alt="Logos Verde" style={{ width: '95%' }} />
         </Box>
         <List >
           {MenuLinks.map((link) => (
             <ListItem  key={link.index} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate(link.link)}>
                 <ListItemIcon>
                   {link.icon}
                 </ListItemIcon>
@@ -74,6 +85,23 @@ export default function Menu() {
           ))}
         </List>
       </Drawer>
+    );
+  }
 
+  // Versão Mobile: Menu Inferior
+  return (
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }} elevation={3}>
+      <BottomNavigation
+        showLabels={false}
+        onChange={(_, newValue) => {
+          navigate(MenuLinks[newValue].link);
+        }}
+        sx={{ backgroundColor: '#d6b696' }}
+      >
+        {MenuLinks.map((link) => (
+          <BottomNavigationAction key={link.index} icon={link.icon} />
+        ))}
+      </BottomNavigation>
+    </Paper>
   );
 }
