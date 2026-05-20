@@ -12,17 +12,17 @@ class PlantingAreasRepository {
   }
 
   async getAll(): Promise<PlantingArea[]> {
-    return await this.db.plantingAreas.findMany();
+    return this.db.plantingAreas.findMany();
   }
 
   async getById(id: PlantingAreaIdParam): Promise<PlantingArea | null> {
-    return await this.db.plantingAreas.findUnique({
+    return this.db.plantingAreas.findUnique({
       where: {id:id}
     });
   }
 
   async create(data: PlantingAreaCreate): Promise<PlantingArea> {
-    return await this.db.plantingAreas.create({
+    return this.db.plantingAreas.create({
       data,
     });
   }
@@ -32,14 +32,14 @@ class PlantingAreasRepository {
       PlantingAreaUpdate,
       Prisma.PlantingAreasUpdateInput
     >(data)
-    return await this.db.plantingAreas.update({
+    return this.db.plantingAreas.update({
       where: {id:id},
       data: prismaData,
     });
   }
 
   async delete(id: PlantingAreaIdParam): Promise<PlantingArea> {
-    return await this.db.plantingAreas.delete({
+    return this.db.plantingAreas.delete({
       where: {id:id},
     });
   }

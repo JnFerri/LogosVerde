@@ -180,7 +180,7 @@ model UserRefreshTokens {
   id         Int       @id @default(autoincrement())
   userId     Int       @unique(map: "user_id_UNIQUE") @map("user_id")
   token      String    @db.VarChar(500)
-  isActive   Int       @default(1) @db.TinyInt @map("is_active")
+  isActive   Boolean   @default(true)   @map("is_active")
   createdAt  DateTime  @default(now()) @db.DateTime(0) @map("created_at")
   expiresAt  DateTime @db.DateTime(0) @map("expires_at")
   revokedAt  DateTime? @db.DateTime(0) @map("revoked_at")
@@ -195,7 +195,7 @@ model Users {
   name                String               @unique(map: "name_UNIQUE") @db.VarChar(120)
   email               String               @unique(map: "email_UNIQUE") @db.VarChar(180)
   password            String               @db.VarChar(180)
-  isActive            Int                  @default(1) @db.TinyInt @map("is_active")
+  isActive            Boolean              @default(true)   @map("is_active")
   createdAt           DateTime             @default(now()) @db.DateTime(0) @map("created_at")
   userRefreshTokens   UserRefreshTokens[]
 

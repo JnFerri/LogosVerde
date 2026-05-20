@@ -3,6 +3,7 @@ import cors from "cors";
 import  express  from "express";
 import rateLimit from 'express-rate-limit';
 import app from "./src/Routes/app";
+import cookieParser from "cookie-parser";
 
 
 const PORT = 3001
@@ -21,6 +22,7 @@ const limiter = rateLimit({
 })
 
 server.use(limiter)
+app.use(cookieParser())
 server.use(express.json())
 server.use(morgan("dev"))
 server.use(app)

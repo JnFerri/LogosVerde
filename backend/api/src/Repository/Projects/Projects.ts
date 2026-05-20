@@ -1,5 +1,5 @@
 
-import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
+import type { PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
 import type { ProjectCreate, ProjectUpdate, ProjectIdParam, Project } from "../../Types/Projects";
 
@@ -10,34 +10,32 @@ class ProjectsRepository {
     this.db = db;
   }
 
-  async getAll(options?: Prisma.ProjectsFindManyArgs): Promise<Project[]> {
-    return await this.db.projects.findMany({
-      ...options
-    });
+  async getAll(): Promise<Project[]> {
+    return  this.db.projects.findMany();
   }
 
   async getById(id: ProjectIdParam): Promise<Project | null> {
-    return await this.db.projects.findUnique({
+    return this.db.projects.findUnique({
       where: {id:id}
   });
   }
 
   async create(data: ProjectCreate): Promise<Project> {
-    return await this.db.projects.create({
+    return this.db.projects.create({
       data,
     });
 
   }
 
   async update(id: ProjectIdParam, data: ProjectUpdate): Promise<Project> {
-    return await this.db.projects.update({
+    return this.db.projects.update({
       where: { id:id },
       data,
     });
   }
 
   async delete(id: ProjectIdParam): Promise<Project> {
-    return await this.db.projects.delete({
+    return this.db.projects.delete({
       where: {id:id},
     });
   }
