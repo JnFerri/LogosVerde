@@ -1,4 +1,4 @@
-import { PestDiseaseController } from "../Controller/PestDiseaseController";
+import { PestDiseaseController } from "../Controller/PestDiseases";
 import PestDiseasesRepository from "../Repository/PestDiseases/PestDiseases";
 import { PestDiseaseService } from "../Services/PestDiseases/PestDiseases";
 

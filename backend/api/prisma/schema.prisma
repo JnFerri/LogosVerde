@@ -123,7 +123,7 @@ model PlantingAreas {
 
 model Plants {
   id                                                                     Int                    @id @default(autoincrement())
-  name                                                                   String                 @db.VarChar(180)
+  name                                                                   String                 @db.VarChar(180) @unique(map: "name_UNIQUE")
   scientificName                                                         String                 @unique(map: "scientific_name_UNIQUE") @db.VarChar(180) @map("scientific_name")
   harvestMinDays                                                         Int                    @map("harvest_min_days")
   harvestMaxDays                                                         Int                    @map("harvest_max_days")

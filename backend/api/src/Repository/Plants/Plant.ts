@@ -49,6 +49,18 @@ class PlantsRepository {
     }
   }
 
+  async getByName(name: string): Promise<Plant | null> {
+    const plant = await this.db.plants.findUnique({
+      where: { name:name },
+    });
+    if (!plant) return null;
+    return {
+      ...plant,
+      phMin: Number(plant.phMin),
+      phMax: Number(plant.phMax),
+    }
+  }
+
   async create(data: PlantCreate): Promise<Plant> {
     const plant = await this.db.plants.create({
       data,

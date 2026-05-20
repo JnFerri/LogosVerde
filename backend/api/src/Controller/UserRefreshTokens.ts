@@ -28,7 +28,7 @@ export class UserRefreshTokenController {
   logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refreshToken = req.cookies.refreshToken;
-
+      
       await this.userService.logout(refreshToken);
 
       const isProduction = process.env.NODE_ENV === "production";
