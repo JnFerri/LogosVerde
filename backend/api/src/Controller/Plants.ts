@@ -1,5 +1,5 @@
+import { ApiError } from "../Models/ApiResponse/ApiError";
 import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
-import { CreatePlantSchema, PlantIdParamSchema, UpdatePlantSchema } from "../Models/DTO/Plants";
 import type PlantsService from "../Services/Plants/Plants";
 import type { Request, Response, NextFunction } from "express";
 
@@ -25,9 +25,11 @@ export class PlantsController {
 
     getById = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = PlantIdParamSchema.parse(id)
-            const result = await this.service.findById(idValidated)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            const result = await this.service.findById(id)
             const response = await ApiSuccess.success("Plant found", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -38,8 +40,7 @@ export class PlantsController {
     create = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const data = req.body
-            const dataValidated = CreatePlantSchema.parse(data)
-            const result = await this.service.create(dataValidated)
+            const result = await this.service.create(data)
             const response = await ApiSuccess.created("Plant created", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -49,11 +50,12 @@ export class PlantsController {
 
     update = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = PlantIdParamSchema.parse(id)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
             const data = req.body
-            const dataValidated = UpdatePlantSchema.parse(data)
-            const result = await this.service.update(idValidated, dataValidated)
+            const result = await this.service.update(id, data)
             const response = await ApiSuccess.updated("Plant updated", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -63,9 +65,11 @@ export class PlantsController {
 
     delete = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = PlantIdParamSchema.parse(id)
-            await this.service.delete(idValidated)
+            if(req.validatedId === undefined){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            await this.service.delete(id)
             const response = await ApiSuccess.noContent("Plant deleted successfully")
             res.status(response.statusCode).json(response)
         } catch (err) {

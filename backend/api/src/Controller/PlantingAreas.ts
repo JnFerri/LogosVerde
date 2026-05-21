@@ -1,5 +1,5 @@
+import { ApiError } from "../Models/ApiResponse/ApiError";
 import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
-import { PlantingAreaCreateSchema, PlantingAreaIdParamSchema, PlantingAreaUpdateSchema } from "../Models/DTO/PlantingAreas";
 import type PlantingAreasService from "../Services/PlantingAreas/PlantingAreas";
 import type { Request, Response, NextFunction } from "express";
 
@@ -22,9 +22,11 @@ export class PlantingAreaController {
 
     getById = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id;
-            const idValidated = PlantingAreaIdParamSchema.parse(id);
-            const result = await this.service.findById(idValidated);
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId;
+            const result = await this.service.findById(id);
             const response = await ApiSuccess.success("Planting area found", result);
             res.status(response.statusCode).json(response);
         } catch (err) {
@@ -35,8 +37,7 @@ export class PlantingAreaController {
     create = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data = req.body;
-            const dataValidated = PlantingAreaCreateSchema.parse(data);
-            const result = await this.service.create(dataValidated);
+            const result = await this.service.create(data);
             const response = await ApiSuccess.created("Planting area created", result);
             res.status(response.statusCode).json(response);
         } catch (err) {
@@ -46,11 +47,12 @@ export class PlantingAreaController {
 
     update = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id;
-            const idValidated = PlantingAreaIdParamSchema.parse(id);
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId;
             const data = req.body;
-            const dataValidated = PlantingAreaUpdateSchema.parse(data);
-            const result = await this.service.update(idValidated, dataValidated);
+            const result = await this.service.update(id, data);
             const response = await ApiSuccess.updated("Planting area updated", result);
             res.status(response.statusCode).json(response);
         } catch (err) {
@@ -60,9 +62,11 @@ export class PlantingAreaController {
 
     delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id;
-            const idValidated = PlantingAreaIdParamSchema.parse(id);
-            await this.service.delete(idValidated);
+            if (!req.validatedId) {
+                throw ApiError.BadRequest("id not validated");
+            }
+            const id = req.validatedId;
+            await this.service.delete(id);
             const response = await ApiSuccess.noContent("Planting area deleted successfully");
             res.status(response.statusCode).json(response);
         } catch (err) {
