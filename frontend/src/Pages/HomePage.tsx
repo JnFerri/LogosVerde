@@ -10,9 +10,9 @@ export default function HomePage() {
 
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center',width: {md:'80%', sm:'90%'}, height: '100%', overflow:'auto', margin:'10px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center',width: {md:'80%', sm:'90%'}, overflow:'auto' }}>
         
-        <img src="/logosIconWithDescription.png" alt="Logos Verde" className='sm:w-[100%] md:w-[70%] h-auto p-2'/>
+        <img src="/logosIconWithDescription.png" alt="Logos Verde" className='sm:w-[100%] md:w-[70%] h-auto p-2 '/>
         
         <Typography sx={{ margin:'10px 0' }}>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
