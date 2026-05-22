@@ -26,13 +26,7 @@ class PlantsRepository {
       }
     }
     );
-
-     const plantsWithRelationsMapped = plantsWithRelations.map((plant) => 
-      PlantMapper.toEntityWithRelations(plant)
-    )
-
-    return plantsWithRelationsMapped;
-  
+      return PlantMapper.toEntitiesWithRelations(plantsWithRelations)
     }
 
 
@@ -46,13 +40,8 @@ class PlantsRepository {
   }
 
   async getAll(): Promise<Plant[]> {
-
     const plants = await this.db.plants.findMany();
-
-    const plantsMapped = plants.map((plant) => 
-      PlantMapper.toEntity(plant)
-    )
-    return plantsMapped;
+    return PlantMapper.toEntities(plants)
   }
 
   async getByIdWithRelations(id: PlantIdParam): Promise<Plant | null> {

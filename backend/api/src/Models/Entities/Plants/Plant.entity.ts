@@ -1,5 +1,4 @@
 
-
 export default class Plant {
   constructor(
     public readonly id : number,
@@ -16,6 +15,9 @@ export default class Plant {
     public phMax: number,
     public plantingDistancePlants: number,
     public managementDescription: string | null,
-    public plantingDescription: string | null
+    public plantingDescription: string | null,
+    public harvestUnitMeasurementId: number ,
+    public plantingUnitMeasurementId: number,
+    public createdAt: Date
   ){}
 }
