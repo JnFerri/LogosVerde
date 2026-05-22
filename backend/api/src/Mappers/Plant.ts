@@ -3,6 +3,7 @@ import type { PlantWithRelations } from "../Models/Entities/Plants/Plant.types";
 import type { Prisma } from "../../generated/prisma/client";
 import { UnitMeasurementMapper } from "./UnitMeasurement";
 import { PlantTypesMapper } from "./PlantTypes";
+import { PlantPestDiseaseMapper } from "./PlantPestDisease";
 
 export class PlantMapper {
   static toEntity(data: Prisma.PlantsGetPayload<true>): Plant {
@@ -32,17 +33,18 @@ export class PlantMapper {
       return data.map((item) => this.toEntity(item));
     }
 
-    static toEntityWithRelations(data: Prisma.PlantsGetPayload<{ include: { harvestUnitMeasurement: true, plantingUnitMeasurement: true, plantTypes: true } }>): PlantWithRelations {
+    static toEntityWithRelations(data: Prisma.PlantsGetPayload<{ include: { harvestUnitMeasurement: true, plantingUnitMeasurement: true, plantTypes: true, plantPestDiseases: true} }>): PlantWithRelations {
       const plant = this.toEntity(data);
     
       return {
       ...plant,
       harvestUnitMeasurement : UnitMeasurementMapper.toEntity(data.harvestUnitMeasurement),
       plantingUnitMeasurement : UnitMeasurementMapper.toEntity(data.plantingUnitMeasurement),
-      plantTypes: PlantTypesMapper.toEntity(data.plantTypes)
+      plantTypes: PlantTypesMapper.toEntity(data.plantTypes),
+      plantPestDiseases: PlantPestDiseaseMapper.toEntities(data.plantPestDiseases)
     };
   }
-    static toEntitiesWithRelations(data:Prisma.PlantsGetPayload<{ include: { harvestUnitMeasurement: true, plantingUnitMeasurement: true, plantTypes: true } }>[]): PlantWithRelations[] {
+    static toEntitiesWithRelations(data:Prisma.PlantsGetPayload<{ include: { harvestUnitMeasurement: true, plantingUnitMeasurement: true, plantTypes: true , plantPestDiseases: true} }>[]): PlantWithRelations[] {
       return data.map((item) => this.toEntityWithRelations(item));
     }
 

@@ -1,7 +1,5 @@
 import type z from "zod";
-import type { PlantPestDiseaseCreateSchema, PlantPestDiseaseParamIdPestDiseaseSchema, PlantPestDiseaseParamIdPlantSchema, PlantPestDiseaseSchema } from "../Schemas/PlantPestDiseases";
-
-export type PlantPestDiseases = z.infer<typeof PlantPestDiseaseSchema>;
+import type { PlantPestDiseaseCreateSchema, PlantPestDiseaseParamIdPestDiseaseSchema, PlantPestDiseaseParamIdPlantSchema } from "../../../Schemas/PlantPestDiseases";
 
 export type PlantPestDiseasesCreate = z.infer<typeof PlantPestDiseaseCreateSchema>;
 

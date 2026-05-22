@@ -4,7 +4,7 @@ import { prisma } from "../../Configs/Prisma";
 import type { PrismaClient } from "../../../generated/prisma/client";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 
-import { PlantMapper } from "../../Mappers/PlantMapper";
+import { PlantMapper } from "../../Mappers/Plant";
 import type { PlantCreate, PlantIdParam, PlantUpdate, PlantWithRelations } from "../../Models/Entities/Plants/Plant.types";
 import type Plant from "../../Models/Entities/Plants/Plant.entity";
 
@@ -22,7 +22,8 @@ class PlantsRepository {
         include: {
         harvestUnitMeasurement : true,
         plantingUnitMeasurement : true,
-        plantTypes: true
+        plantTypes: true,
+        plantPestDiseases: true
       }
     }
     );
@@ -50,7 +51,8 @@ class PlantsRepository {
       include: {
         harvestUnitMeasurement : true,
         plantingUnitMeasurement : true,
-        plantTypes: true
+        plantTypes: true,
+        plantPestDiseases: true
       }
   });
     if (!plantWithRelations) return null;

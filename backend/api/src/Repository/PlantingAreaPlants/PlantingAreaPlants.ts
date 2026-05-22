@@ -3,7 +3,9 @@ import type { Prisma, PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 import { PlantingAreaPlantsMapper } from "../../Mappers/PlantingAreaPlants";
-import type { PlantingAreaPlants, PlantingAreaPlantsCreate, PlantingAreaPlantsIdParam, PlantingAreaPlantsUpdate } from "../../Types/PlantingAreaPlants";
+import type PlantingAreaPlant from "../../Models/Entities/PlantingAreaPlant/PlantingAreaPlant.entity";
+import type { PlantingAreaPlantsCreate, PlantingAreaPlantsIdParam, PlantingAreaPlantsUpdate } from "../../Models/Entities/PlantingAreaPlant/PlantingAreaPlant.types";
+
 
 class PlantingAreaPlantsRepository{
  private db: PrismaClient
@@ -12,14 +14,14 @@ class PlantingAreaPlantsRepository{
      this.db = db;
    }
 
-   async getAll(): Promise<PlantingAreaPlants[]> {
+   async getAll(): Promise<PlantingAreaPlant[]> {
        const plantingAreaPlants = await this.db.plantingAreaPlants.findMany();
 
        return PlantingAreaPlantsMapper.toEntities(plantingAreaPlants);
      }
 
    
-     async getById(id: PlantingAreaPlantsIdParam): Promise<PlantingAreaPlants | null> {
+     async getById(id: PlantingAreaPlantsIdParam): Promise<PlantingAreaPlant | null> {
        const plantingAreaPlants = await this.db.plantingAreaPlants.findUnique({
          where: {id:id}
        });
@@ -27,7 +29,7 @@ class PlantingAreaPlantsRepository{
        return PlantingAreaPlantsMapper.toEntity(plantingAreaPlants);
     }
 
-     async create(data: PlantingAreaPlantsCreate): Promise<PlantingAreaPlants> {
+     async create(data: PlantingAreaPlantsCreate): Promise<PlantingAreaPlant> {
        const plantingAreaPlantsCreated = await this.db.plantingAreaPlants.create({
          data
        });
@@ -35,7 +37,7 @@ class PlantingAreaPlantsRepository{
        return PlantingAreaPlantsMapper.toEntity(plantingAreaPlantsCreated);
      }
    
-     async update(id: PlantingAreaPlantsIdParam, data: PlantingAreaPlantsUpdate): Promise<PlantingAreaPlants> {
+     async update(id: PlantingAreaPlantsIdParam, data: PlantingAreaPlantsUpdate): Promise<PlantingAreaPlant> {
        const prismaData = mapToPrismaUpdate<
          PlantingAreaPlantsUpdate,
          Prisma.PlantingAreaPlantsUpdateInput
@@ -47,7 +49,7 @@ class PlantingAreaPlantsRepository{
        return PlantingAreaPlantsMapper.toEntity(plantingAreaPlantsUpdated);
      }
    
-     async delete(id: PlantingAreaPlantsIdParam): Promise<PlantingAreaPlants> {
+     async delete(id: PlantingAreaPlantsIdParam): Promise<PlantingAreaPlant> {
        const plantingAreaPlantsDeleted = await this.db.plantingAreaPlants.delete({
          where: {id:id},
        });
