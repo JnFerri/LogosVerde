@@ -1,7 +1,7 @@
 
 import type { PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
-import { ProjectMapper } from "../../Mappers/ProjectMapper";
+import { ProjectMapper } from "../../Mappers/Project";
 import type Project from "../../Models/Entities/Project/Project.entity";
 import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../../Models/Entities/Project/Project.type";
 
