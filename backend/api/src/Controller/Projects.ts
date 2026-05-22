@@ -1,5 +1,5 @@
-import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
-import { ProjectCreateSchema, ProjectIdParamSchema, ProjectUpdateSchema } from "../Models/DTO/Projects";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
+import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type ProjectsService from "../Services/Projects/Projects";
 import type { Request, Response, NextFunction } from "express";
 
@@ -25,9 +25,11 @@ export class ProjectsController {
 
     getById = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = ProjectIdParamSchema.parse(id)
-            const result = await this.service.findById(idValidated)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            const result = await this.service.findById(id)
             const response = await ApiSuccess.success("Project found", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -38,8 +40,7 @@ export class ProjectsController {
     create = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const data = req.body
-            const dataValidated = ProjectCreateSchema.parse(data)
-            const result = await this.service.create(dataValidated)
+            const result = await this.service.create(data)
             const response = await ApiSuccess.created("Project created", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -49,11 +50,12 @@ export class ProjectsController {
 
     update = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = ProjectIdParamSchema.parse(id)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
             const data = req.body
-            const dataValidated = ProjectUpdateSchema.parse(data)
-            const result = await this.service.update(idValidated, dataValidated)
+            const result = await this.service.update(id, data)
             const response = await ApiSuccess.updated("Project updated", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -63,9 +65,11 @@ export class ProjectsController {
 
     delete = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = ProjectIdParamSchema.parse(id)
-            await this.service.delete(idValidated)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            await this.service.delete(id)
             const response = await ApiSuccess.noContent("Project deleted successfully")
             res.status(response.statusCode).json(response)
         } catch (err) {

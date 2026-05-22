@@ -1,27 +1,23 @@
-import { ApiError } from "../../Models/ApiResponse/ApiError";
-import { PlantSchema } from "../../Models/DTO/Plants";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import type PlantsRepository from "../../Repository/Plants/Plant";
-import type { Plant, PlantCreate, PlantIdParam, PlantUpdate } from "../../Types/Plant";
+import type Plant from "../../Models/Entities/Plants/Plant.entity";
+import type { PlantCreate, PlantIdParam, PlantUpdate } from "../../Models/Entities/Plants/Plant.types";
+
 
 export class PlantsService {
-  constructor(private repository: PlantsRepository) {
-    this.repository = repository;
-  }
+  constructor(private readonly repository: PlantsRepository) {}
 
   async findAll(): Promise<Plant[]> {
-    const response = await this.repository.getAll();
-    const responseValidated = PlantSchema.array().parse(response);
-  
-    return responseValidated;
+    const response = await this.repository.getAllWithRelations();
+    return response;
   }
 
   async findById(id: PlantIdParam): Promise<Plant> {
-    const response = await this.repository.getById(id);
+    const response = await this.repository.getByIdWithRelations(id);
     if (!response) {
       throw ApiError.NotFound("Plant not found");
     }
-    const responseValidated = PlantSchema.parse(response);
-    return responseValidated;
+    return response;
   }
 
   async create(data: PlantCreate): Promise<Plant> {
@@ -30,15 +26,12 @@ export class PlantsService {
       throw ApiError.BadRequest("Plant already exists");
     }
     const response = await this.repository.create(data);
-    const responseValidated = PlantSchema.parse(response);
-    return responseValidated;
+    return response;
   }
 
   async update(id: PlantIdParam, data: PlantUpdate): Promise<Plant> {
-
     const response = await this.repository.update(id, data);
-    const responseValidated = PlantSchema.parse(response);
-    return responseValidated;
+    return response;
   }
 
   async delete(id: PlantIdParam): Promise<void> {

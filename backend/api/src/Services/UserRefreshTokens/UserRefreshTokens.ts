@@ -1,4 +1,4 @@
-import { ApiError } from "../../Models/ApiResponse/ApiError";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import type UserRefreshTokensRepository from "../../Repository/UserRefreshTokens/UserRefreshTokens";
 import  jwt  from "jsonwebtoken";
 

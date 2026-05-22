@@ -1,5 +1,5 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client"
-import { ApiError } from "../Models/ApiResponse/ApiError"
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError"
 
 export function isPrismaError(err: unknown): err is PrismaClientKnownRequestError {
     return err instanceof PrismaClientKnownRequestError

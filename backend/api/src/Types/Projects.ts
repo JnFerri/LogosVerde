@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { ProjectCreateSchema, ProjectIdParamSchema, ProjectSchema, ProjectUpdateSchema } from "../Models/DTO/Projects";
+import type { ProjectCreateSchema, ProjectIdParamSchema, ProjectSchema, ProjectUpdateSchema } from "../Schemas/Projects";
 
 export type Project = z.infer<typeof ProjectSchema>;
 

@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { PlantIntercroppingCreateSchema, PlantIntercroppingParamIdPlantSchema, PlantIntercroppingSchema } from "../Models/DTO/PlantIntercropping";
+import type { PlantIntercroppingCreateSchema, PlantIntercroppingParamIdPlantSchema, PlantIntercroppingSchema } from "../Schemas/PlantIntercropping";
 
 export type PlantIntercropping = z.infer<typeof PlantIntercroppingSchema>;
 

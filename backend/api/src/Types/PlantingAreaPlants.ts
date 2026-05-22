@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { PlantingAreaPlantsCreateSchema, PlantingAreaPlantsIdParamSchema, PlantingAreaPlantsSchema, PlantingAreaPlantsUpdateSchema } from "../Models/DTO/PlantingAreaPlants";
+import type { PlantingAreaPlantsCreateSchema, PlantingAreaPlantsIdParamSchema, PlantingAreaPlantsSchema, PlantingAreaPlantsUpdateSchema } from "../Schemas/PlantingAreaPlants";
 
 
 export type PlantingAreaPlants = z.infer<typeof PlantingAreaPlantsSchema>;

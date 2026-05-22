@@ -1,7 +1,8 @@
-import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
+import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type { Request, Response, NextFunction } from "express";
 import type { UserRefreshTokenService } from "../Services/UserRefreshTokens/UserRefreshTokens";
 import type UsersService from "../Services/Users/Users";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
 
 export class UserRefreshTokenController {
   constructor(
@@ -12,7 +13,9 @@ export class UserRefreshTokenController {
   refresh = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refreshToken = req.cookies.refreshToken;
-
+      if (!refreshToken || typeof refreshToken !== "string") {
+         throw ApiError.Unauthorized("Invalid refresh token");
+      }
       const result = await this.service.refresh(refreshToken);
       const response = await ApiSuccess.success(
         "Token refreshed successfully",
@@ -28,7 +31,9 @@ export class UserRefreshTokenController {
   logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refreshToken = req.cookies.refreshToken;
-      
+      if (!refreshToken || typeof refreshToken !== "string") {
+         throw ApiError.Unauthorized("Invalid refresh token");
+      }
       await this.userService.logout(refreshToken);
 
       const isProduction = process.env.NODE_ENV === "production";

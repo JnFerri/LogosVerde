@@ -1,6 +1,6 @@
 
-import { ApiError } from "../../Models/ApiResponse/ApiError";
-import { PestDiseasesSchema } from "../../Models/DTO/PestDisease";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
+import { PestDiseasesSchema } from "../../Schemas/PestDisease";
 import PestDiseasesRepository from "../../Repository/PestDiseases/PestDiseases"
 import type { PestDiseases, PestDiseasesCreate, PestDiseasesIdParam, PestDiseasesUpdate } from "../../Types/PestDiseases";
 

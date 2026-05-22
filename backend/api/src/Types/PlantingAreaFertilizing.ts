@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { PlantingAreaFertilizingCreateSchema, PlantingAreaFertilizingParamIdPlantingAreaSchema, PlantingAreaFertilizingParamIdSchema, PlantingAreaFertilizingSchema, PlantingAreaFertilizingUpdateSchema } from "../Models/DTO/PlantAreaFertilizing";
+import type { PlantingAreaFertilizingCreateSchema, PlantingAreaFertilizingParamIdPlantingAreaSchema, PlantingAreaFertilizingParamIdSchema, PlantingAreaFertilizingSchema, PlantingAreaFertilizingUpdateSchema } from "../Schemas/PlantAreaFertilizing";
 
 export type PlantingAreaFertilizing = z.infer<
   typeof PlantingAreaFertilizingSchema

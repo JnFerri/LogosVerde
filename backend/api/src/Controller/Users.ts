@@ -1,7 +1,7 @@
-import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
+import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type { Request, Response, NextFunction } from "express";
 import type UsersService from "../Services/Users/Users";
-import { UserCreateSchema, UserIdParamSchema, UserLoginSchema, UserUpdateSchema } from "../Models/DTO/User";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
 
 export class UserController {
     
@@ -12,8 +12,7 @@ export class UserController {
     try {
         
         const data = req.body
-        const dataValidated = UserLoginSchema.parse(data)
-        const {email, password} = dataValidated
+        const {email, password} = data
         const result = await this.service.login(email, password)
         const response = await ApiSuccess.success("User Login successfully", result.accessToken)
         const isProduction = process.env.NODE_ENV === "production";
@@ -49,9 +48,11 @@ export class UserController {
 
     getById = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = UserIdParamSchema.parse(id)
-            const result = await this.service.findById(idValidated)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            const result = await this.service.findById(id)
             const response = await ApiSuccess.success("user found", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -62,8 +63,7 @@ export class UserController {
     create = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const data = req.body
-            const dataValidated = UserCreateSchema.parse(data)
-            const result = await this.service.create(dataValidated)
+            const result = await this.service.create(data)
             const response = await ApiSuccess.created("User created", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -73,11 +73,12 @@ export class UserController {
 
     update = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = UserIdParamSchema.parse(id)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
             const data = req.body
-            const dataValidated = UserUpdateSchema.parse(data)
-            const result = await this.service.update(idValidated, dataValidated)
+            const result = await this.service.update(id, data)
             const response = await ApiSuccess.updated("Pest disease updated", result)
             res.status(response.statusCode).json(response)
         } catch (err) {
@@ -87,9 +88,11 @@ export class UserController {
 
     inactive = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const id = req.params.id
-            const idValidated = UserIdParamSchema.parse(id)
-            const result =await this.service.inactive(idValidated)
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const id = req.validatedId
+            const result =await this.service.inactive(id)
             const response = await ApiSuccess.updated("User inactiveted" , result)
             res.status(response.statusCode).json(response)
         } catch (err) {

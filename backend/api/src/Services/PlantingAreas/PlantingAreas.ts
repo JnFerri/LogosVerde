@@ -1,5 +1,5 @@
-import { ApiError } from "../../Models/ApiResponse/ApiError";
-import { PlantingAreaSchema } from "../../Models/DTO/PlantingAreas";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
+import { PlantingAreaSchema } from "../../Schemas/PlantingAreas";
 import type PlantingAreasRepository from "../../Repository/PlantingAreas/PlantingAreas";
 import type { PlantingArea, PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Types/PlantingAreas";
 

@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 export const PlantSchema = z.object({
+  id: z.number(),
+
   name: z.string().min(1).max(180),
 
   scientificName: z.string().min(1).max(180),

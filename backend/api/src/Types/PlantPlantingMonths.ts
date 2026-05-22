@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { PlantPlantingMonthsCreateSchema, PlantPlantingMonthsParamIdPlantSchema, PlantPlantingMonthsSchema } from "../Models/DTO/PlantPlantingMonths";
+import type { PlantPlantingMonthsCreateSchema, PlantPlantingMonthsParamIdPlantSchema, PlantPlantingMonthsSchema } from "../Schemas/PlantPlantingMonths";
 
 export type PlantPlantingMonths = z.infer<
   typeof PlantPlantingMonthsSchema
