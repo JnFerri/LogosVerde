@@ -79,7 +79,6 @@ model PlantingAreaFertilizing {
 
   plantingAreas        PlantingAreas          @relation(fields: [plantingAreaId],references: [id])
 
-  plantingAreaPlants PlantingAreaPlants[]
 
   @@map("planting_area_fertilizing")
   @@index([plantingAreaId], map: "planting_area_id_idx")
@@ -96,13 +95,10 @@ model PlantingAreaPlants {
   harvestDate                                                                            DateTime?                  @db.Date                          @map("harvest_date") 
   plantingQuantity                                                                       Int?                       @map("planting_quantity") 
   harvestQuantity                                                                        Decimal?                   @db.Decimal(5, 2)                 @map("harvest_quantity") 
-  fertilizingId                                                                          Int?                       @map("fertilizing_id")
-  plantingAreaFertilizing                                                                PlantingAreaFertilizing?   @relation(fields: [fertilizingId], references: [id])
   plants                                                                                 Plants                     @relation(fields: [plantId], references: [id])
   plantingAreas                                                                         PlantingAreas               @relation(fields: [plantingAreaId], references: [id])
 
   @@map("planting_area_plants")
-  @@index([fertilizingId], map: "adubation_id_idx")
   @@index([plantId], map: "plant_id_idx")
   @@index([plantingAreaId], map: "planting_area_id_idx")
 }
@@ -135,7 +131,7 @@ model Plants {
   phMin                                                                  Decimal                @db.Decimal(2, 1)           @map("ph_min")
   phMax                                                                  Decimal                @db.Decimal(2, 1)           @map("ph_max")
   plantingDistancePlants                                                 Int                    @map("planting_distance_plants")
-  harverstUnitMeasurementId                                              Int                    @default(1)                       @map("harverst_unit_measurement_id")
+  harvestUnitMeasurementId                                              Int                    @default(1)                       @map("harvest_unit_measurement_id")
   plantingUnitMeasurementId                                              Int                    @default(1)                       @map("planting_unit_measurement_id")
   managementDescription                                                  String?                @db.Text                   @map("management_description")
   plantingDescription                                                    String?                @db.Text                   @map("planting_description")
@@ -146,12 +142,12 @@ model Plants {
   plantPlantingMonths                                                    PlantPlantingMonths[]
   plantingAreaPlants                                                     PlantingAreaPlants[]
   plantTypes                                                             PlantTypes             @relation(fields:[plantTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  harvestUnitMeasurement                                                 UnitMeasurements       @relation("HarvestUnitMeasurement", fields: [harverstUnitMeasurementId ],references: [id])
+  harvestUnitMeasurement                                                 UnitMeasurements       @relation("HarvestUnitMeasurement", fields: [harvestUnitMeasurementId ],references: [id])
   plantingUnitMeasurement                                                UnitMeasurements       @relation("PlantingUnitMeasurement", fields: [plantingUnitMeasurementId], references: [id])
 
   @@map("plants")
   @@index([plantTypeId], map: "plant_type_id_idx")
-  @@index([harverstUnitMeasurementId], map: "harverst_unit_measurement_id_idx")
+  @@index([harvestUnitMeasurementId], map: "harvest_unit_measurement_id_idx")
   @@index([plantingUnitMeasurementId], map: "planting_unit_measurement_id_idx")
 }
 

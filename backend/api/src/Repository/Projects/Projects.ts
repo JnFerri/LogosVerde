@@ -1,7 +1,10 @@
 
 import type { PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
-import type { ProjectCreate, ProjectUpdate, ProjectIdParam, Project } from "../../Types/Projects";
+import { ProjectMapper } from "../../Mappers/ProjectMapper";
+import type Project from "../../Models/Entities/Project/Project.entity";
+import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../../Models/Entities/Project/Project.type";
+
 
 class ProjectsRepository {
   private db: PrismaClient
@@ -11,33 +14,53 @@ class ProjectsRepository {
   }
 
   async getAll(): Promise<Project[]> {
-    return  this.db.projects.findMany();
+    const projects = await this.db.projects.findMany();
+    return ProjectMapper.toEntities(projects);
+
   }
 
+  async getAllWithRelations(): Promise<Project[]> {
+    const projectsWithRelations = await this.db.projects.findMany(
+      {
+        include: {
+          plantingAreas: true
+        }
+      }
+    );
+    return ProjectMapper.toEntitiesWithRelations(projectsWithRelations);
+  }
+
+
   async getById(id: ProjectIdParam): Promise<Project | null> {
-    return this.db.projects.findUnique({
+    const project = await this.db.projects.findUnique({
       where: {id:id}
   });
+    if (!project) return null;
+    return ProjectMapper.toEntity(project);
+
   }
 
   async create(data: ProjectCreate): Promise<Project> {
-    return this.db.projects.create({
+    const projectCreated = await this.db.projects.create({
       data,
     });
+    return ProjectMapper.toEntity(projectCreated);
 
   }
 
   async update(id: ProjectIdParam, data: ProjectUpdate): Promise<Project> {
-    return this.db.projects.update({
+    const projectUpdated = await this.db.projects.update({
       where: { id:id },
       data,
     });
+    return ProjectMapper.toEntity(projectUpdated);
   }
 
   async delete(id: ProjectIdParam): Promise<Project> {
-    return this.db.projects.delete({
+    const projectDeleted = await this.db.projects.delete({
       where: {id:id},
     });
+    return ProjectMapper.toEntity(projectDeleted);
   }
 
 }

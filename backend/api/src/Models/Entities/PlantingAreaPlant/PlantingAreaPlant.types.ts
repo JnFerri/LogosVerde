@@ -1,8 +1,9 @@
 import type z from "zod";
-import type { PlantingAreaPlantsCreateSchema, PlantingAreaPlantsIdParamSchema, PlantingAreaPlantsSchema, PlantingAreaPlantsUpdateSchema } from "../Schemas/PlantingAreaPlants";
+import type { PlantingAreaPlantsCreateSchema, PlantingAreaPlantsIdParamSchema, PlantingAreaPlantsSchema, PlantingAreaPlantsUpdateSchema } from "../../../Schemas/PlantingAreaPlants";
 
 
-export type PlantingAreaPlants = z.infer<typeof PlantingAreaPlantsSchema>;
+
+export type PlantingAreaPlantsWithRelations = z.infer<typeof PlantingAreaPlantsSchema>;
 
 export type PlantingAreaPlantsCreate = z.infer<typeof PlantingAreaPlantsCreateSchema>;
 

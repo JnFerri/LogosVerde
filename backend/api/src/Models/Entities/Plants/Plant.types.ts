@@ -3,12 +3,14 @@ import type { CreatePlantSchema, UpdatePlantSchema , PlantIdParamSchema } from "
 import type Plant from "./Plant.entity";
 import type UnitMeasurements from "../UnitMesurement/UnitMeasurements.entity";
 import type PlantTypes from "../PlantTypes/PlantTypes.entity";
+import type PlantPestDisease from "../PlantPestDisease/PlantPestDisease.entity";
 
 
 export type PlantWithRelations = Plant & {
 harvestUnitMeasurement : UnitMeasurements,
 plantingUnitMeasurement : UnitMeasurements,
-plantTypes: PlantTypes 
+plantTypes: PlantTypes,
+plantPestDiseases: PlantPestDisease[]
 }
 export type PlantCreate = z.infer<typeof CreatePlantSchema>;
 

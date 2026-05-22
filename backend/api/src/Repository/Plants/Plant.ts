@@ -4,7 +4,7 @@ import { prisma } from "../../Configs/Prisma";
 import type { PrismaClient } from "../../../generated/prisma/client";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 
-import { PlantMapper } from "../../Mappers/PlantMapper";
+import { PlantMapper } from "../../Mappers/Plant";
 import type { PlantCreate, PlantIdParam, PlantUpdate, PlantWithRelations } from "../../Models/Entities/Plants/Plant.types";
 import type Plant from "../../Models/Entities/Plants/Plant.entity";
 
@@ -22,17 +22,12 @@ class PlantsRepository {
         include: {
         harvestUnitMeasurement : true,
         plantingUnitMeasurement : true,
-        plantTypes: true
+        plantTypes: true,
+        plantPestDiseases: true
       }
     }
     );
-
-     const plantsWithRelationsMapped = plantsWithRelations.map((plant) => 
-      PlantMapper.toEntityWithRelations(plant)
-    )
-
-    return plantsWithRelationsMapped;
-  
+      return PlantMapper.toEntitiesWithRelations(plantsWithRelations)
     }
 
 
@@ -46,13 +41,8 @@ class PlantsRepository {
   }
 
   async getAll(): Promise<Plant[]> {
-
     const plants = await this.db.plants.findMany();
-
-    const plantsMapped = plants.map((plant) => 
-      PlantMapper.toEntity(plant)
-    )
-    return plantsMapped;
+    return PlantMapper.toEntities(plants)
   }
 
   async getByIdWithRelations(id: PlantIdParam): Promise<Plant | null> {
@@ -61,7 +51,8 @@ class PlantsRepository {
       include: {
         harvestUnitMeasurement : true,
         plantingUnitMeasurement : true,
-        plantTypes: true
+        plantTypes: true,
+        plantPestDiseases: true
       }
   });
     if (!plantWithRelations) return null;

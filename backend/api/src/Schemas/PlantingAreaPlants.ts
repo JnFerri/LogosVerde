@@ -20,9 +20,7 @@ export const PlantingAreaPlantsSchema = z.object({
 
   harvestQuantity: z
     .number()
-    .nullable(),
-
-  fertilizingId: z.number().nullable()
+    .nullable()
 });
 
 export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
@@ -34,8 +32,7 @@ export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
   plantingDate: true,
   harvestDate: true,
   plantingQuantity: true,
-  harvestQuantity: true,
-  fertilizingId: true,
+  harvestQuantity: true
 }).extend({
   plantingDate: PlantingAreaPlantsSchema.shape.plantingDate
     .optional()
@@ -48,10 +45,7 @@ export const PlantingAreaPlantsCreateSchema = PlantingAreaPlantsSchema.pick({
     .transform((val) => val ?? null),
   harvestQuantity: PlantingAreaPlantsSchema.shape.harvestQuantity
     .optional()
-    .transform((val) => val ?? null),
-  ferilizingId: PlantingAreaPlantsSchema.shape.fertilizingId
-    .optional()
-    .transform((val) => val ?? null),
+    .transform((val) => val ?? null)
 });
 
 export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
@@ -62,11 +56,11 @@ export const PlantingAreaPlantsUpdateSchema = PlantingAreaPlantsSchema.pick({
   plantingDate: true,
   harvestDate: true,
   plantingQuantity: true,
-  harvestQuantity:true,
-  fertilizingId: true,
+  harvestQuantity:true
 }).partial();
 
 export const PlantingAreaPlantsIdParamSchema = z.coerce.number().int().positive();
+export const PlantingAreaIdParamSchema = z.coerce.number().int().positive();
 
 
 
