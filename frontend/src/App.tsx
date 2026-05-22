@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Box sx={{ display: 'flex', height: '100vh'}}>
           <Menu/>
-        <main className="p-4 md:ml-[240px]">
+        <main className="p-4 md:ml-60">
           <Routes>
             <Route path="/" element={<HomePage />} />
           </Routes>
