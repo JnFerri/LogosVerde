@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { UserRefreshTokensCreateSchema, UserRefreshTokensSchema, UserRefreshTokensUpdateSchema } from "../Models/DTO/UserRefreshTokens";
+import type { UserRefreshTokensCreateSchema, UserRefreshTokensSchema, UserRefreshTokensUpdateSchema } from "../Schemas/UserRefreshTokens";
 
 export type UserRefreshTokens = z.infer<typeof UserRefreshTokensSchema>;
 

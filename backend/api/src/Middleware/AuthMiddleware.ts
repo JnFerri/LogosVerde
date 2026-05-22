@@ -1,7 +1,7 @@
 
 import type {  Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { ApiError } from "../Models/ApiResponse/ApiError";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
 
 
 

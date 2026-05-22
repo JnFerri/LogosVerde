@@ -1,7 +1,7 @@
 import { Router } from "express";
 import controller from "../../Containers/PestDisesases";
 import { validateBody, validateParamId } from "../../Middleware/ValidateZod";
-import { PestDiseasesCreateSchema, PestDiseasesIdParamSchema, PestDiseasesUpdateSchema } from "../../Models/DTO/PestDisease";
+import { PestDiseasesCreateSchema, PestDiseasesIdParamSchema, PestDiseasesUpdateSchema } from "../../Schemas/PestDisease";
 
 
 const router = Router();

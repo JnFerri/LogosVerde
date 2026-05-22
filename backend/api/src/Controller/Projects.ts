@@ -1,5 +1,5 @@
-import { ApiError } from "../Models/ApiResponse/ApiError";
-import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
+import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type ProjectsService from "../Services/Projects/Projects";
 import type { Request, Response, NextFunction } from "express";
 

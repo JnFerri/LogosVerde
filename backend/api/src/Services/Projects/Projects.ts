@@ -1,5 +1,5 @@
-import { ApiError } from "../../Models/ApiResponse/ApiError";
-import { ProjectSchema } from "../../Models/DTO/Projects";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
+import { ProjectSchema } from "../../Schemas/Projects";
 import type ProjectsRepository from "../../Repository/Projects/Projects";
 import type { Project, ProjectCreate, ProjectIdParam, ProjectUpdate } from "../../Types/Projects";
 

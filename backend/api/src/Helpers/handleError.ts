@@ -1,5 +1,5 @@
 import { ZodError } from "zod"
-import { ApiError } from "../Models/ApiResponse/ApiError"
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError"
 import { isPrismaError } from "./handlePrismaError"
 
 export function handleError(err:unknown):ApiError {

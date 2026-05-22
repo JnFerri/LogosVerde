@@ -1,6 +1,6 @@
 import  jwt  from "jsonwebtoken";
 import "dotenv/config";
-import { ApiError } from "../../Models/ApiResponse/ApiError";
+import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import type UsersRepository from "../../Repository/Users/Users";
 import type { User, UserCreate, UserIdParam, UserUpdate } from "../../Types/User";
 import bcrypt from "bcrypt";

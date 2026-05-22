@@ -1,7 +1,7 @@
 import { Router } from "express";
 import controller from "../../Containers/Plants";
 import { validateBody, validateParamId } from "../../Middleware/ValidateZod";
-import { CreatePlantSchema, PlantIdParamSchema, UpdatePlantSchema } from "../../Models/DTO/Plants";
+import { CreatePlantSchema, PlantIdParamSchema, UpdatePlantSchema } from "../../Schemas/Plants";
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import controller from "../../Containers/Projects";
 import { validateBody, validateParamId } from "../../Middleware/ValidateZod";
-import { ProjectCreateSchema, ProjectIdParamSchema, ProjectUpdateSchema } from "../../Models/DTO/Projects";
+import { ProjectCreateSchema, ProjectIdParamSchema, ProjectUpdateSchema } from "../../Schemas/Projects";
 
 const router = Router();
 

@@ -1,8 +1,8 @@
-import { ApiSuccess } from "../Models/ApiResponse/ApiSuccess";
+import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type { Request, Response, NextFunction } from "express";
 import type { UserRefreshTokenService } from "../Services/UserRefreshTokens/UserRefreshTokens";
 import type UsersService from "../Services/Users/Users";
-import { ApiError } from "../Models/ApiResponse/ApiError";
+import { ApiError } from "../Models/DTO/ApiResponse/ApiError";
 
 export class UserRefreshTokenController {
   constructor(
