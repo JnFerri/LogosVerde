@@ -6,15 +6,24 @@ import CardsHomePage from '../Components/CardsHomePage/CardsHomePage';
 
 export default function HomePage() {
   
-    
-
-
+  
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center',width: {md:'80%', sm:'90%'}, overflow:'auto' }}>
+    <>
+       <Box
+        component="img"
+        src="/logosIconWithDescription.png"
+        alt="Logos Verde"
+        sx={{
+          width: {
+            xs: '100%',
+            md: '70%',
+          },
+          height: 'auto',
+          mb: 2,
+        }}
+      />
         
-        <img src="/logosIconWithDescription.png" alt="Logos Verde" className='sm:w-[100%] md:w-[70%] h-auto p-2 '/>
-        
-        <Typography sx={{ margin:'10px 0' }}>
+        <Typography sx={{ mb:'10px 0' }}>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
           eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
           neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
@@ -28,6 +37,6 @@ export default function HomePage() {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
         <CardsHomePage/>
-      </Box>
+      </>
   );
 }
