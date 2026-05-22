@@ -24,7 +24,7 @@ function CardsHomePage() {
   const [selectedCard, setSelectedCard] = useState(0);
 
   return (
-    <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',gap: 2 , justifyContent:'center'}}>
+    <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',gap: 2 , justifyContent:'center' , margin:'10px 0'}}>
       {cards.map((card, index) => (
         <Card key={card.id}>
           <CardActionArea
