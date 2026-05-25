@@ -7,6 +7,7 @@ export class UserMapper {
       data.id,
       data.name,
       data.email,
+      data.password,
       data.isActive,
       data.createdAt
     );

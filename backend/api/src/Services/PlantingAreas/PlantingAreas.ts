@@ -1,7 +1,8 @@
 import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import { PlantingAreaSchema } from "../../Schemas/PlantingAreas";
 import type PlantingAreasRepository from "../../Repository/PlantingAreas/PlantingAreas";
-import type { PlantingArea, PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Types/PlantingAreas";
+import type PlantingArea from "../../Models/Entities/PlantingArea/PlantingArea.entity";
+import type { PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Models/Entities/PlantingArea/PlantingArea.types";
 
 export class PlantingAreasService {
   constructor(private repository: PlantingAreasRepository) {
