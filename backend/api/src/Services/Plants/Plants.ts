@@ -8,34 +8,34 @@ export class PlantsService {
   constructor(private readonly repository: PlantsRepository) {}
 
   async findAll(): Promise<Plant[]> {
-    const response = await this.repository.getAllWithRelations();
-    return response;
+    const response = await this.repository.getAllWithRelations()
+    return response
   }
 
   async findById(id: PlantIdParam): Promise<Plant> {
-    const response = await this.repository.getByIdWithRelations(id);
+    const response = await this.repository.getByIdWithRelations(id)
     if (!response) {
-      throw ApiError.NotFound("Plant not found");
+      throw ApiError.NotFound("Plant not found")
     }
-    return response;
+    return response
   }
 
   async create(data: PlantCreate): Promise<Plant> {
-    const existingPlant = await this.repository.getByName(data.name);
+    const existingPlant = await this.repository.getByName(data.name)
     if (existingPlant) {
-      throw ApiError.BadRequest("Plant already exists");
+      throw ApiError.BadRequest("Plant already exists")
     }
-    const response = await this.repository.create(data);
+    const response = await this.repository.create(data)
     return response;
   }
 
   async update(id: PlantIdParam, data: PlantUpdate): Promise<Plant> {
-    const response = await this.repository.update(id, data);
+    const response = await this.repository.update(id, data)
     return response;
   }
 
   async delete(id: PlantIdParam): Promise<void> {
-    await this.repository.delete(id);
+    await this.repository.delete(id)
   }
 }
 
