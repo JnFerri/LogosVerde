@@ -1,7 +1,8 @@
 import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import { ProjectSchema } from "../../Schemas/Projects";
 import type ProjectsRepository from "../../Repository/Projects/Projects";
-import type { Project, ProjectCreate, ProjectIdParam, ProjectUpdate } from "../../Types/Projects";
+import type Project from "../../Models/Entities/Project/Project.entity";
+import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../../Models/Entities/Project/Project.type";
 
 export class ProjectsService {
   constructor(private repository: ProjectsRepository) {

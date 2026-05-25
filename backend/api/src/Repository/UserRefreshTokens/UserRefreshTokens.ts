@@ -3,7 +3,8 @@ import { prisma } from "../../Configs/Prisma";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 import type { Prisma } from "../../../generated/prisma/client";
 import type { UserRefreshTokens, UserRefreshTokensCreate, UserRefreshTokensUpdate } from "../../Types/UserRefreshToken";
-import type { UserIdParam } from "../../Types/User";
+import type { UserIdParam } from "../../Models/Entities/User/User.types";
+
 
 class UserRefreshTokensRepository {
   private db: PrismaClient;

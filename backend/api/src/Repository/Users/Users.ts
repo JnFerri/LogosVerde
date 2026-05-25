@@ -1,8 +1,10 @@
 import type { PrismaClient } from "../../../generated/prisma/client";
 import { prisma } from "../../Configs/Prisma";
 import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
-import type { User, UserCreate, UserIdParam, UserUpdate } from "../../Types/User";
 import type { Prisma } from "../../../generated/prisma/client";
+import User from "../../Models/Entities/User/User.entity";
+import type { UserCreate, UserIdParam, UserUpdate } from "../../Models/Entities/User/User.types";
+import { UserMapper } from "../../Mappers/User";
 
 class UsersRepository {
   private db: PrismaClient;
@@ -12,28 +14,33 @@ class UsersRepository {
   }
 
   async getAll(): Promise<User[]> {
-    return this.db.users.findMany();
+    const users = await this.db.users.findMany();
+    return UserMapper.toEntities(users);
   }
 
   async getById(id: UserIdParam): Promise<User | null> {
-    return this.db.users.findUnique({
+    const user = await this.db.users.findUnique({
       where: { id },
-    });
+    })
+    return user ? UserMapper.toEntity(user) : null;
   }
 
   async getByEmail(email: string): Promise<User | null> {
-    return this.db.users.findUnique({
+    const user = await this.db.users.findUnique({
       where: { email },
     });
+    return user ? UserMapper.toEntity(user) : null;
   }
 
   async create(data: UserCreate): Promise<User> {
-    return this.db.users.create({
+    const userCreated = await this.db.users.create({
       data: {
         ...data,
         isActive: true,
       },
     });
+    return UserMapper.toEntity(userCreated);
+
   }
 
   async update(id: UserIdParam, data: UserUpdate): Promise<User> {
@@ -42,19 +49,21 @@ class UsersRepository {
       Prisma.UsersUpdateInput
     >(data);
     
-    return this.db.users.update({
+    const userUpdated = await this.db.users.update({
       where: { id },
       data: prismaData,
     });
+    return UserMapper.toEntity(userUpdated);
   }
 
   async inactive(id: UserIdParam): Promise<User> {
-    return this.db.users.update({
+    const userInactive = await this.db.users.update({
       where: { id },
       data: {
         isActive: false,
       },
     });
+    return UserMapper.toEntity(userInactive);
   }
 }
 

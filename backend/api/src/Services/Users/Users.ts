@@ -2,9 +2,10 @@ import  jwt  from "jsonwebtoken";
 import "dotenv/config";
 import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import type UsersRepository from "../../Repository/Users/Users";
-import type { User, UserCreate, UserIdParam, UserUpdate } from "../../Types/User";
 import bcrypt from "bcrypt";
 import type UserRefreshTokensRepository from "../../Repository/UserRefreshTokens/UserRefreshTokens";
+import type User from "../../Models/Entities/User/User.entity";
+import type { UserCreate, UserIdParam, UserUpdate } from "../../Models/Entities/User/User.types";
 
 class UsersService {
   private repository: UsersRepository;
