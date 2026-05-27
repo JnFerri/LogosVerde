@@ -4,32 +4,33 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
-import { useState } from 'react';
 
 const cards = [
   {
-    id: 1,
+    id: 0,
     title: 'Criar Novo Projeto',
     description: 'Crie um novo projeto onde poderá adiministrar suas aréas de plantio.',
   },
   {
-    id: 2,
+    id: 1,
     title: 'Acessar Projetos',
     description: 'Acesse os projetos ja criados anteriormente.',
   }
  
 ];
 
-function CardsHomePage() {
-  const [selectedCard, setSelectedCard] = useState(0);
+interface CardsHomePageProps {
+  isOpenModal: () => void;
+  teste: () => void;
+}
 
+function CardsHomePage({ isOpenModal, teste }: CardsHomePageProps) {
   return (
     <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',gap: 2 , justifyContent:'center' , margin:'10px 0'}}>
-      {cards.map((card, index) => (
+      {cards.map((card) => (
         <Card key={card.id}>
           <CardActionArea
-            onClick={() => setSelectedCard(index)}
-            data-active={selectedCard === index ? '' : undefined}
+            onClick={() => card.id === 0 ? isOpenModal() : teste() }
             sx={{
               height: '100%',
                 '&:hover': {
