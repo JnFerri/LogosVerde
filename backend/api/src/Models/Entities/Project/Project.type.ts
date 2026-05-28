@@ -1,7 +1,7 @@
 import type z from "zod";
 import type { ProjectCreateSchema, ProjectIdParamSchema, ProjectUpdateSchema } from "../../../Schemas/Projects";
-import type { PlantingArea } from "../../../Types/PlantingAreas";
 import type Project from "./Project.entity";
+import type PlantingArea from "../PlantingArea/PlantingArea.entity";
 
 export type ProjectWithRelations = Project & {
   plantingAreas: PlantingArea[];

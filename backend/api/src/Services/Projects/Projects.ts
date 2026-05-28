@@ -9,7 +9,7 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    const response = await this.repository.getAll()
+    const response = await this.repository.getAllWithRelations()
     return response
   }
 
