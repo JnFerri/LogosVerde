@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { useNavigate } from 'react-router-dom';
 
 const cards = [
   {
@@ -21,16 +22,16 @@ const cards = [
 
 interface CardsHomePageProps {
   isOpenModal: () => void;
-  teste: () => void;
 }
 
-function CardsHomePage({ isOpenModal, teste }: CardsHomePageProps) {
+function CardsHomePage({ isOpenModal}: CardsHomePageProps) {
+  const navigate = useNavigate()
   return (
     <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',gap: 2 , justifyContent:'center' , margin:'10px 0'}}>
       {cards.map((card) => (
         <Card key={card.id}>
           <CardActionArea
-            onClick={() => card.id === 0 ? isOpenModal() : teste() }
+            onClick={() => card.id === 0 ? isOpenModal() : navigate('/projects') }
             sx={{
               height: '100%',
                 '&:hover': {

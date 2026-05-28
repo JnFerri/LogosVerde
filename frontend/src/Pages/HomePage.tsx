@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import CardsHomePage from '../Components/CardsHomePage/CardsHomePage';
 import { useState } from 'react';
 import { Modal } from '@mui/material';
-import FormCreateProject from '../Components/Forms/FormCreateProject/FormCreatePorject';
+import FormCreateProject from '../features/Projects/Components/FormCreatePorject';
 
 
 
@@ -13,14 +13,12 @@ export default function HomePage() {
   const isOpenModal = () =>{
     setIsOpenModal(true)
   }
-  const teste = () =>{
-    console.log('teste')
-  }
+  
   
   return (
     
   <>
-    {IsOpenModal ? 
+    {IsOpenModal && 
       
       <Modal open={IsOpenModal} onClose={() => setIsOpenModal(false)} sx={{
         display: 'flex',
@@ -32,9 +30,9 @@ export default function HomePage() {
 
         </Box>
       </Modal>
-        
-      :
-      <>
+}
+      
+      
        <Box
         component="img"
         src="/logosIconWithDescription.png"
@@ -52,9 +50,7 @@ export default function HomePage() {
         <Typography  sx={{ mb:'10px'}}>
           Este sistema foi desenvolvido para auxiliar produtores rurais, técnicos e gestores no planejamento, acompanhamento e gerenciamento de áreas de cultivo, desde pequenas hortas familiares até grandes projetos agroflorestais.
         </Typography>
-        <CardsHomePage isOpenModal={isOpenModal} teste={teste}/>
-      </>
-      }
+        <CardsHomePage isOpenModal={isOpenModal}/>
       </>
   );
 }

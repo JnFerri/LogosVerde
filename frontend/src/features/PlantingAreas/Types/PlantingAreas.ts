@@ -1,8 +1,8 @@
 import type z from "zod";
 import type { PlantingAreaCreateSchema, PlantingAreaIdParamSchema, PlantingAreaUpdateSchema } from "../../../Schemas/PlantingAreas";
-import type PlantingArea from "./PlantingArea.entity";
-import type PlantingAreaPlant from "../PlantingAreaPlant/PlantingAreaPlant.entity";
-import type PlantingAreaFertilizing from "../PlantingAreaFertilizing/PlantingAreaFertilizing.entity";
+import type PlantingAreaPlant from "../../../Entities/PlantingAreaPlant/PlantingAreaPlant.entity";
+import type PlantingArea from "../Entities/PlantingArea";
+import type PlantingAreaFertilizing from "../../../Entities/PlantingAreaFertilizing/PlantingAreaFertilizing.entity";
 
 export type PlantingAreaWithRelations = PlantingArea &{
   plantingAreaPlants: PlantingAreaPlant[];
