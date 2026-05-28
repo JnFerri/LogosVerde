@@ -4,7 +4,7 @@ import type { ProjectUpdate } from "../Types/Project";
 import { useForm } from "react-hook-form";
 import { useCreateProject } from "../Hooks/useCreateProject";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProjectUpdateSchema } from "../../../Schemas/Projects";
+import { ProjectUpdateSchema } from "../Schemas/Projects";
 
 export default function FormCreateProject({ setIsOpenModal} : {setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>}) {
   const { register, handleSubmit } = useForm<ProjectUpdate>({
