@@ -1,5 +1,5 @@
-import { api } from "../api/axios";
-import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../Entities/Project/Project.type";
+import { api } from "../../../api/axios";
+import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../Types/Project";
 
 const getAll = () => {
   return api.get(`/projects/`);
