@@ -2,12 +2,18 @@ import { Box, Button, TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import type { ProjectUpdate } from "../../../Entities/Project/Project.type";
 import { useForm } from "react-hook-form";
+import { useCreateProject } from "../../../Hooks/Projects/useCreateProject";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProjectUpdateSchema } from "../../../Schemas/Projects";
 
-
-export default function FormCreateProject() {
-  const { register, handleSubmit } = useForm();
+export default function FormCreateProject({ setIsOpenModal} : {setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>}) {
+  const { register, handleSubmit } = useForm<ProjectUpdate>({
+    resolver: zodResolver(ProjectUpdateSchema)
+  });
+  const createProject = useCreateProject();
   const SubmitCreateProject = (dados: ProjectUpdate) => {
-    console.log(dados)
+    createProject.mutate(dados)
+    setIsOpenModal(false)
   }
 
   return (
