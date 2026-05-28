@@ -28,7 +28,7 @@ export default function HomePage() {
         justifyContent: 'center',
       }}>
         <Box sx={{width:'80%', height:'40%', backgroundColor:'white'}}>
-        <FormCreateProject/>
+        <FormCreateProject setIsOpenModal={setIsOpenModal}/>
 
         </Box>
       </Modal>
