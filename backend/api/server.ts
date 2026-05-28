@@ -11,7 +11,7 @@ const PORT = 3001
 const server = express()
 
 server.use(cors({
-  origin: ['http://localhost:3000'], 
+  origin: ['http://localhost:5174'], 
   credentials: true,
 }))
 
@@ -30,4 +30,7 @@ server.use(app)
 
 server.listen(PORT , ()  => {
   console.log(`servidor rodando na porta ${PORT}`)
-})
+
+}).on("error", (err) => {
+  console.error(err);
+  });
