@@ -41,6 +41,8 @@ export default function HomePage() {
           width: {
             xs: '100%',
             md: '70%',
+            xl: '40%',
+            xxl:'35%'
           },
           height: 'auto',
           mb: 2,

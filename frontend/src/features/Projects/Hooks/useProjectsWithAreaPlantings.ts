@@ -5,7 +5,7 @@ export const useProjectsWithAreaPlantings = () => {
   return useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
-      const response = await projectService.getAll();
+      const response = await projectService.getAllWithAreaPlantings();
       return response.data.data;
     },
   });

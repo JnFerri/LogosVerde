@@ -67,7 +67,7 @@ export default function AppLayout() {
           sx={{
             width: '100%',
 
-            maxWidth: '1400px',
+            maxWidth: '100%',
 
             display: 'flex',
             flexDirection: 'column',
