@@ -1,7 +1,7 @@
 import { api } from "../../../api/axios";
 import type { ProjectCreate, ProjectIdParam, ProjectUpdate } from "../Types/Project";
 
-const getAll = () => {
+const getAllWithAreaPlantings = () => {
   return api.get(`/projects/`);
 };
 
@@ -22,7 +22,7 @@ const remove = (id: ProjectIdParam) => {
 };
 
 export const projectService = {
-  getAll,
+  getAllWithAreaPlantings,
   getById,
   create,
   update,

@@ -9,16 +9,14 @@ import type ProjectWithPlantingAreas from '../Entities/ProjectWithPantingAreas';
 import { Box } from '@mui/material';
 
 
-interface ProjectsHomePageProps {
-  projects: ProjectWithPlantingAreas[];
-}
 
-function CardsProjects({ projects }: ProjectsHomePageProps) {
+
+function CardsProjects({ projects }: { projects: ProjectWithPlantingAreas[] }) {
   const navigate = useNavigate()
   return (
     <>
       {projects.map((project) => (
-        <Card key={project.id} sx={{maxWidth:'30%' , minWidth:'20%' }}>
+        <Card key={project.id} sx={{height:'350px'}}>
           <CardActionArea
             onClick={() => navigate(`/${project.id}`) }
             sx={{
@@ -28,19 +26,22 @@ function CardsProjects({ projects }: ProjectsHomePageProps) {
               },
             }}
           >
-            <CardContent sx={{ height: '100%' , p:'0'}}>
-              <Box sx={{backgroundColor:'#d6b696', width:'100%'}}>
-              <ForestIcon/>
-              <Typography variant="h3">
+            <CardContent sx={{display: 'flex',
+    flexDirection: 'column', height: '100%' , p:'0'}}>
+              <Box sx={{backgroundColor:'#d6b696', width:'100%', height:'50%' , flexDirection:'column', justifyContent:'center', alignItems:'center', display:'flex'}}>
+              <ForestIcon sx={{backgroundColor:'#6e9662', width:'100%', height:'50%'}} />
+              <Typography variant="h4" sx={{textAlign:'center', height:'50%', p:1, alignContent:'center'}}>
                 {project.name}
               </Typography>
               </Box>
-              <Typography >
+              <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', height:'50%' , backgroundColor:'#f7f0e4'}}>
+              <Typography sx={{textAlign:'center'}} >
                 Criado em : {new Date(project.createdAt).toLocaleDateString('PT-br')}
               </Typography>
-              <Typography >
-                Quantidades de areas de plantio: : {project.plantingAreas.length}
+              <Typography sx={{textAlign:'center'}}>
+                Quantidades de areas de plantio: {project.plantingAreas.length}
               </Typography>
+              </Box>
             </CardContent>
           </CardActionArea>
         </Card>

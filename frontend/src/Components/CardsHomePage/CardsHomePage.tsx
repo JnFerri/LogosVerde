@@ -27,7 +27,7 @@ interface CardsHomePageProps {
 function CardsHomePage({ isOpenModal}: CardsHomePageProps) {
   const navigate = useNavigate()
   return (
-    <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',gap: 2 , justifyContent:'center' , margin:'10px 0'}}>
+    <Box sx={{ width: '100%',display: 'grid',gridTemplateColumns: 'repeat(auto-fit, minmax(200px,min(600px, 100%)))',gap: 2 , justifyContent:'center' , margin:'10px 0'}}>
       {cards.map((card) => (
         <Card key={card.id}>
           <CardActionArea
