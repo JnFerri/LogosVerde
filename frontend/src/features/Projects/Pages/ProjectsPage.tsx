@@ -1,13 +1,13 @@
 import { Box, Modal } from "@mui/material"
 import CardsProjects from "../Components/CardsProject";
 import { useProjectsWithAreaPlantings } from "../Hooks/useProjectsWithAreaPlantings";
-import type Project from "../Entities/Project";
 import type { HeaderActions } from "../../../Components/Navigation/PageHeader";
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
+import {  useMemo, useState } from "react";
 import FormCreateProject from "../Components/FormCreatePorject";
 import PageHeader from "../../../Components/Navigation/PageHeader";
 import type { SearchOption } from "../../../Interface/SearchOptions";
+import type Project from "../Entities/Project";
 
 
 
@@ -17,22 +17,51 @@ const ProjectsPage = () => {
   const [searchField, setSearchField] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
-  const searchOptions : SearchOption<Project>[] = [
+  const searchOptions : SearchOption[] = [
   {
     label: "Nome",
     value: "name",
-    filter: (project: Project, search: string) =>
-      project.name
-        .toLowerCase()
-        .includes(search.toLowerCase()),
+    
   },
   {
     label: "Data",
     value: "createdAt",
-    filter: (project: Project, search: string) =>
-      new Date(project.createdAt).toLocaleDateString('PT-br').includes(search),
+    
   }
 ];
+
+
+
+const filteredData = useMemo(() => {
+  if (!data) return [];
+
+  const filters = {
+  name: (project: Project, search: string) =>
+    project.name
+      .toLowerCase()
+      .includes(search.toLowerCase()),
+
+  createdAt: (project: Project, search: string) =>
+    new Date(project.createdAt)
+      .toLocaleDateString("pt-BR")
+      .includes(search),
+};
+
+  const filterFn =
+    filters[searchField as keyof typeof filters];
+
+  if (!filterFn) {
+    return data;
+  }
+
+  return data.filter((project: Project) =>
+    filterFn(project, searchValue)
+  );
+}, [
+  data,
+  searchField,
+  searchValue,
+]);
 
 const headerActions: HeaderActions[] = [
   {
@@ -48,28 +77,35 @@ const headerActions: HeaderActions[] = [
 
 
   return(
+    <Box sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%'
+    }}>
+    <PageHeader title="Projetos" actions={headerActions} searchOptions ={searchOptions} searchField={searchField} searchValue={searchValue} onSearchFieldChange={setSearchField} onSearchValueChange={setSearchValue}/>
+    {IsOpenModal && 
     
+    <Modal open={IsOpenModal} onClose={() => setIsOpenModal(false)} sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Box sx={{width:'80%', height:'40%', backgroundColor:'white'}}>
+      <FormCreateProject setIsOpenModal={setIsOpenModal}/>
+
+      </Box>
+    </Modal>
+}
     <Box sx={{
     display: 'grid',
     width: '100%',
     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: 2,}}>
-      <PageHeader title="Projetos" actions={headerActions} searchOptions ={searchOptions} searchField={searchField} searchValue={searchValue} onSearchFieldChange={setSearchField} onSearchValueChange={setSearchValue}/>
-      {IsOpenModal && 
-      
-      <Modal open={IsOpenModal} onClose={() => setIsOpenModal(false)} sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <Box sx={{width:'80%', height:'40%', backgroundColor:'white'}}>
-        <FormCreateProject setIsOpenModal={setIsOpenModal}/>
-
-        </Box>
-      </Modal>
-}
+    gap: 2,
+    p:1}}>
       {isLoading ? <p>Carregando...</p> :
-      <CardsProjects projects={data}/>}
+      <CardsProjects projects={filteredData}/>}
+    </Box>
     </Box>
   )
 }

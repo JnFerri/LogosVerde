@@ -9,17 +9,17 @@ export interface HeaderActions {
 
 
 
-export interface PageHeaderProps<T> {
+export interface PageHeaderProps{
   title: string;
   actions?: HeaderActions[];
   searchField: string;
   searchValue: string;
   onSearchFieldChange: (value: string) => void;
   onSearchValueChange: (value: string) => void;
-  searchOptions?: SearchOption<T>[];
+  searchOptions?: SearchOption[];
 }
 
-export default function PageHeader<T>({
+export default function PageHeader({
   title,
   actions,
   searchField,
@@ -27,41 +27,36 @@ export default function PageHeader<T>({
   onSearchFieldChange,
   onSearchValueChange,
   searchOptions,
-}: PageHeaderProps<T>) {
+}: PageHeaderProps) {
   return (
-    <Box>
+    
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          width:'100%',
+          flexWrap:'wrap',
+          p:1,
+          backgroundColor: '#d6b696',
         }}
         
       >
-        <Typography variant="h3">
+        <Typography variant="h3" sx={{
+          color:'white',
+          fontWeight:'bold'
+        }}>
           {title}
         </Typography>
-        
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          {actions && actions.map((action, index) => (
-            <Button 
-              key={index} 
-              onClick={action.onClick} 
-              startIcon={action.icon}
-              variant="contained"
-            >
-              {action.description}
-            </Button>
-          ))}
-        </Box>
-      </Box>
-
-      {searchOptions && (
-        <Box >
+        {searchOptions && (
+        <Box sx={{
+          p:1,
+          minWidth:'30%'
+        }}>
          <Stack
-      direction="row"
-      spacing={2}
-    >
+        direction="row"
+        spacing={2}
+        >
       <TextField
         select
         size="small"
@@ -70,9 +65,13 @@ export default function PageHeader<T>({
         onChange={(e) =>
           onSearchFieldChange(e.target.value)
         }
+        sx={{
+          backgroundColor:'#f5f5f5',
+          minWidth:'30%'
+        }}
       >
         {searchOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem  key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
@@ -85,10 +84,30 @@ export default function PageHeader<T>({
         onChange={(e) =>
           onSearchValueChange(e.target.value)
         }
+        sx={{
+          backgroundColor:'#f5f5f5'
+        }}
       />
     </Stack>
         </Box>
       )}
+        
+        <Box sx={{ display: 'flex', gap: 1, p:1, minwidth:'50%', alignItems:'right', justifyContent:'right' }}>
+          {actions && actions.map((action, index) => (
+            <Button 
+              key={index} 
+              onClick={action.onClick} 
+              startIcon={action.icon}
+              variant="contained"
+              size="small"
+              sx={{ background: 'linear-gradient(135deg, #6e9662 0%, #4a6343 100%)'}}
+            >
+              {action.description}
+            </Button>
+          ))}
+        </Box>
+
+      
     </Box>
   );
 }

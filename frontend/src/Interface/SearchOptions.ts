@@ -1,5 +1,4 @@
-export interface SearchOption<T> {
+export interface SearchOption {
   label: string;
   value: string;
-  filter: (item: T, search: string) => boolean;
 }
