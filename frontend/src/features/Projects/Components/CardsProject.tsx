@@ -9,9 +9,14 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import GrassIcon from '@mui/icons-material/Grass';
 import type ProjectWithPlantingAreas from '../Entities/ProjectWithPantingAreas';
 import { Box, Divider, Stack } from '@mui/material';
+import { useProjectStore } from '../Stores/useProjectStore';
 
-function CardsProjects({ projects }: { projects: ProjectWithPlantingAreas[] }) {
+function CardsProject({ projects }: { projects: ProjectWithPlantingAreas[] }) {
   const navigate = useNavigate()
+  const setSelectedProject = useProjectStore(
+  (state) => state.setSelectedProject
+)
+  
   return (
     <>
       {projects.map((project) => (
@@ -28,7 +33,9 @@ function CardsProjects({ projects }: { projects: ProjectWithPlantingAreas[] }) {
           }}
         >
           <CardActionArea
-            onClick={() => navigate(`/${project.id}`) }
+            onClick={() =>{
+              setSelectedProject(project)
+              navigate(`/projects/${project.id}`)} }
             sx={{ height: '100%' }}
           >
             <CardContent sx={{ display: 'flex', flexDirection: 'column', height: '100%', p: 0 }}>
@@ -88,4 +95,4 @@ function CardsProjects({ projects }: { projects: ProjectWithPlantingAreas[] }) {
   );
 }
 
-export default CardsProjects;
+export default CardsProject;

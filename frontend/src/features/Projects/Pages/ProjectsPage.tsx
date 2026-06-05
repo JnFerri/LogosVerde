@@ -1,5 +1,5 @@
 import { Box, Modal } from "@mui/material"
-import CardsProjects from "../Components/CardsProject";
+import CardsProject from "../Components/CardsProject";
 import { useProjectsWithAreaPlantings } from "../Hooks/useProjectsWithAreaPlantings";
 import type { HeaderActions } from "../../../Components/Navigation/PageHeader";
 import AddIcon from '@mui/icons-material/Add';
@@ -104,7 +104,7 @@ const headerActions: HeaderActions[] = [
     gap: 2,
     p:1}}>
       {isLoading ? <p>Carregando...</p> :
-      <CardsProjects projects={filteredData}/>}
+      <CardsProject projects={filteredData}/>}
     </Box>
     </Box>
   )

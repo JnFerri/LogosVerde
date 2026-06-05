@@ -12,10 +12,10 @@ export interface HeaderActions {
 export interface PageHeaderProps{
   title: string;
   actions?: HeaderActions[];
-  searchField: string;
-  searchValue: string;
-  onSearchFieldChange: (value: string) => void;
-  onSearchValueChange: (value: string) => void;
+  searchField?: string;
+  searchValue?: string;
+  onSearchFieldChange?: (value: string) => void;
+  onSearchValueChange?: (value: string) => void;
   searchOptions?: SearchOption[];
 }
 
@@ -48,7 +48,7 @@ export default function PageHeader({
         }}>
           {title}
         </Typography>
-        {searchOptions && (
+        {searchOptions && searchField && searchValue && onSearchFieldChange && onSearchValueChange && (
         <Box sx={{
           p:1,
           minWidth:'30%'

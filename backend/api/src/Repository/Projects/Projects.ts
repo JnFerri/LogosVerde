@@ -40,6 +40,18 @@ class ProjectsRepository {
 
   }
 
+  async getByIdWithRelations(id: ProjectIdParam): Promise<Project | null> {
+    const projectWithRelations = await this.db.projects.findUnique({
+      where: {id:id},
+      include: {
+        plantingAreas: true
+      }
+    });
+    if (!projectWithRelations) return null;
+    return ProjectMapper.toEntityWithRelations(projectWithRelations);
+  }
+
+
   async create(data: ProjectCreate): Promise<Project> {
     const projectCreated = await this.db.projects.create({
       data,
