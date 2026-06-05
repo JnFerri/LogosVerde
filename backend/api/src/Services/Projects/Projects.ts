@@ -14,7 +14,7 @@ export class ProjectsService {
   }
 
   async findById(id: ProjectIdParam): Promise<Project> {
-    const response = await this.repository.getById(id)
+    const response = await this.repository.getByIdWithRelations(id)
     if (!response) {
       throw ApiError.NotFound("Project not found")
     }

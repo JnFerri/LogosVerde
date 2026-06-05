@@ -48,17 +48,9 @@ export default function AppLayout() {
 
           overflowY: 'auto',
 
-          px: {
-            xs: 2,
-            sm: 3,
-            md: 4,
-          },
-
-          py: 3,
-
           pb: {
             xs: `calc(${MOBILE_NAV_HEIGHT}px + 24px)`,
-            md: 3,
+            md: '24px',
           },
         }}
       >
