@@ -3,6 +3,7 @@ import PageHeader from "../../../Components/Navigation/PageHeader"
 import { useParams } from "react-router-dom"
 import { useProjectStore } from "../Stores/useProjectStore"
 import { useProject } from "../Hooks/useProject"
+import DashBoardProject from "../Components/DashBoardProject"
 
 
 const ProjectPage = () => {
@@ -14,7 +15,7 @@ const ProjectPage = () => {
 
   const shouldFetch : boolean = !selectedProject || selectedProject.id !== Number(projectId)
 
-  const { data, isLoading} = useProject(Number(projectId) , shouldFetch)
+  const { data  } = useProject(Number(projectId) , shouldFetch)
  
 
   return (
@@ -25,7 +26,21 @@ const ProjectPage = () => {
       width: '100%'
     }}>
       <PageHeader title="Projetos - Areas de Plantio " />
-      
+      <DashBoardProject selectedProject={selectedProject ? selectedProject : data} />
+      <Box sx={{
+        display: 'grid',
+        width: '100%',
+        gridTemplateColumns: {xs:'repeat(auto-fit, minmax(240px, 1fr))',
+      md:'repeat(auto-fit, minmax(240px, 240px))',
+    },
+        gap: 2,
+        p:1,
+        borderRadius: 2,
+        backgroundColor:'background.paper',
+        boxShadow: 1
+    }}>
+
+      </Box>
     </Box>
   )
 }

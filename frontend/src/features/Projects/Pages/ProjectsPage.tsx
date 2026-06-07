@@ -100,7 +100,9 @@ const headerActions: HeaderActions[] = [
     <Box sx={{
     display: 'grid',
     width: '100%',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gridTemplateColumns: {xs:'repeat(auto-fit, minmax(240px, 1fr))',
+      md:'repeat(auto-fit, minmax(300px, 400pxfr))',
+    },
     gap: 2,
     p:1}}>
       {isLoading ? <p>Carregando...</p> :
