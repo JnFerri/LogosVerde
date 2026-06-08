@@ -30,6 +30,17 @@ const ProjectsPage = () => {
   }
 ];
 
+const breadcrumbs = [
+  {
+    label:'Home',
+    path:'/'
+  },
+  {
+    label:'Projetos',
+    path:'/projects'
+  }
+]
+
 
 
 const filteredData = useMemo(() => {
@@ -83,7 +94,15 @@ const headerActions: HeaderActions[] = [
     alignItems: 'center',
     width: '100%'
     }}>
-    <PageHeader title="Projetos" actions={headerActions} searchOptions ={searchOptions} searchField={searchField} searchValue={searchValue} onSearchFieldChange={setSearchField} onSearchValueChange={setSearchValue}/>
+    <PageHeader title="Projetos" 
+    actions={headerActions} 
+    searchOptions ={searchOptions} 
+    searchField={searchField} 
+    searchValue={searchValue} 
+    onSearchFieldChange={setSearchField} 
+    onSearchValueChange={setSearchValue}
+    breadcrumbs={breadcrumbs}
+    />
     {IsOpenModal && 
     
     <Modal open={IsOpenModal} onClose={() => setIsOpenModal(false)} sx={{
