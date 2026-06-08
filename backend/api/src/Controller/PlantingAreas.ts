@@ -3,7 +3,7 @@ import { ApiSuccess } from "../Models/DTO/ApiResponse/ApiSuccess";
 import type PlantingAreasService from "../Services/PlantingAreas/PlantingAreas";
 import type { Request, Response, NextFunction } from "express";
 
-export class PlantingAreaController {
+export class PlantingAreasController {
     constructor(private service: PlantingAreasService) {}
 
     getAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,6 +19,25 @@ export class PlantingAreaController {
             next(err);
         }
     };
+
+    getAllByProjectId = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            if(!req.validatedId){
+                throw ApiError.BadRequest("id not validated")
+            }
+            const idProject = req.validatedId;
+            const result = await this.service.findByProjectId(idProject);
+            if (result.length === 0) {
+                const responseEmpty = await ApiSuccess.success("No planting areas found", []);
+                return res.status(responseEmpty.statusCode).json(responseEmpty);
+            }
+            const response = await ApiSuccess.success("Planting areas found", result);
+            return res.status(response.statusCode).json(response);
+        }catch(err){
+            next(err)
+        }
+    }
+
 
     getById = async (req: Request, res: Response, next: NextFunction) => {
         try {

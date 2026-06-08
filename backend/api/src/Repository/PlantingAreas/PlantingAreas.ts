@@ -5,6 +5,7 @@ import mapToPrismaUpdate from "../../Helpers/mapToPrismaUpdate";
 import { PlantingAreaMapper } from "../../Mappers/PlantingArea";
 import type PlantingArea from "../../Models/Entities/PlantingArea/PlantingArea.entity";
 import type { PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate, PlantingAreaWithRelations } from "../../Models/Entities/PlantingArea/PlantingArea.types";
+import type { ProjectIdParam } from "../../Models/Entities/Project/Project.type";
 
 class PlantingAreasRepository {
   private db: PrismaClient
@@ -17,6 +18,14 @@ class PlantingAreasRepository {
     const plantingAreas = await this.db.plantingAreas.findMany();
     return PlantingAreaMapper.toEntities(plantingAreas);
   }
+
+  async getAllByProjectId(projectId: ProjectIdParam): Promise<PlantingArea[]> {
+    const plantingAreas = await this.db.plantingAreas.findMany({
+      where: { projectId: projectId },
+    });
+    return PlantingAreaMapper.toEntities(plantingAreas);
+  }
+
 
   async getAllWithRelations(): Promise<PlantingAreaWithRelations[]> {
     const plantingAreasWithRelations = await this.db.plantingAreas.findMany({
