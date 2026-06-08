@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { useProjectStore } from "../Stores/useProjectStore"
 import { useProject } from "../Hooks/useProject"
 import DashBoardProject from "../Components/DashBoardProject"
+import { useEffect } from "react"
 
 
 const ProjectPage = () => {
@@ -13,10 +14,33 @@ const ProjectPage = () => {
     (state) => state.selectedProject
   )
 
-  const shouldFetch : boolean = !selectedProject || selectedProject.id !== Number(projectId)
+  const setSelectedProject = useProjectStore(
+    (state) => state.setSelectedProject
+  )
 
+
+  const shouldFetch : boolean = !selectedProject || selectedProject.id !== Number(projectId)
   const { data  } = useProject(Number(projectId) , shouldFetch)
+
  
+  useEffect(() => {
+    setSelectedProject(data)
+  }, [data , setSelectedProject])
+  
+  const breadcrumbs = [
+    {
+      label:'Home',
+      path:'/'
+    },
+    {
+      label:'Projetos',
+      path:'/projects'
+    },
+    {
+      label:selectedProject ? selectedProject.name : '',
+      path:`/projects/${selectedProject ? selectedProject.id : ''}`
+    }
+  ]
 
   return (
     <Box sx={{
@@ -25,7 +49,7 @@ const ProjectPage = () => {
       alignItems: 'center',
       width: '100%'
     }}>
-      <PageHeader title="Projetos - Areas de Plantio " />
+      <PageHeader title= {selectedProject ? selectedProject.name : ''} breadcrumbs={breadcrumbs} />
       <DashBoardProject selectedProject={selectedProject ? selectedProject : data} />
       <Box sx={{
         display: 'grid',
