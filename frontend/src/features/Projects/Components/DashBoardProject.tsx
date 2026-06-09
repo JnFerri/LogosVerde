@@ -17,7 +17,7 @@ const DashBoardProject = ({ selectedProject }: { selectedProject: ProjectWithPla
         p:1
     }}>
         <CardDashBoard Icon={ForestIcon} title="Total de Areas de Plantio" value={selectedProject?.plantingAreas?.length || 0}/>
-        <CardDashBoard Icon={CalendarIcon} title="projeto criado em" value={selectedProject?.createdAt ? new Date(selectedProject.createdAt).toLocaleDateString() : ''} />
+        <CardDashBoard Icon={CalendarIcon} title="projeto criado em" value={selectedProject?.createdAt ? new Date(selectedProject.createdAt).toLocaleDateString('pt-BR') : ''} />
     </Box>
   )
 }

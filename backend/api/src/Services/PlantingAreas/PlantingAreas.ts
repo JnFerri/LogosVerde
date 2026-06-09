@@ -2,6 +2,7 @@ import { ApiError } from "../../Models/DTO/ApiResponse/ApiError";
 import type PlantingAreasRepository from "../../Repository/PlantingAreas/PlantingAreas";
 import type PlantingArea from "../../Models/Entities/PlantingArea/PlantingArea.entity";
 import type { PlantingAreaCreate, PlantingAreaIdParam, PlantingAreaUpdate } from "../../Models/Entities/PlantingArea/PlantingArea.types";
+import type { ProjectIdParam } from "../../Models/Entities/Project/Project.type";
 
 export class PlantingAreasService {
   constructor(private repository: PlantingAreasRepository) {
@@ -12,6 +13,12 @@ export class PlantingAreasService {
     const response = await this.repository.getAll()
     return response
   }
+
+  async findByProjectId(id: ProjectIdParam) : Promise<PlantingArea[]> {
+    const response = await this.repository.getAllByProjectId(id)
+    return response
+  }
+
 
   async findById(id: PlantingAreaIdParam): Promise<PlantingArea> {
     const response = await this.repository.getById(id)

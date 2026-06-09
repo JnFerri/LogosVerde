@@ -1,31 +1,32 @@
-import { Box } from "@mui/material"
-import PageHeader from "../../../Components/Navigation/PageHeader"
+import { Box, Modal } from "@mui/material"
+import PageHeader, { type HeaderActions } from "../../../Components/Navigation/PageHeader"
 import { useParams } from "react-router-dom"
 import { useProjectStore } from "../Stores/useProjectStore"
 import { useProject } from "../Hooks/useProject"
 import DashBoardProject from "../Components/DashBoardProject"
-import { useEffect } from "react"
-
+import CardsPlantingArea from "../../PlantingAreas/Components/CardsPlantingArea"
+import { usePlantingAreasByProjectId } from "../../PlantingAreas/Hooks/usePlantingAreasByProjectId"
+import AddIcon from '@mui/icons-material/Add';
+import { useState } from "react"
+import FormCreatePlantingArea from "../../PlantingAreas/Components/FormCreatePlantingArea"
 
 const ProjectPage = () => {
   const { projectId } = useParams()
+  const [isOpenModal, setIsOpenModal] = useState(false)
   
   const selectedProject = useProjectStore(
     (state) => state.selectedProject
   )
 
-  const setSelectedProject = useProjectStore(
-    (state) => state.setSelectedProject
-  )
-
 
   const shouldFetch : boolean = !selectedProject || selectedProject.id !== Number(projectId)
-  const { data  } = useProject(Number(projectId) , shouldFetch)
+  const { data :projectData  } = useProject(Number(projectId) , shouldFetch)
 
+  const shouldFetchAreaPlantings : boolean = !selectedProject?.plantingAreas || selectedProject?.plantingAreas.length === 0
+  
+  const {data : plantingAreasData } = usePlantingAreasByProjectId(selectedProject ? selectedProject.id : projectData.id , shouldFetchAreaPlantings)
  
-  useEffect(() => {
-    setSelectedProject(data)
-  }, [data , setSelectedProject])
+ 
   
   const breadcrumbs = [
     {
@@ -37,8 +38,18 @@ const ProjectPage = () => {
       path:'/projects'
     },
     {
-      label:selectedProject ? selectedProject.name : '',
+      label:`Projeto - ${selectedProject ? selectedProject.name : ''}`,
       path:`/projects/${selectedProject ? selectedProject.id : ''}`
+    }
+  ]
+
+  const headerActions: HeaderActions[] = [
+    {
+      description: 'Nova Área de Plantio',
+      icon: <AddIcon />,
+      onClick: () => {
+        setIsOpenModal(true)
+      }
     }
   ]
 
@@ -49,8 +60,23 @@ const ProjectPage = () => {
       alignItems: 'center',
       width: '100%'
     }}>
-      <PageHeader title= {selectedProject ? selectedProject.name : ''} breadcrumbs={breadcrumbs} />
-      <DashBoardProject selectedProject={selectedProject ? selectedProject : data} />
+      <PageHeader 
+        title= {`Projeto - ${selectedProject ? selectedProject.name : ''}`} 
+        breadcrumbs={breadcrumbs} 
+        actions={headerActions}
+      />
+      <DashBoardProject selectedProject={selectedProject ? selectedProject : projectData} />
+      
+      <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <Box sx={{ width: '80%', maxWidth: '500px', height: '40%', backgroundColor: 'white', borderRadius: 2 }}>
+          <FormCreatePlantingArea projectId={Number(projectId)} setIsOpenModal={setIsOpenModal} />
+        </Box>
+      </Modal>
+
       <Box sx={{
         display: 'grid',
         width: '100%',
@@ -63,7 +89,7 @@ const ProjectPage = () => {
         backgroundColor:'background.paper',
         boxShadow: 1
     }}>
-
+      <CardsPlantingArea plantingAreas={selectedProject?.plantingAreas || plantingAreasData || []} />
       </Box>
     </Box>
   )
