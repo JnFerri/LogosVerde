@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import type { ProjectCreate, ProjectUpdate,  } from "../Types/Project";
 import { useForm } from "react-hook-form";
@@ -47,7 +47,9 @@ export default function FormCreateProject({ setIsOpenModal , typeForm , setTypeF
       component='form'
       onSubmit={handleSubmit(typeForm === 'update' ? SubmitUpdateProject : SubmitCreateProject)}
     >
-
+      <Typography variant="h5" sx={{ marginBottom: '2rem' , display: 'flex', justifyContent: 'center'}}>
+        {typeForm === 'update' ? 'Editar Projeto' : 'Criar Projeto'}
+      </Typography>
       <TextField
         required
         id="outlined-required"

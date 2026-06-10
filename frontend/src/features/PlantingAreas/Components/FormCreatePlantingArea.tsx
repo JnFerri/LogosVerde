@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from "react-hook-form";
 import React from "react";
@@ -54,6 +54,9 @@ export default function FormCreatePlantingArea({projectId, plantingAreaId, setIs
       component='form'
       onSubmit={handleSubmit(typeForm === 'update' ? SubmitUpdatePlantingArea : onSubmitCreate)}
     >
+      <Typography variant="h5" sx={{ marginBottom: '2rem' , display: 'flex', justifyContent: 'center'}}>
+        {typeForm === 'update' ? 'Editar Área de Plantio' : 'Criar Área de Plantio'}
+      </Typography>
       <TextField
         required
         label="Nome da Área de Plantio"

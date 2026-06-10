@@ -115,7 +115,7 @@ const headerActions: HeaderActions[] = [
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-      <Box sx={{width:'80%',maxWidth: '500px', height:'40%', backgroundColor:'#f7f0e4', borderRadius:2}}>
+      <Box sx={{width:'80%',height:'auto', maxWidth: '500px', minheight:'40%', backgroundColor:'#f7f0e4', borderRadius:2}}>
       
       <FormCreateProject setIsOpenModal={setIsOpenModal} typeForm={typeForm} setTypeForm={setTypeForm}/>
 

@@ -104,7 +104,7 @@ export default function PageHeader({
             startIcon={action.icon}
             variant="contained"
             size="small"
-            sx={{ background: 'linear-gradient(135deg, #6e9662 0%, #4a6343 100%)' }}
+            sx={{ background: action.background || 'linear-gradient(135deg, #6e9662 0%, #4a6343 100%)' }}
           >
             {action.description}
           </Button>
