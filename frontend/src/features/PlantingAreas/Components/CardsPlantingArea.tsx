@@ -4,12 +4,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import {useNavigate } from 'react-router-dom';
-import ForestIcon from '@mui/icons-material/Forest';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Box, Stack } from '@mui/material';
 import type PlantingArea from '../Entities/PlantingArea';
 import SunnyIcon from '@mui/icons-material/Sunny';
-
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 function CardsPlantingArea({ plantingAreas }: { plantingAreas : PlantingArea[] }) {
   const navigate = useNavigate()
   
@@ -47,7 +46,7 @@ function CardsPlantingArea({ plantingAreas }: { plantingAreas : PlantingArea[] }
                 }}
               >
                 <Box sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '50%', p: 1.5, mb: 1 }}>
-                  <ForestIcon sx={{ fontSize: 40 }} />
+                  <LocalFloristIcon/>
                 </Box>
                 <Typography variant="h5" sx={{ textAlign:'center', fontWeight: 'bold', px: 2 }}>
                   {area.name}
@@ -67,13 +66,13 @@ function CardsPlantingArea({ plantingAreas }: { plantingAreas : PlantingArea[] }
                 <Stack spacing={2}>
                   <Box sx={{ display: 'flex',flexDirection:'column', alignItems: 'center', gap: 1.5 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    <CalendarMonthIcon sx={{ color: '#8b5a2b', fontSize: 20 }} />
+                    <CalendarMonthIcon sx={{ color: '#8b5a2b' }} />
                     <Typography variant="body2" color="text.secondary">
                       Criado em: {new Date(area.createdAt).toLocaleDateString('PT-br')}
                     </Typography>
                     </Box>
                     <Box  sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                    <SunnyIcon/>
+                    <SunnyIcon sx={{ color: '#8b5a2b'}}/>
                     <Typography variant="body2" color="text.secondary">
                       Horas de Sol: {area.sunshineHours ? area.sunshineHours : 'N/A'}
                     </Typography>

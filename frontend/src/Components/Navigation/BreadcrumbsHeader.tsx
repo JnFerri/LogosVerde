@@ -1,7 +1,7 @@
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import type { breadcrumbs } from "./PageHeader";
+import type { breadcrumbs } from "../../Interface/PageHeader/breadcrumbs";
 
 const BreadcrumbsHeader = ({breadcrumbs} : {breadcrumbs: breadcrumbs[]}) => {
   const navigate = useNavigate();

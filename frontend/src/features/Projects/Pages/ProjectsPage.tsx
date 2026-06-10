@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {  useMemo, useState } from "react";
 import FormCreateProject from "../Components/FormCreatePorject";
 import PageHeader from "../../../Components/Navigation/PageHeader";
-import type { SearchOption } from "../../../Interface/SearchOptions";
+import type { SearchOption } from "../../../Interface/PageHeader/SearchOptions";
 import type Project from "../Entities/Project";
 
 
