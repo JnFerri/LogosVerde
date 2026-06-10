@@ -49,7 +49,9 @@ export default function FormCreatePlantingArea({ projectId, setIsOpenModal }: Fo
       <TextField
         type = 'number'
         label="Quantidade de horas de sol"
-        {...register('sunshineHours')}
+        {...register('sunshineHours', {
+          valueAsNumber: true,
+        })}
         sx={{ marginBottom: '2rem', width: '100%' }}
       />
       <Button

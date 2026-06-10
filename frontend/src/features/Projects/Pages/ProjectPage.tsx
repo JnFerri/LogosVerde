@@ -20,11 +20,13 @@ const ProjectPage = () => {
 
 
   const shouldFetch : boolean = !selectedProject || selectedProject.id !== Number(projectId)
-  const { data :projectData  } = useProject(Number(projectId) , shouldFetch)
+  const { data :projectData  } = useProject(Number(projectId), shouldFetch)
 
   const shouldFetchAreaPlantings : boolean = !selectedProject?.plantingAreas || selectedProject?.plantingAreas.length === 0
   
-  const {data : plantingAreasData } = usePlantingAreasByProjectId(selectedProject ? selectedProject.id : projectData.id , shouldFetchAreaPlantings)
+  
+  const {data : plantingAreasData } = usePlantingAreasByProjectId(selectedProject ? selectedProject?.id : projectData?.id, shouldFetchAreaPlantings )
+
  
  
   
@@ -84,10 +86,7 @@ const ProjectPage = () => {
       md:'repeat(auto-fit, minmax(240px, 240px))',
     },
         gap: 2,
-        p:1,
-        borderRadius: 2,
-        backgroundColor:'background.paper',
-        boxShadow: 1
+        p:1
     }}>
       <CardsPlantingArea plantingAreas={selectedProject?.plantingAreas || plantingAreasData || []} />
       </Box>

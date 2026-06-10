@@ -3,11 +3,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import ForestIcon from '@mui/icons-material/Forest';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Box, Stack } from '@mui/material';
 import type PlantingArea from '../Entities/PlantingArea';
+import SunnyIcon from '@mui/icons-material/Sunny';
 
 function CardsPlantingArea({ plantingAreas }: { plantingAreas : PlantingArea[] }) {
   const navigate = useNavigate()
@@ -64,11 +65,19 @@ function CardsPlantingArea({ plantingAreas }: { plantingAreas : PlantingArea[] }
                 }}
               >
                 <Stack spacing={2}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                  <Box sx={{ display: 'flex',flexDirection:'column', alignItems: 'center', gap: 1.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                     <CalendarMonthIcon sx={{ color: '#8b5a2b', fontSize: 20 }} />
                     <Typography variant="body2" color="text.secondary">
-                      Criado em: <strong>{new Date(area.createdAt).toLocaleDateString('PT-br')}</strong>
+                      Criado em: {new Date(area.createdAt).toLocaleDateString('PT-br')}
                     </Typography>
+                    </Box>
+                    <Box  sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <SunnyIcon/>
+                    <Typography variant="body2" color="text.secondary">
+                      Horas de Sol: {area.sunshineHours ? area.sunshineHours : 'N/A'}
+                    </Typography>
+                    </Box>
                   </Box>
                 </Stack>
               </Box>
