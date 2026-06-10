@@ -52,7 +52,7 @@ function CardsProject({ projects }: { projects: ProjectWithPlantingAreas[] }) {
                 }}
               >
                 <Box sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '50%', p: 1.5, mb: 1 }}>
-                  <ForestIcon sx={{ fontSize: 40 }} />
+                  <ForestIcon />
                 </Box>
                 <Typography variant="h5" sx={{ textAlign:'center', fontWeight: 'bold', px: 2 }}>
                   {project.name}

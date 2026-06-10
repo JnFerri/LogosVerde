@@ -1,30 +1,7 @@
 import { Box,  Button, MenuItem, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
-import type { SearchOption } from "../../Interface/SearchOptions";
 import { theme } from "../../Contexts/Theme";
 import BreadcrumbsHeader from "./BreadcrumbsHeader";
-
-export interface HeaderActions {
-  description: string;
-  icon: React.ReactNode;
-  onClick: () => void;
-}
-export interface breadcrumbs {
-  label: string;
-  path?: string;
-}
-
-
-
-export interface PageHeaderProps {
-  title: string;
-  actions?: HeaderActions[];
-  searchField?: string;
-  searchValue?: string;
-  onSearchFieldChange?: (value: string) => void;
-  onSearchValueChange?: (value: string) => void;
-  searchOptions?: SearchOption[];
-  breadcrumbs?:breadcrumbs[];
-}
+import type { PageHeaderProps } from "../../Interface/PageHeader/PageHeaderProps";
 
 export default function PageHeader({
   title,
