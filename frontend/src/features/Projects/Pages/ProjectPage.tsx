@@ -1,5 +1,5 @@
 import { Box, Modal } from "@mui/material"
-import PageHeader, { type HeaderActions } from "../../../Components/Navigation/PageHeader"
+import PageHeader from "../../../Components/Navigation/PageHeader"
 import { useParams } from "react-router-dom"
 import { useProjectStore } from "../Stores/useProjectStore"
 import { useProject } from "../Hooks/useProject"
@@ -9,10 +9,15 @@ import { usePlantingAreasByProjectId } from "../../PlantingAreas/Hooks/usePlanti
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react"
 import FormCreatePlantingArea from "../../PlantingAreas/Components/FormCreatePlantingArea"
+import type { HeaderActions } from "../../../Interface/PageHeader/HeaderActions"
+import EditIcon from '@mui/icons-material/Edit';
+import FormCreateProject from "../Components/FormCreatePorject"
+
 
 const ProjectPage = () => {
   const { projectId } = useParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [typeForm , setTypeForm] = useState('')
   
   const selectedProject = useProjectStore(
     (state) => state.selectedProject
@@ -50,6 +55,15 @@ const ProjectPage = () => {
       description: 'Nova Área de Plantio',
       icon: <AddIcon />,
       onClick: () => {
+        setTypeForm('create')
+        setIsOpenModal(true)
+      }
+    },
+    {
+      description: 'Editar Projeto',
+      icon: <EditIcon />,
+      onClick: () => {
+        setTypeForm('update')
         setIsOpenModal(true)
       }
     }
@@ -69,13 +83,16 @@ const ProjectPage = () => {
       />
       <DashBoardProject selectedProject={selectedProject ? selectedProject : projectData} />
       
-      <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} sx={{
+      <Modal open={isOpenModal} onClose={() =>{
+        setTypeForm('')
+       setIsOpenModal(false)}} sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Box sx={{ width: '80%', maxWidth: '500px', height: '40%', backgroundColor: 'white', borderRadius: 2 }}>
-          <FormCreatePlantingArea projectId={Number(projectId)} setIsOpenModal={setIsOpenModal} />
+        <Box sx={{ width: '80%', maxWidth: '500px', height: '40%', backgroundColor:'#f7f0e4', borderRadius: 2 }}>
+          {typeForm === 'create' && <FormCreatePlantingArea projectId={Number(projectId)} typeForm={typeForm} setTypeForm={setTypeForm} setIsOpenModal={setIsOpenModal} />}
+          {typeForm === 'update' && <FormCreateProject projectId={Number(projectId)} typeForm={typeForm} setTypeForm={setTypeForm} setIsOpenModal={setIsOpenModal} />}
         </Box>
       </Modal>
 
