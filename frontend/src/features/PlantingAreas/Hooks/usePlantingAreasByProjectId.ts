@@ -8,6 +8,6 @@ export const usePlantingAreasByProjectId = (projectId: number, enabled: boolean 
       const response = await projectService.getByProjectId(projectId);
       return response.data.data;
     },
-    enabled: !!projectId && enabled,
+    enabled: enabled && !!projectId,
   });
 };
