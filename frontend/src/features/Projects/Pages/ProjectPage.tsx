@@ -1,6 +1,6 @@
 import { Box, Modal } from "@mui/material"
 import PageHeader from "../../../Components/Navigation/PageHeader"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useProjectStore } from "../Stores/useProjectStore"
 import { useProject } from "../Hooks/useProject"
 import DashBoardProject from "../Components/DashBoardProject"
@@ -12,13 +12,19 @@ import FormCreatePlantingArea from "../../PlantingAreas/Components/FormCreatePla
 import type { HeaderActions } from "../../../Interface/PageHeader/HeaderActions"
 import EditIcon from '@mui/icons-material/Edit';
 import FormCreateProject from "../Components/FormCreatePorject"
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ConfirmDialog } from "../../../Components/Utils/ConfirmDialog"
+import { useDeleteProject } from "../Hooks/useDeleteProject"
 
 
 const ProjectPage = () => {
   const { projectId } = useParams()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [typeForm , setTypeForm] = useState('')
-  
+  const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
+  const navigate = useNavigate()
+
+  const deleteProject = useDeleteProject()
   const selectedProject = useProjectStore(
     (state) => state.selectedProject
   )
@@ -66,8 +72,20 @@ const ProjectPage = () => {
         setTypeForm('update')
         setIsOpenModal(true)
       }
+    },
+    {
+      description: 'Excluir Projeto',
+      icon: <DeleteIcon />,
+      onClick: () => {
+        setIsOpenConfirmation(true)
+      },
+      background: '#ab4141'
     }
   ]
+
+  const removeProject = () => {
+    deleteProject.mutate(selectedProject ? selectedProject?.id : projectData?.id)
+  }
 
   return (
     <Box sx={{
@@ -90,11 +108,25 @@ const ProjectPage = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Box sx={{ width: '80%', maxWidth: '500px', height: '40%', backgroundColor:'#f7f0e4', borderRadius: 2 }}>
+        <Box sx={{ width: '80%', maxWidth: '500px', height: 'auto',minheight:'40%', backgroundColor:'#f7f0e4', borderRadius: 2 }}>
           {typeForm === 'create' && <FormCreatePlantingArea projectId={Number(projectId)} typeForm={typeForm} setTypeForm={setTypeForm} setIsOpenModal={setIsOpenModal} />}
           {typeForm === 'update' && <FormCreateProject projectId={Number(projectId)} typeForm={typeForm} setTypeForm={setTypeForm} setIsOpenModal={setIsOpenModal} />}
         </Box>
       </Modal>
+
+      <ConfirmDialog open = {isOpenConfirmation}
+      message = {`Tem certeza que deseja excluir o projeto ${selectedProject?.name}`}
+      onConfirm = {() => {
+        setIsOpenConfirmation(false)
+        removeProject()
+        navigate('/projects')
+      
+      }}
+      onClose = {() => {
+        setIsOpenConfirmation(false)
+      }
+    }
+      />
 
       <Box sx={{
         display: 'grid',
