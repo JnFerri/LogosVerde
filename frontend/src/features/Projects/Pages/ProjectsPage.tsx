@@ -1,18 +1,19 @@
 import { Box, Modal } from "@mui/material"
 import CardsProject from "../Components/CardsProject";
 import { useProjectsWithAreaPlantings } from "../Hooks/useProjectsWithAreaPlantings";
-import type { HeaderActions } from "../../../Components/Navigation/PageHeader";
 import AddIcon from '@mui/icons-material/Add';
 import {  useMemo, useState } from "react";
 import FormCreateProject from "../Components/FormCreatePorject";
 import PageHeader from "../../../Components/Navigation/PageHeader";
 import type { SearchOption } from "../../../Interface/PageHeader/SearchOptions";
 import type Project from "../Entities/Project";
+import type { HeaderActions } from "../../../Interface/PageHeader/HeaderActions";
 
 
 
 const ProjectsPage = () => {
   const {data, isLoading} = useProjectsWithAreaPlantings()
+  const [typeForm , setTypeForm] = useState('')
   const [IsOpenModal, setIsOpenModal] = useState(false)
   const [searchField, setSearchField] = useState('')
   const [searchValue, setSearchValue] = useState('')
@@ -80,6 +81,7 @@ const headerActions: HeaderActions[] = [
     icon: <AddIcon />,
     onClick: () => {
       setIsOpenModal(true)
+      setTypeForm('create')
     }
   }
 ]
@@ -105,13 +107,17 @@ const headerActions: HeaderActions[] = [
     />
     {IsOpenModal && 
     
-    <Modal open={IsOpenModal} onClose={() => setIsOpenModal(false)} sx={{
+    <Modal open={IsOpenModal} onClose={() => {
+      setIsOpenModal(false)
+      setTypeForm('')}} 
+      sx={{
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-      <Box sx={{width:'80%', height:'40%', backgroundColor:'white'}}>
-      <FormCreateProject setIsOpenModal={setIsOpenModal}/>
+      <Box sx={{width:'80%',maxWidth: '500px', height:'40%', backgroundColor:'#f7f0e4', borderRadius:2}}>
+      
+      <FormCreateProject setIsOpenModal={setIsOpenModal} typeForm={typeForm} setTypeForm={setTypeForm}/>
 
       </Box>
     </Modal>
