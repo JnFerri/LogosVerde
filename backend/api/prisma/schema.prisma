@@ -97,10 +97,30 @@ model PlantingAreaPlants {
   harvestQuantity                                                                        Decimal?                   @db.Decimal(5, 2)                 @map("harvest_quantity") 
   plants                                                                                 Plants                     @relation(fields: [plantId], references: [id])
   plantingAreas                                                                         PlantingAreas               @relation(fields: [plantingAreaId], references: [id])
+  PlantingAreaLayoutItems                                                               PlantingAreaLayoutItem[]
+
 
   @@map("planting_area_plants")
   @@index([plantId], map: "plant_id_idx")
   @@index([plantingAreaId], map: "planting_area_id_idx")
+
+}
+
+model PlantingAreaLayoutItem {
+  id Int @id @default(autoincrement())
+
+  plantingAreaPlantId Int
+
+  x Decimal @db.Decimal(8,2)
+  y Decimal @db.Decimal(8,2)
+
+  width Decimal? @db.Decimal(8,2)
+  height Decimal? @db.Decimal(8,2)
+
+  plantingAreaPlant PlantingAreaPlants @relation(fields: [plantingAreaPlantId],references: [id])
+
+  @@map("planting_area_layout_item")
+  @@index([plantingAreaPlantId], map: "planting_area_plant_id_idx")
 }
 
 model PlantingAreas {
@@ -109,6 +129,8 @@ model PlantingAreas {
   createdAt                 DateTime                    @default(now()) @db.DateTime(0)     @map("created_at")
   sunshineHours             Int?                        @map("sunshine_hours")  
   projectId                 Int                         @map("project_id")
+  width                     Decimal?                    @db.Decimal(10, 2)           @map("width")
+  length                    Decimal?                    @db.Decimal(10, 2)           @map("length")
   plantingAreaFertilizing   PlantingAreaFertilizing[]
   plantingAreaPlants        PlantingAreaPlants[]
   projects                  Projects                    @relation(fields: [projectId], references: [id])
