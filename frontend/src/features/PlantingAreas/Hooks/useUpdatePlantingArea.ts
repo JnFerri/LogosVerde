@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { projectService } from "../Services/PlantingArea";
+import { plantingAreaService } from "../Services/PlantingArea";
 import type { PlantingAreaUpdate } from "../Types/PlantingAreas";
 
 export const useUpdatePlantingArea = () => {
@@ -7,7 +7,7 @@ export const useUpdatePlantingArea = () => {
 
   return useMutation({
     mutationFn: ({ id, data }: { id: number; data: PlantingAreaUpdate }) =>
-      projectService.update(id, data),
+      plantingAreaService.update(id, data),
     onSuccess: (response) => {
       const updatedArea = response.data.data;
       queryClient.invalidateQueries({ queryKey: ["plantingAreas"] });
