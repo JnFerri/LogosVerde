@@ -1,9 +1,10 @@
 import type z from "zod";
 import type { CreatePlantSchema, UpdatePlantSchema , PlantIdParamSchema } from "../../../Schemas/Plants";
-import type Plant from "./Plant.entity";
-import type UnitMeasurements from "../UnitMesurement/UnitMeasurements.entity";
-import type PlantTypes from "../PlantTypes/PlantTypes.entity";
-import type PlantPestDisease from "../PlantPestDisease/PlantPestDisease.entity";
+import type Plant from "../Entities/Plant";
+import type UnitMeasurements from "../../../Entities/UnitMesurement/UnitMeasurements.entity";
+import type PlantPestDisease from "../../../Entities/PlantPestDisease/PlantPestDisease.entity";
+import type PlantTypes from "../../../Entities/PlantTypes/PlantTypes.entity";
+
 
 
 export type PlantWithRelations = Plant & {

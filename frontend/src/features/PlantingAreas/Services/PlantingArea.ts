@@ -27,7 +27,7 @@ const remove = (id: PlantingAreaIdParam) => {
   return api.delete(`/plantingAreas/${id}`);
 };
 
-export const projectService = {
+export const plantingAreaService = {
   getAll,
   getById,
   getByProjectId,
