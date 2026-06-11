@@ -22,10 +22,17 @@ const remove = (id: PlantIdParam) => {
   return api.delete(`/plants/${id}`);
 };
 
+const getAllPlantsTypes = () => {
+  return api.get(`/plantTypes/`);
+};
+
+
+
 export const plantService = {
   getAll,
   getById,
   create,
   update,
   remove,
+  getAllPlantsTypes,
 };
