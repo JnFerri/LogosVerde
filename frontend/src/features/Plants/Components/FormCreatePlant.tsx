@@ -75,6 +75,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          flexWrap:'wrap',
           gap: 2
         }}
       >
@@ -87,7 +88,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
             defaultValue={'corn'}
             required
             {...register('plantIconName')}
-            sx={{ marginBottom: '2rem', width: '20%' }}
+            sx={{ marginBottom: '2rem', width: {md:'20%', xs:'50%'} }}
 
           >
             {plantsIcons.map((icon) => (
@@ -135,6 +136,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          flexWrap:'wrap',
           gap: 2
         }}
       >
@@ -162,6 +164,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          flexWrap:'wrap',
           gap: 2
         }}
       >
@@ -216,6 +219,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          flexWrap:'wrap',
           gap: 2
         }}
       >
@@ -269,6 +273,7 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
+          flexWrap:'wrap',
           gap: 2
         }}
       >
