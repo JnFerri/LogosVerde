@@ -3,10 +3,12 @@ import SendIcon from '@mui/icons-material/Send';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreatePlant } from "../Hooks/useCreatePlant";
-import { CreatePlantSchema } from "../../../Schemas/Plants";
+import { CreatePlantSchema } from "../Schemas/Plants";
 import type { PlantCreate } from "../Types/Plant";
 import { usePlantTypes } from "../Hooks/usePlantTypes";
 import type PlantTypes from "../../../Entities/PlantTypes/PlantTypes.entity";
+import { usePlantIcons } from "../Hooks/usePlantsIcons";
+
 
 interface FormCreatePlantProps {
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +24,10 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
     plantTypeId: 1
   }
   });
+
+  const plantsIcons = usePlantIcons;
+
+
 
   const { data: plantTypesData } = usePlantTypes();
 
@@ -62,12 +68,46 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
       <Typography variant="h5" sx={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
         {typeForm === 'update' ? 'Editar Planta' : 'Criar Nova Planta'}
       </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          gap: 2
+        }}
+      >
+      <TextField
+        required
+        select
+        label="Imagem"
+        {...register('plantIconName')}
+        sx={{ marginBottom: '2rem', width: '25%' }}
+      >
+        {
+          plantsIcons && plantsIcons.map((plantIcon: {id: number, name: string, src: string}) => (
+            <MenuItem key={plantIcon.id} value={plantIcon.name}>
+              <Box component={'img'}
+                sx={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                }}
+                src={plantIcon.src}
+                >
+              </Box>
+            </MenuItem>
+          ))
+        }
+      </TextField>
       <TextField
         required
         label="Nome"
         {...register('name')}
         sx={{ marginBottom: '2rem', width: '100%' }}
       />
+      </Box>
 
       <TextField
         required

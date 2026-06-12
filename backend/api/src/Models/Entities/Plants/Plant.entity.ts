@@ -16,6 +16,7 @@ export default class Plant {
     public plantingDistancePlants: number,
     public managementDescription: string | null,
     public plantingDescription: string | null,
+    public plantIconName : string,
     public harvestUnitMeasurementId: number ,
     public plantingUnitMeasurementId: number,
     public createdAt: Date

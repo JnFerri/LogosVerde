@@ -157,6 +157,7 @@ model Plants {
   plantingUnitMeasurementId                                              Int                    @default(1)                       @map("planting_unit_measurement_id")
   managementDescription                                                  String?                @db.Text                   @map("management_description")
   plantingDescription                                                    String?                @db.Text                   @map("planting_description")
+  plantIconName                                                          String?                @db.VarChar(180)           @map("plant_icon_name")
   createdAt                                                              DateTime               @default(now()) @db.DateTime(0)     @map("created_at") 
   intercroppings                                                         PlantIntercropping[]   @relation("PlantIntercropping_Main")
   intercroppedWith                                                       PlantIntercropping[]   @relation("PlantIntercropping_Secondary")

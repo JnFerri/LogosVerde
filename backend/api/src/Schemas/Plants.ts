@@ -24,11 +24,34 @@ export const PlantSchema = z.object({
   plantingDistancePlants: z.number().int().positive(),
 
   managementDescription: z.string().nullable(),
-  plantingDescription: z.string().nullable()
+  plantingDescription: z.string().nullable(),
+  plantIconName: z.string(),
+  harvestUnitMeasurementId: z.number().int().positive(),
+  plantingUnitMeasurementId: z.number().int().positive(),
+  createdAt: z.coerce.date()
+
 
 });
 
-export const PlantSchemaWithRules = PlantSchema.refine(
+export const PlantSchemaWithRules = PlantSchema.pick({
+  name : true,
+  scientificName: true,
+  harvestMinDays: true,
+  harvestMaxDays: true,
+  sunshineMaxHours: true,
+  sunshineMinHours: true,
+  plantTypeId: true,
+  germinationMinDays: true,
+  germinationMaxDays: true,
+  phMin: true,
+  phMax: true,
+  plantingDistancePlants: true,
+  managementDescription: true,
+  plantingDescription: true,
+  plantIconName: true,
+  harvestUnitMeasurementId: true,
+  plantingUnitMeasurementId: true
+}).refine(
   (data) => data.harvestMaxDays >= data.harvestMinDays,
   {
     message: "harvestMaxDays it has to be bigger than harvestMinDays",

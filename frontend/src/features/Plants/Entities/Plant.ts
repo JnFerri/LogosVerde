@@ -14,9 +14,11 @@ export default class Plant {
   public plantingDistancePlants: number;
   public managementDescription: string | null;
   public plantingDescription: string | null;
+  public plantIconName: string;
   public harvestUnitMeasurementId: number;
   public plantingUnitMeasurementId: number;
   public createdAt: Date;
+
 
   constructor(
     id: number,
@@ -34,6 +36,7 @@ export default class Plant {
     plantingDistancePlants: number,
     managementDescription: string | null,
     plantingDescription: string | null,
+    plantIconName: string,
     harvestUnitMeasurementId: number,
     plantingUnitMeasurementId: number,
     createdAt: Date
@@ -53,6 +56,7 @@ export default class Plant {
     this.plantingDistancePlants = plantingDistancePlants;
     this.managementDescription = managementDescription;
     this.plantingDescription = plantingDescription;
+    this.plantIconName = plantIconName;
     this.harvestUnitMeasurementId = harvestUnitMeasurementId;
     this.plantingUnitMeasurementId = plantingUnitMeasurementId;
     this.createdAt = createdAt;

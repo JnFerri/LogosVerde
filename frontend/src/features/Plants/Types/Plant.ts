@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { CreatePlantSchema, UpdatePlantSchema , PlantIdParamSchema } from "../../../Schemas/Plants";
+import type { CreatePlantSchema, UpdatePlantSchema , PlantIdParamSchema } from "../Schemas/Plants";
 import type Plant from "../Entities/Plant";
 import type UnitMeasurements from "../../../Entities/UnitMesurement/UnitMeasurements.entity";
 import type PlantPestDisease from "../../../Entities/PlantPestDisease/PlantPestDisease.entity";
