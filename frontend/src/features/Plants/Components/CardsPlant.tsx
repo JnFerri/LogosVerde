@@ -18,7 +18,7 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
         width: '100%',
         gridTemplateColumns: {
           xs: 'repeat(auto-fit, minmax(240px, 1fr))',
-          md: 'repeat(auto-fit, minmax(450px, 500px))',
+          md: 'repeat(auto-fit, minmax(350px, 5fr))',
         },
         gap: 2,
         p: 1,
@@ -36,7 +36,7 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
     PlantIcons.find((icon) => icon.name === plant.plantIconName)
   )
   return (
-          <Card key={plant.id}>
+          <Card key={plant.id} sx={{backgroundColor:'#f7f0e4'}}>
             <CardContent
             sx={{ display: 'flex', flexDirection: 'row' ,justifyContent: 'space-between', gap:1 }}>
               <Box
@@ -49,8 +49,8 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
               >
               </Box>
               <Box sx={{ display: 'flex',flexDirection:'column', justifyContent: 'space-between', height: '100%', width:'75%'}}>
-              <Typography variant="h6" component="div">{plant.name}</Typography>
-              <Typography variant="body2" color="text.secondary">Nome Científico: {plant.scientificName}</Typography>
+              <Typography variant="h6" component="div">{plant.name.toLocaleUpperCase()}</Typography>
+              <Typography variant="body2" color="text.secondary">{plant.scientificName.toLocaleUpperCase()}</Typography>
               <Box sx={{
                 fisplay:'flex',
                 flexWrap:'wrap',

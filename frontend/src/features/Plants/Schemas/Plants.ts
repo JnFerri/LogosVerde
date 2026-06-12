@@ -73,7 +73,11 @@ export const PlantSchemaWithRules = PlantSchema.pick({
     message: "phMax it has to be bigger than phMin",
     path: ["phMax"],
   }
-);
+).transform((data) => ({
+  ...data,
+  name: data.name.toLocaleUpperCase(),
+  scientificName: data.scientificName.toLocaleUpperCase(),
+}));
 
 export const CreatePlantSchema = PlantSchemaWithRules;
 
