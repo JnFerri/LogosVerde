@@ -23,6 +23,7 @@ export class PlantMapper {
       data.plantingDistancePlants,
       data.managementDescription,
       data.plantingDescription,
+      data.plantIconName,
       data.harvestUnitMeasurementId,
       data.plantingUnitMeasurementId,
       data.createdAt
