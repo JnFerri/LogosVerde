@@ -1,6 +1,6 @@
-export default class PlantTypes{
+export default class PlantType {
   constructor(
     public readonly id: number,
-    public description : string 
-  ){}
+    public readonly description: string
+  ) {}
 }
