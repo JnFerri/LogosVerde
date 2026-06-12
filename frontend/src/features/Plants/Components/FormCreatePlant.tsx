@@ -8,34 +8,32 @@ import type { PlantCreate } from "../Types/Plant";
 import { usePlantTypes } from "../Hooks/usePlantTypes";
 import type PlantTypes from "../../../Entities/PlantTypes/PlantTypes.entity";
 import { usePlantIcons } from "../Hooks/usePlantsIcons";
+import { useUnitMeasurements } from "../../UnitMeasurement/Hooks/useUnitMeasurements";
+import type UnitMeasurements from "../../UnitMeasurement/Entities/UnitMeasurements";
 
 
 interface FormCreatePlantProps {
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   typeForm: string;
   setTypeForm: React.Dispatch<React.SetStateAction<string>>;
-  plantId?: number;
+  plantId?: string | number;
 }
 
+
 export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm, plantId }: FormCreatePlantProps) {
+  const plantsIcons = usePlantIcons()
+  const { data: plantTypesData } = usePlantTypes();
+  const {data: unitMeasurementsData} = useUnitMeasurements();
   const { register, handleSubmit } = useForm<PlantCreate>({
-    resolver: zodResolver(CreatePlantSchema),
-    defaultValues: {
-    plantTypeId: 1
-  }
+    resolver: zodResolver(CreatePlantSchema)
   });
 
-  const plantsIcons = usePlantIcons;
 
-
-
-  const { data: plantTypesData } = usePlantTypes();
 
 
   const createPlant = useCreatePlant();
 
   const SubmitCreatePlant = (data: PlantCreate) => {
-    console.log('teste')
     createPlant.mutate(data, {
       onSuccess: () => {
         setTypeForm('');
@@ -63,7 +61,9 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
         padding: 4
       }}
       component='form'
-      onSubmit={handleSubmit(typeForm === 'update' ? SubmitUpdatePlant : SubmitCreatePlant)}
+      onSubmit={handleSubmit(typeForm === 'update' ? SubmitUpdatePlant : SubmitCreatePlant, (errors) => {
+        console.log('ERROS:', errors);
+      })}
     >
       <Typography variant="h5" sx={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
         {typeForm === 'update' ? 'Editar Planta' : 'Criar Nova Planta'}
@@ -78,35 +78,48 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           gap: 2
         }}
       >
-      <TextField
-        required
-        select
-        label="Imagem"
-        {...register('plantIconName')}
-        sx={{ marginBottom: '2rem', width: '25%' }}
-      >
         {
-          plantsIcons && plantsIcons.map((plantIcon: {id: number, name: string, src: string}) => (
-            <MenuItem key={plantIcon.id} value={plantIcon.name}>
-              <Box component={'img'}
+          plantsIcons && plantsIcons.length > 0 &&
+
+          <TextField
+            select
+            label="Imagem"
+            defaultValue={'corn'}
+            required
+            {...register('plantIconName')}
+            sx={{ marginBottom: '2rem', width: '20%' }}
+
+          >
+            {plantsIcons.map((icon) => (
+              <MenuItem
+                key={icon.id}
+                value={icon.name}
                 sx={{
-                  width: '40px',
-                  height: '40px',
-                  objectFit: 'cover',
+                  display: "flex",
+                  justifyContent: 'center'
                 }}
-                src={plantIcon.src}
-                >
-              </Box>
-            </MenuItem>
-          ))
+              >
+                <Box
+                  component={'img'}
+                  src={icon.src}
+                  alt={icon.name}
+                  sx={{
+                    width: '40px',
+                    height: '40px',
+                    objectFit: 'cover'
+                  }}
+                />
+              </MenuItem>
+            ))}
+          </TextField>
+
         }
-      </TextField>
-      <TextField
-        required
-        label="Nome"
-        {...register('name')}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
+        <TextField
+          required
+          label="Nome"
+          {...register('name')}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
       </Box>
 
       <TextField
@@ -125,22 +138,22 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           gap: 2
         }}
       >
-      <TextField
-        required
-        label="Tempo minimo até colheita (dias)"
-        {...register('harvestMinDays', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
-      <TextField
-        required
-        label="Tempo maximo até colheita (dias)"
-        {...register('harvestMaxDays', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
+        <TextField
+          required
+          label="Tempo minimo até colheita (dias)"
+          {...register('harvestMinDays', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
+        <TextField
+          required
+          label="Tempo maximo até colheita (dias)"
+          {...register('harvestMaxDays', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
       </Box>
       <Box
         sx={{
@@ -152,38 +165,103 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           gap: 2
         }}
       >
-      <TextField
-        required
-        label="Minimo de horas de sol"
-        {...register('sunshineMinHours', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
-      <TextField
-        required
-        label="Maximo de horas de sol"
-        {...register('sunshineMaxHours', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
+        <TextField
+          required
+          label="Minimo de horas de sol"
+          {...register('sunshineMinHours', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
+        <TextField
+          required
+          label="Maximo de horas de sol"
+          {...register('sunshineMaxHours', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
       </Box>
-      <TextField
-        required
-        select
-        label="Tipo de planta"
-        {...register('plantTypeId')}
-        sx={{ marginBottom: '2rem', width: '100%' }}
+      {plantTypesData && plantTypesData.length > 0 &&
+        <TextField
+          required
+          select
+          defaultValue={1}
+          label="Tipo de planta"
+          {...register('plantTypeId', {
+            setValueAs: (v) => v === '' || v === 0 ? undefined : Number(v)  // Converte para number
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        >
+          {
+
+            plantTypesData.map((type: PlantTypes) => (
+              <MenuItem
+                key={type.id}
+                value={type.id}
+              >
+                {type.description}
+              </MenuItem>
+            ))
+
+          }
+        </TextField>
+      }
+      {unitMeasurementsData && unitMeasurementsData.length > 0 &&
+       
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          gap: 2
+        }}
       >
-        {
-          plantTypesData && plantTypesData.map((plantType : PlantTypes ) => (
-            <MenuItem key={plantType.id} value={plantType.id}>
-              {plantType.description}
+        <TextField
+          required
+          select
+          defaultValue={1}
+          label="Unidade de medida plantio"
+          {...register('plantingUnitMeasurementId', {
+            setValueAs: (v) => v === '' || v === 0 ? undefined : Number(v) // Converte para number
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        >
+          {unitMeasurementsData.map((unitMeasurement: UnitMeasurements) => (
+            <MenuItem
+              key={unitMeasurement.id}
+              value={unitMeasurement.id}
+            >
+              {unitMeasurement.description}
             </MenuItem>
-          ))
-        }
-      </TextField>
+          ))}
+
+
+        </TextField><TextField
+          required
+          select
+          defaultValue={1}
+          label="Unidade medida de colheita"
+          {...register('harvestUnitMeasurementId', {
+            setValueAs: (v) => v === '' || v === 0 ? undefined : Number(v) // Converte para number
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        >
+          {unitMeasurementsData.map((unitMeasurement: UnitMeasurements) => (
+            <MenuItem
+              key={unitMeasurement.id}
+              value={unitMeasurement.id}
+            >
+              {unitMeasurement.description}
+            </MenuItem>
+          ))}
+
+
+          </TextField>
+          </Box>
+         }
       <Box
         sx={{
           display: 'flex',
@@ -194,22 +272,22 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           gap: 2
         }}
       >
-      <TextField
-        required
-        label="Dias minimos até germinação"
-        {...register('germinationMinDays', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
-      <TextField
-        required
-        label="Dias maximo até germinação"
-        {...register('germinationMaxDays', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
+        <TextField
+          required
+          label="Dias minimos até germinação"
+          {...register('germinationMinDays', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
+        <TextField
+          required
+          label="Dias maximo até germinação"
+          {...register('germinationMaxDays', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
 
       </Box>
       <Box
@@ -222,22 +300,22 @@ export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm,
           gap: 2
         }}
       >
-      <TextField
-        required
-        label="Ph minimo"
-        {...register('phMin', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
-      <TextField
-        required
-        label="Ph maximo"
-        {...register('phMax', {
-          valueAsNumber: true
-        })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
-      />
+        <TextField
+          required
+          label="Ph minimo"
+          {...register('phMin', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
+        <TextField
+          required
+          label="Ph maximo"
+          {...register('phMax', {
+            valueAsNumber: true
+          })}
+          sx={{ marginBottom: '2rem', width: '100%' }}
+        />
 
       </Box>
       <TextField
