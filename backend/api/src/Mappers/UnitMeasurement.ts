@@ -9,4 +9,7 @@ export class UnitMeasurementMapper {
       data.abbreviation
     );
   }
+  static toEntities(data: Prisma.UnitMeasurementsGetPayload<true>[]): UnitMeasurements[] {
+    return data.map((item) => this.toEntity(item));
+  }
 }
