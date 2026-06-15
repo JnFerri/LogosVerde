@@ -3,14 +3,15 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import type Plant from "../Entities/Plant";
 import { usePlantIcons } from "../Hooks/usePlantsIcons";
+import { useNavigate } from "react-router-dom";
 
 interface CardsPlantProps {
   plants: Plant[];
 }
 
 export default function CardsPlant({ plants }: CardsPlantProps) {
-  const PlantIcons = usePlantIcons();
-
+  const PlantIcons = usePlantIcons()
+  const navigate = useNavigate()
   return (
     <Box
       sx={{
@@ -38,7 +39,9 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
   return (
           <Card key={plant.id} sx={{backgroundColor:'#f7f0e4'}}>
             <CardContent
-            sx={{ display: 'flex', flexDirection: 'row' ,justifyContent: 'space-between', gap:1 }}>
+            sx={{ display: 'flex', flexDirection: 'row' ,justifyContent: 'space-between', gap:1 }}
+             onClick={() =>{
+              navigate(`/projects/plants/${plant.id}`)} }>
               <Box
                 component='img'
                 src={PlantIcons?.find((icon) => icon.name === plant.plantIconName)?.src || ''}
