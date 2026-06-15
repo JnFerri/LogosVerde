@@ -1,5 +1,5 @@
 
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 import type Plant from "../Entities/Plant";
 import { usePlantIcons } from "../Hooks/usePlantsIcons";
@@ -10,7 +10,7 @@ interface CardsPlantProps {
 }
 
 export default function CardsPlant({ plants }: CardsPlantProps) {
-  const PlantIcons = usePlantIcons()
+  const {icons : plantIcons} = usePlantIcons()
   const navigate = useNavigate()
   return (
     <Box
@@ -25,7 +25,7 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
         p: 1,
       }}
     >
-      {plants.length === 0 || !PlantIcons ? (
+      {plants.length === 0 || !plantIcons ? (
         <Typography variant="h6" sx={{ gridColumn: '1 / -1', textAlign: 'center', mt: 4 }}>
           Nenhuma planta encontrada.
         </Typography>
@@ -34,14 +34,18 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
 
           return (
             <Card key={plant.id} sx={{ backgroundColor: '#f7f0e4' }}>
+              <CardActionArea
+                onClick={() => {
+                  navigate(`/plants/${plant.id}`)
+                }}
+                sx={{ height: '100%' }}
+              >
               <CardContent
                 sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 1 }}
-                onClick={() => {
-                  navigate(`/projects/plants/${plant.id}`)
-                }}>
+              >
                 <Box
                   component='img'
-                  src={PlantIcons?.find((icon) => icon.name === plant.plantIconName)?.src || ''}
+                  src={plantIcons?.find((icon) => icon.name === plant.plantIconName)?.src || ''}
                   alt={plant.plantIconName}
                   sx={{
                     width: '25%'
@@ -64,6 +68,7 @@ export default function CardsPlant({ plants }: CardsPlantProps) {
                   </Box>
                 </Box>
               </CardContent>
+              </CardActionArea>
             </Card>
           )
         })

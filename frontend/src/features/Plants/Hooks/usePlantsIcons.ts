@@ -8,58 +8,71 @@ import cucumberIcon from '../../../assets/PlantsIcons/cucumber.png'
 import grapeIcon from '../../../assets/PlantsIcons/grape.png'
 import potatoIcon from '../../../assets/PlantsIcons/potato.png'
 import zucchiniIcon from '../../../assets/PlantsIcons/zucchini.png'
+import { useMemo } from 'react'
+
+export interface PlantIcon {
+  id: number;
+  name: string;
+  src: string;
+}
 
 
-export const usePlantIcons = () => [
-  {
-    id: 1,
-    name: 'corn',
-    src: cornIcon
-  },
-  {
-    id: 2,
-    name: 'carrot',
-    src: carrotIcon
-  },
-  {
-    id: 3,
-    name: 'broccoli',
-    src: broccoliIcon
-  },
-  {
-    id: 4,
-    name: 'tomato',
-    src: tomatoIcon
-  },
-  {
-    id: 5,
-    name: 'cabbage',
-    src: cabbageIcon
-  },
-  {
-    id: 6,
-    name: 'chinese-cabbage',
-    src: chinese_cabbageIcon
-  },
-  {
-    id: 7,
-    name: 'cucumber',
-    src: cucumberIcon
-  },
-  {
-    id: 8,
-    name: 'grape',
-    src: grapeIcon
-  },
-  {
-    id: 9,
-    name: 'potato',
-    src: potatoIcon
-  },
-  {
-    id: 10,
-    name: 'zuchini',
-    src: zucchiniIcon
-  }
-]
-  
+export const usePlantIcons = () => {
+  const icons : PlantIcon[] = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'corn',
+        src: cornIcon
+      },
+      {
+        id: 2,
+        name: 'carrot',
+        src: carrotIcon
+      },
+      {
+        id: 3,
+        name: 'broccoli',
+        src: broccoliIcon
+      },
+      {
+        id: 4,
+        name: 'tomato',
+        src: tomatoIcon
+      },
+      {
+        id: 5,
+        name: 'cabbage',
+        src: cabbageIcon
+      },
+      {
+        id: 6,
+        name: 'chinese-cabbage',
+        src: chinese_cabbageIcon
+      },
+      {
+        id: 7,
+        name: 'cucumber',
+        src: cucumberIcon
+      },
+      {
+        id: 8,
+        name: 'grape',
+        src: grapeIcon
+      },
+      {
+        id: 9,
+        name: 'potato',
+        src: potatoIcon
+      },
+      {
+        id: 10,
+        name: 'zuchini',
+        src: zucchiniIcon
+      }
+    ],
+    []
+  );
+
+  return { icons };
+};
