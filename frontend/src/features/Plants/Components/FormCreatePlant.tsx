@@ -21,7 +21,7 @@ interface FormCreatePlantProps {
 
 
 export default function FormCreatePlant({ setIsOpenModal, typeForm, setTypeForm, plantId }: FormCreatePlantProps) {
-  const plantsIcons = usePlantIcons()
+  const {icons : plantsIcons} = usePlantIcons()
   const { data: plantTypesData } = usePlantTypes();
   const {data: unitMeasurementsData} = useUnitMeasurements();
   const { register, handleSubmit } = useForm<PlantCreate>({
