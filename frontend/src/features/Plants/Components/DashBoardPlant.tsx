@@ -17,16 +17,17 @@ const DashBoardPlant = ({ plant }: {
   return (
     
     <Box sx={{
-      width: '95%',
+      width: '99%',
       minHeight: '30%',
       boxShadow: '1px 1px 4px',
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       backgroundColor: '#f7f0e4',
-      marginTop:'1rem',
+      p:1,
+      margin:1,
       borderRadius:'1rem',
-      flexDirection:'column'
+      flexDirection: {xs:'column', md:'row'}
         
     }}>
       {plant && (
@@ -35,19 +36,19 @@ const DashBoardPlant = ({ plant }: {
       component={'div'}
       sx={{
         
-        width:'95%',
+        width:{xs:'100%', md:'20%'},
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         gap:1,
-        p:1
+        flexDirection:{xs:'row',md:'column'}
       }}>
       <Box
         component='img'
         src={plantIcons?.find((icon) => icon.name === plant.plantIconName)?.src || ''}
         alt={plant.plantIconName}
         sx={{
-          width: '10%'
+          width: {xs:'25%',md:'20%'}
         }}
       />
       <Box sx={{
@@ -55,7 +56,7 @@ const DashBoardPlant = ({ plant }: {
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
-        width:'85%'
+        width:'auto'
       }}>
 
         <Typography variant="h6" component="div">{plant.name.toLocaleUpperCase()}</Typography>
@@ -65,10 +66,10 @@ const DashBoardPlant = ({ plant }: {
       </Box>
       <Box sx={{
         display: 'grid',
-        width: {md:'85%', xs:'100%'},
+        width: {xs:'100%', md:'80%'},
         gridTemplateColumns: {
-          xs: 'repeat(auto-fit, minmax(240px, 1fr))',
-          md: 'repeat(auto-fit, minmax(240px, 6fr))',
+          xs: 'repeat(auto-fit, minmax(250px, 1fr))',
+          md: 'repeat(auto-fit, minmax(250px, 6fr))',
         },
         gap: 2,
         p: 1
