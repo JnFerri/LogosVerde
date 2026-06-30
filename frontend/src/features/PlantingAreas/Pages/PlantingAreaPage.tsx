@@ -2,22 +2,21 @@ import { Box, Container, Grid, Modal, useTheme } from "@mui/material";
 import { useState } from "react";
 import PageHeader from "../../../Components/Navigation/PageHeader";
 import type { HeaderActions } from "../../../Interface/PageHeader/HeaderActions";
-import FormCreatePlant from "../Components/FormCreatePlant";
-import { usePlant } from "../Hooks/usePlant";
 import { useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import DashBoardPlant from "../Components/DashBoardPlant";
-import PlantInfoSection from "../Components/PlantInfoSection";
-import PlantingAreaPlantSection from "../Components/PlantingAreaPlantsSection";
+import { usePlantingArea } from "../Hooks/usePlantingArea";
+import FormCreatePlantingArea from "../Components/FormCreatePlantingArea";
+import SectionDragAndDrop from "../Components/SectionDragAndDrop";
+import ListPlants from "../Components/ListPlants";
+import SectionPlantsSelected from "../Components/SectionPlantsSelected";
 
-const PlantPage = () => {
-  const { plantId } = useParams();
+const PlantingAreaPage = () => {
+  const { plantingAreaId } = useParams();
   const theme = useTheme();
-  const { data: plantData, isLoading: plantIsLoading } = usePlant(
-    Number(plantId),
-  );
-  const [typeForm, setTypeForm] = useState("");
+  const { data: plantingAreaData, isLoading: plantAreaIsLoading } =
+    usePlantingArea(Number(plantingAreaId));
   const [IsOpenModal, setIsOpenModal] = useState(false);
+  const [typeForm, setTypeForm] = useState("");
 
   const breadcrumbs = [
     {
@@ -25,18 +24,18 @@ const PlantPage = () => {
       path: "/",
     },
     {
-      label: "Plantas",
-      path: "/plants",
+      label: "Areas de Plantio",
+      path: plantAreaIsLoading ? "" : `/project/${plantingAreaData.projectId}`,
     },
     {
-      label: plantIsLoading ? "" : plantData.name,
-      path: plantIsLoading ? "" : `/plants/${plantData.id}`,
+      label: plantAreaIsLoading ? "" : plantingAreaData.name,
+      path: plantAreaIsLoading ? "" : `/plantingAreas/${plantingAreaData.id}`,
     },
   ];
 
   const headerActions: HeaderActions[] = [
     {
-      description: "Atualizar Planta",
+      description: "Atualizar Area de Plantio",
       icon: <EditIcon />,
       onClick: () => {
         setIsOpenModal(true);
@@ -45,10 +44,12 @@ const PlantPage = () => {
     },
   ];
 
-  return (
+  return plantAreaIsLoading ? (
+    <div>Carregando...</div>
+  ) : (
     <>
       <PageHeader
-        title="Plantas"
+        title={`Area de Plantio - ${plantingAreaData.name}`}
         actions={headerActions}
         breadcrumbs={breadcrumbs}
       />
@@ -87,7 +88,9 @@ const PlantPage = () => {
                 borderRadius: 2,
               }}
             >
-              <FormCreatePlant
+              <FormCreatePlantingArea
+                projectId={plantingAreaData.projectId}
+                plantingAreaId={plantingAreaData.id}
                 setIsOpenModal={setIsOpenModal}
                 typeForm={typeForm}
                 setTypeForm={setTypeForm}
@@ -98,15 +101,13 @@ const PlantPage = () => {
         <Container maxWidth={false} sx={{ width: "100%" }}>
           <Grid container spacing={2}>
             <Grid size={12}>
-              <DashBoardPlant plant={plantData} />
+              <SectionDragAndDrop />
             </Grid>
-
             <Grid size={{ xs: 12, md: 6 }}>
-              <PlantInfoSection plant={plantData} />
+              <ListPlants />
             </Grid>
-
             <Grid size={{ xs: 12, md: 6 }}>
-              <PlantingAreaPlantSection />
+              <SectionPlantsSelected />
             </Grid>
           </Grid>
         </Container>
@@ -115,4 +116,4 @@ const PlantPage = () => {
   );
 };
 
-export default PlantPage;
+export default PlantingAreaPage;
