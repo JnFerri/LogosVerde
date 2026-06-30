@@ -4,7 +4,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  useTheme,
 } from "@mui/material";
 
 interface ConfirmDialogProps {
@@ -20,29 +21,36 @@ export function ConfirmDialog({
   title = "Confirmação",
   message,
   onConfirm,
-  onClose
+  onClose,
 }: ConfirmDialogProps) {
+  const theme = useTheme();
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
 
       <DialogContent>
-        <DialogContentText>
-          {message}
-        </DialogContentText>
+        <DialogContentText>{message}</DialogContentText>
       </DialogContent>
 
       <DialogActions>
-        <Button 
-        onClick={onClose}
-        sx={{background:'#ab4141', color:'white'}}>
+        <Button
+          onClick={onClose}
+          sx={{
+            background: theme.palette.error.main,
+            color: theme.palette.text.secondary,
+          }}
+        >
           Cancelar
         </Button>
 
         <Button
           variant="contained"
           onClick={onConfirm}
-          sx={{background:'linear-gradient(135deg, #6e9662 0%, #4a6343 100%)'}}
+          sx={{
+            background: theme.palette.success.main,
+            color: theme.palette.text.secondary,
+          }}
         >
           Confirmar
         </Button>

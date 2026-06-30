@@ -1,5 +1,5 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 import React from "react";
 import type { PlantingAreaCreate } from "../Types/PlantingAreas";
@@ -19,58 +19,71 @@ interface FormCreatePlantingAreaProps {
   setTypeForm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function FormCreatePlantingArea({projectId, plantingAreaId, setIsOpenModal , typeForm , setTypeForm}: FormCreatePlantingAreaProps) {
-  const { register, handleSubmit } = useForm<PlantingAreaCreate >();
-  
+export default function FormCreatePlantingArea({
+  projectId,
+  plantingAreaId,
+  setIsOpenModal,
+  typeForm,
+  setTypeForm,
+}: FormCreatePlantingAreaProps) {
+  const { register, handleSubmit } = useForm<PlantingAreaCreate>();
+  const theme = useTheme();
   // const createPlantingArea = useCreatePlantingArea();
-  const createPlantingArea = useCreatePlantingArea()
+  const createPlantingArea = useCreatePlantingArea();
   const onSubmitCreate = (data: PlantingAreaCreate) => {
     createPlantingArea.mutate({ ...data, projectId });
     setIsOpenModal(false);
-  }
+  };
   const updatePlantingArea = useUpdatePlantingArea();
 
   const SubmitUpdatePlantingArea = (dados: PlantingAreaCreate) => {
     if (!plantingAreaId) {
-      alert('Área de plantio não encontrada');
+      alert("Área de plantio não encontrada");
       return;
     }
     updatePlantingArea.mutate({ id: plantingAreaId, data: { ...dados } });
-    setTypeForm('');
+    setTypeForm("");
     setIsOpenModal(false);
   };
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-        padding: 4
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
+        padding: 4,
       }}
-      component='form'
-      onSubmit={handleSubmit(typeForm === 'update' ? SubmitUpdatePlantingArea : onSubmitCreate)}
+      component="form"
+      onSubmit={handleSubmit(
+        typeForm === "update" ? SubmitUpdatePlantingArea : onSubmitCreate,
+      )}
     >
-      <Typography variant="h5" sx={{ marginBottom: '2rem' , display: 'flex', justifyContent: 'center'}}>
-        {typeForm === 'update' ? 'Editar Área de Plantio' : 'Criar Área de Plantio'}
+      <Typography
+        variant="h5"
+        sx={{ marginBottom: "2rem", display: "flex", justifyContent: "center" }}
+      >
+        {typeForm === "update"
+          ? "Editar Área de Plantio"
+          : "Criar Área de Plantio"}
       </Typography>
       <TextField
         required
         label="Nome da Área de Plantio"
-        {...register('name')}
-        sx={{ marginBottom: '2rem', width: '100%' }}
+        {...register("name")}
+        sx={{ marginBottom: "2rem", width: "100%" }}
       />
 
       <TextField
-        type = 'number'
+        type="number"
         label="Quantidade de horas de sol"
-        {...register('sunshineHours', {
+        {...register("sunshineHours", {
           valueAsNumber: true,
         })}
-        sx={{ marginBottom: '2rem', width: '100%' }}
+        sx={{ marginBottom: "2rem", width: "100%" }}
       />
       <Button
         type="submit"
@@ -78,10 +91,12 @@ export default function FormCreatePlantingArea({projectId, plantingAreaId, setIs
         endIcon={<SendIcon />}
         size="large"
         sx={{
-          background: 'linear-gradient(135deg, #6e9662 0%, #4a6343 100%)'
-        }}>
+          background: theme.palette.background.linearGreen,
+          color: theme.palette.text.secondary,
+        }}
+      >
         Criar Área
       </Button>
     </Box>
-  )
+  );
 }
